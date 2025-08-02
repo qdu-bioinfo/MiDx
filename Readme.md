@@ -1,4 +1,4 @@
-# BioMetaPipe
+# MiDx
 
 ## Content
 
@@ -13,7 +13,7 @@
 - [Leave-one-out cross validation](#run-the-example-with-one-click)
 - [Independent Verification](#supplementary)
 ## Introduction
-BioMetaPipe, a five-stage computational framework designed for microbial data analysis, covers modules such as data preprocessing, batch effect correction, feature screening and standardization modeling, and model validation.
+MiDx, a five-stage computational framework designed for microbial data analysis, covers modules such as data preprocessing, batch effect correction, feature screening and standardization modeling, and model validation.
 ## Package requirement
 ```
 environment.yml
