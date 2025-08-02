@@ -3,15 +3,15 @@ import os
 base_command = [
     "python", "Main.py",
     # Input raw feature table (CSV), samples × features
-    "--raw-data", r"./BioMetaPipe/Result/data/16s/Raw/otu/Raw_feature_finally.csv",
+    "--raw-data", r"./BioMetaPipe/Result/data/wgs/Raw/t_sgb/Raw_feature_finally.csv",
     # Input sample metadata (CSV), index is sample IDs
-    "--meta-data", r"./BioMetaPipe/Result/data/16s/Raw_meta_finally.csv",
+    "--meta-data", r"./BioMetaPipe/Result/data/wgs/Raw_meta_finally.csv",
     # Feature type tag (e.g., 16s, wgs)
-    "--feature-type", "16s",
+    "--feature-type", "wgs",
     # Groups to include (here: control CTR and adenoma ADA)
     "--groups", "CTR", "ADA",
     # Classification level tag (using OTU level here)
-    "--class-level", "otu",
+    "--class-level", "t_sgb",
     # Filter threshold: retain features with abundance >= 0.0001
     "--filter-threshold", "0.0001",
     # Label mapping: map CTR to 0, ADA to 1
@@ -19,7 +19,7 @@ base_command = [
     # Filter mode: based on abundance
     "--filter-mode", "abundance",
     # Output directory for results
-    "--output-path", r"./BioMetaPipe/Result/",
+    "--output-path", r"./MiDx/Result/",
     # Feature selection method: Wilcoxon test
     "--feature", "wilcoxon",
     # Normalization mode: standardization (std)

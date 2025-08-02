@@ -1,11 +1,11 @@
 import subprocess
 base_command = [
     "python", "Main.py",
-    "--raw-data", r"./BioMetaPipe/Result/data/16s/Raw/otu/Raw_feature_finally.csv",
-    "--meta-data", r"./BioMetaPipe/Result/data/16s/Raw_meta_finally.csv",
-    "--feature-type", "16s",
+    "--raw-data", r"./BioMetaPipe/Result/data/wgs/Raw/t_sgb/Raw_feature_finally.csv",
+    "--meta-data", r"./BioMetaPipe/Result/data/wgs/Raw_meta_finally.csv",
+    "--feature-type", "wgs",
     "--groups", "CTR", "ADA",
-    "--class-level", "otu",
+    "--class-level", "t_sgb",
     "--filter-threshold","0.0001",
     "--mapping", "CTR=0", "ADA=1",
     "--filter-mode", "abundance",
