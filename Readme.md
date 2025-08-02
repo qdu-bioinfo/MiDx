@@ -20,10 +20,10 @@ environment.yml
 ```
 ## Installation environment
 ```
-1.https://github.com/qdu-bioinfo/MiDx.git
+1.git clone https://github.com/qdu-bioinfo/MiDx.git
 2.cd MiDx
-3.conda env create -f environment.yml -n BioMetaPipe
-4.conda activate BioMetaPipe
+3.conda env create -f environment.yml -n MiDx
+4.conda activate MiDx
 ```
 ## Data Description
 ### a. 16S rRNA sequence data
