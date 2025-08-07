@@ -6,10 +6,27 @@
 ################################################################################
 # Required libraries
 required_packages <- c("dplyr", "ggplot2", "Maaslin2", "microeco", "magrittr", "pacman", "tidyverse","SIAMCAT","phyloseq","sva","R.utils","ANCOMBC")
-# 然后按包名逐个 library()
 lapply(required_packages, function(pkg) {
   library(pkg, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)
 })
+
+get_script_dir <- function() {
+  if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
+    script_path <- rstudioapi::getSourceEditorContext()$path
+    return(dirname(script_path))
+  } else {
+    args <- commandArgs(trailingOnly = FALSE)
+    file_arg <- grep("--file=", args, value = TRUE)
+    if (length(file_arg) > 0) {
+      script_path <- sub("--file=", "", file_arg[1])
+      return(dirname(script_path))
+    } else {
+      warning("Cannot determine script path. Returning working directory.")
+      return(getwd())
+    }
+  }
+}
+
 
 ################################################################################
 # Main Function: analyze_microbiome_data
@@ -122,10 +139,14 @@ analyze_microbiome_data <- function(meta.all.filtered, feat.all, output_dir) {
   )
   # Function to run external analysis tools
   run_analysis_tools <- function(feat.all, meta.all.filtered, output_dir) {
+
+    script_dir <- get_script_dir()
+    print(script_dir)
+    tool_script_dir <- file.path(script_dir, "Tool_script")
     analysis_tools <- list(
-    "Wilcoxon" = paste("./Tool_script/Run_Wilcox.R", sep = ""),
-    "metagenomeSeq" = paste("./Tool_script/Run_metagenomeSeq.R", sep = ""),
-    "t_test" = paste("./Tool_script/Run_t_test.R", sep = "")
+    "Wilcoxon" = file.path(tool_script_dir,"Run_Wilcox.R") ,
+    "metagenomeSeq" = file.path(tool_script_dir,"Run_metagenomeSeq.R"),
+    "t_test" = file.path(tool_script_dir,"Run_t_test.R")
     #"ANCOM" = paste(script_dir, "/Tool_script/Run_ANCOM.R", sep = "")
     )
     for (method in names(analysis_tools)) {

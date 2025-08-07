@@ -187,7 +187,7 @@ def _cross_validate(
     plt.close()
 
     pd.DataFrame(records).to_csv(output_dir / f"{model_key}_cv_results.csv", index=False)
-    print(f"[{model_key}] 5‑fold CV finished – results saved to {output_dir}, Mean AUROC={auc(mean_fpr, mean_tpr):.3f}")
+    print(f"[{model_key}] 5 fold CV finished results saved to {output_dir}, Mean AUROC={auc(mean_fpr, mean_tpr):.3f}")
 
 def _lodo_validate(
     model_key: str,
@@ -295,7 +295,7 @@ def _lodo_validate(
     plt.close()
 
     pd.DataFrame(records).to_csv(output_dir / f"{model_key}_lodo_results.csv", index=False)
-    print(f"[{model_key}] LODO validation finished – results saved to {output_dir}, Mean AUROC={auc(mean_fpr, mean_tpr):.3f}")
+    print(f"[{model_key}] LODO validation finished results saved to {output_dir}, Mean AUROC={auc(mean_fpr, mean_tpr):.3f}")
 
 def _save_models(
     model_key: str,

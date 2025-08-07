@@ -10,14 +10,18 @@ import json
 import locale
 import os
 os.environ["LC_CTYPE"] = "en_US.UTF-8"
+
 import platform
 import subprocess
 from typing import Dict, List, Optional
 import pandas as pd
+from pathlib import Path
+script_dir = Path(__file__).resolve().parent
+print(f"Script Directory: {script_dir}")
 # ───────────────────────── ensure R_HOME ────────────────────────────────
 if "R_HOME" not in os.environ:
     if platform.system() == "Windows":
-        os.environ["R_HOME"] = r"D:\software\R-4.4"
+        os.environ["R_HOME"] = rf"{script_dir}\R-4.4"
         os.environ["PATH"] = os.pathsep.join([
             os.path.join(os.environ["R_HOME"], "bin", "x64"),
             os.path.join(os.environ["R_HOME"], "bin"),

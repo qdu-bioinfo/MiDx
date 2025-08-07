@@ -75,10 +75,11 @@ def analysis_pipeline():
     importr('base')
     importr('utils')
 
-    feature_type = "16s"
-    class_level, groups = 'otu', ['CTR', 'ADA']
+    feature_type = "wgs"
+    class_level, groups = 't_sgb', ['CTR', 'CRC']
+    group_map={"CTR": 0, "CRC": 1}
     filter_thre = 0.0001
-    norm_method = "log.std"
+    norm_method = "std"
     feature_method = "wilcoxon"
     model_name = "xgb"
     thresholds = {'abundance': filter_thre}
@@ -92,8 +93,8 @@ def analysis_pipeline():
     robjects.r['source'](correct_script)
     robjects.r['source'](feature_script)
 
-    data_dir = os.path.abspath(os.path.join(script_dir, '..', 'Result', 'data', feature_type, 'Raw'))
-    meta_dir = os.path.abspath(os.path.join(script_dir, '..', 'Result', 'data', feature_type))
+    data_dir = os.path.abspath(os.path.join(script_dir, '..', 'data', feature_type, 'Raw'))
+    meta_dir = os.path.abspath(os.path.join(script_dir, '..', 'data', feature_type,'Raw'))
 
     raw_df = pd.read_csv(os.path.join(data_dir, class_level, 'Raw_feature_finally.csv'), index_col=0)
     meta_df = pd.read_csv(os.path.join(meta_dir, 'Raw_meta_finally.csv'), index_col=0)
@@ -139,8 +140,8 @@ def analysis_pipeline():
 
     raw_train = meta_train.drop(columns=["Group","Study"])
     raw_test = meta_test.drop(columns=["Group","Study"])
-    y_train = meta_train["Group"].map({"CTR": 0, "ADA": 1}).values
-    y_test = meta_test["Group"].map({"CTR": 0, "ADA": 1}).values
+    y_train = meta_train["Group"].map(group_map).values
+    y_test = meta_test["Group"].map(group_map).values
 
     print(f"[INFO] Train samples: {meta_train.shape[0]}, Test samples: {meta_test.shape[0]}")
     print(f"[INFO] Features used: {len(cols)}")
