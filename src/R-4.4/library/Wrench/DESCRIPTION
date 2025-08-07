@@ -1,0 +1,33 @@
+Package: Wrench
+Depends: R (>= 3.5.0)
+Type: Package
+Title: Wrench normalization for sparse count data
+Version: 1.24.0
+Authors@R: c( person("Senthil Kumar", "Muthiah",
+                      email="smuthiah@umiacs.umd.edu",
+                      role = c("aut")),
+              person("Hector", "Corrada Bravo", 
+                      email = "hcorrada@gmail.com", 
+                      role = c("aut", "cre"))
+            )
+Description: Wrench is a package for normalization sparse genomic count data, like that arising from 16s metagenomic surveys.
+Imports: limma, matrixStats, locfit, stats, graphics
+License: Artistic-2.0
+RoxygenNote: 6.1.0
+Suggests: knitr, rmarkdown, metagenomeSeq, DESeq2, edgeR
+VignetteBuilder: knitr
+biocViews: Normalization, Sequencing, Software
+URL: https://github.com/HCBravoLab/Wrench
+BugReports: https://github.com/HCBravoLab/Wrench/issues
+git_url: https://git.bioconductor.org/packages/Wrench
+git_branch: RELEASE_3_20
+git_last_commit: e72ed95
+git_last_commit_date: 2024-10-29
+Repository: Bioconductor 3.20
+Date/Publication: 2024-10-29
+NeedsCompilation: no
+Packaged: 2024-10-30 06:19:41 UTC; biocbuild
+Author: Senthil Kumar Muthiah [aut],
+  Hector Corrada Bravo [aut, cre]
+Maintainer: Hector Corrada Bravo <hcorrada@gmail.com>
+Built: R 4.4.1; ; 2024-10-30 17:00:48 UTC; windows

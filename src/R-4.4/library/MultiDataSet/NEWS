@@ -1,0 +1,26 @@
+CHANGES IN VERSION 1.4.0
+-------------------------
+    
+    NEW FEATURES
+
+o Add function to add matrices to MDS.
+
+o Add vignettes published in scientific article.
+
+o Remove non-critical dependencies.
+
+
+
+CHANGES IN VERSION 1.2.0
+-------------------------
+    
+    NEW FEATURES
+
+o Add wrappers for two functions to integrate omic data: mcia (from omicade4 package) and iClusterPlus.
+
+o Add advanced subsetting by phenotype and feature.
+
+
+BUG FIXES
+
+o Solve subsetting issues when sampleNames is different from ID column. 

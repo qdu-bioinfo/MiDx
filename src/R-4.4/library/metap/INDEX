@@ -1,0 +1,23 @@
+albatros                Albatros plot
+allmetap                Carry out all or some of the methods in the
+                        package
+dat.metap               Example data
+invchisq                Combine p values using the inverse chi squared
+                        method
+invt                    Combine p values using the inverse t method
+logitp                  Combine p values using the logit method
+meanp                   Combine p values by the mean p method
+meanz                   Combine p values using the mean z method
+metap-package           Meta-Analysis of Significance Values
+plotp                   Q-Q plot of p-values
+schweder                Schweder and Spjotvoll plot
+sumlog                  Combine p-values by the sum of logs (Fisher's)
+                        method
+sump                    Combine p-values using the sum of p
+                        (Edgington's) method
+sumz                    Combine p-values using the sum of z
+                        (Stouffer's) method
+truncated               Truncated product methods
+two2one                 Convert two-sided p-values to one-sided
+votep                   Combine p-values by the vote counting method
+wilkinsonp              Combine p-values using Wilkinson's method

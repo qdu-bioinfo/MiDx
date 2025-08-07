@@ -1,0 +1,17 @@
+CRC_abd                 Species level feature abundance data of five
+                        public CRC studies
+CRC_meta                Sample metadata of five public CRC studies
+adjust_batch            Zero-inflated empirical Bayes adjustment of
+                        batch effect in compositional feature abundance
+                        data
+continuous_discover     Unsupervised meta-analytical discovery and
+                        validation of continuous structures in
+                        microbial abundance data
+discrete_discover       Unsupervised meta-analytical discovery and
+                        validation of discrete clustering structures in
+                        microbial abundance data
+lm_meta                 Covariate adjusted meta-analytical differential
+                        abundance testing
+vaginal_abd             Species level feature abundance data of two
+                        public vaginal studies
+vaginal_meta            Sample metadata of two public vaginal studies

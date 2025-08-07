@@ -1,0 +1,13 @@
+FineRoot                Data sets in the cplm pakcage
+bcplm                   Bayesian Compound Poisson Linear Models
+cpglm                   Compound Poisson Generalized Linear Models
+cpglmm                  Compound Poisson Generalized Linear Mixed
+                        Models
+cplm-class              Classes and Methods for a Compound Poisson
+                        Linear Model Object
+cplm-package            Tweedie compound Poisson linear models
+getF                    Get and plot the smoothing function values
+gini                    The Gini index
+sp2d                    2-dimentional Radial Spline
+tp                      Generate basis functions for penalized spline
+                        smoothing.

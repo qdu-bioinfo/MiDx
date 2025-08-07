@@ -1,0 +1,12 @@
+AICtweedie              Tweedie Distributions
+dtweedie                Tweedie Distributions
+dtweedie.dldphi         Tweedie Distributions
+dtweedie.dlogfdphi      Tweedie internal function
+dtweedie.saddle         Tweedie Distributions (saddlepoint
+                        approximation)
+logLiktweedie           Tweedie Distributions
+tweedie-package         Tweedie Distributions
+tweedie.convert         Convert Tweedie parameters
+tweedie.dev             Tweedie Distributions: the deviance function
+tweedie.plot            Tweedie Distributions: plotting
+tweedie.profile         Tweedie Distributions: mle estimation of p

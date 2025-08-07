@@ -1,0 +1,150 @@
+MRcoefs                 Table of top-ranked features from fitZig or
+                        fitFeatureModel
+MRcounts                Accessor for the counts slot of a MRexperiment
+                        object
+MRexperiment-class      Class "MRexperiment" - a modified eSet object
+                        for the data from high-throughput sequencing
+                        experiments
+MRexperiment2biom       MRexperiment to biom objects
+MRfulltable             Table of top microbial marker gene from linear
+                        model fit including sequence information
+MRihw                   MRihw runs IHW within a MRcoefs() call
+MRihw,fitFeatureModelResults-method
+                        MRihw runs IHW within a MRcoefs() call
+MRihw,fitZigResults-method
+                        MRihw runs IHW within a MRcoefs() call
+MRtable                 Table of top microbial marker gene from linear
+                        model fit including sequence information
+aggregateBySample       Aggregates a MRexperiment object or counts
+                        matrix to by a factor.
+aggregateByTaxonomy     Aggregates a MRexperiment object or counts
+                        matrix to a particular level.
+biom2MRexperiment       Biom to MRexperiment objects
+calcNormFactors         Cumulative sum scaling (css) normalization
+                        factors
+calcPosComponent        Positive component
+calcShrinkParameters    Calculate shrinkage parameters
+calcStandardError       Calculate the zero-inflated log-normal
+                        statistic's standard error
+calcZeroAdjustment      Calculate the zero-inflated component's
+                        adjustment factor
+calcZeroComponent       Zero component
+calculateEffectiveSamples
+                        Estimated effective samples per feature
+correctIndices          Calculate the correct indices for the output of
+                        correlationTest
+correlationTest         Correlation of each row of a matrix or
+                        MRexperiment object
+cumNorm                 Cumulative sum scaling normalization
+cumNormMat              Cumulative sum scaling factors.
+cumNormStat             Cumulative sum scaling percentile selection
+cumNormStatFast         Cumulative sum scaling percentile selection
+doCountMStep            Compute the Maximization step calculation for
+                        features still active.
+doEStep                 Compute the Expectation step.
+doZeroMStep             Compute the zero Maximization step.
+expSummary              Access MRexperiment object experiment data
+exportMat               Export the normalized MRexperiment dataset as a
+                        matrix.
+exportStats             Various statistics of the count data.
+extractMR               Extract the essentials of an MRexperiment.
+filterData              Filter datasets according to no. features
+                        present in features with at least a certain
+                        depth.
+fitDO                   Wrapper to calculate Discovery Odds Ratios on
+                        feature values.
+fitFeatureModel         Computes differential abundance analysis using
+                        a zero-inflated log-normal model
+fitFeatureModelResults-class
+                        Class "fitFeatureModelResults" - a formal class
+                        for storing results from a fitFeatureModel call
+fitLogNormal            Computes a log-normal linear model and
+                        permutation based p-values.
+fitMultipleTimeSeries   Discover differentially abundant time intervals
+                        for all bacteria
+fitPA                   Wrapper to run fisher's test on
+                        presence/absence of a feature.
+fitSSTimeSeries         Discover differentially abundant time intervals
+                        using SS-Anova
+fitTimeSeries           Discover differentially abundant time intervals
+fitZeroLogNormal        Compute the log fold-change estimates for the
+                        zero-inflated log-normal model
+fitZig                  Computes the weighted fold-change estimates and
+                        t-statistics.
+fitZigResults-class     Class "fitZigResults" - a formal class for
+                        storing results from a fitZig call
+getCountDensity         Compute the value of the count density function
+                        from the count model residuals.
+getEpsilon              Calculate the relative difference between
+                        iterations of the negative log-likelihoods.
+getNegativeLogLikelihoods
+                        Calculate the negative log-likelihoods for the
+                        various features given the residuals.
+getPi                   Calculate the mixture proportions from the zero
+                        model / spike mass model residuals.
+getZ                    Calculate the current Z estimate
+                        responsibilities (posterior probabilities)
+isItStillActive         Function to determine if a feature is still
+                        active.
+libSize                 Access sample depth of coverage from
+                        MRexperiment object
+libSize<-               Replace the library sizes in a MRexperiment
+                        object
+loadBiom                Load objects organized in the Biom format.
+loadMeta                Load a count dataset associated with a study.
+loadMetaQ               Load a count dataset associated with a study
+                        set up in a Qiime format.
+loadPhenoData           Load a clinical/phenotypic dataset associated
+                        with a study.
+lungData                OTU abundance matrix of samples from a
+                        smoker/non-smoker study
+makeLabels              Function to make labels simpler
+mergeMRexperiments      Merge two MRexperiment objects together
+mergeTable              Merge two tables
+metagenomeSeq-deprecated
+                        Depcrecated functions in the metagenomeSeq
+                        package.
+metagenomeSeq-package   Statistical analysis for sparse high-throughput
+                        sequencing
+mouseData               OTU abundance matrix of mice samples from a
+                        diet longitudinal study
+newMRexperiment         Create a MRexperiment object
+normFactors             Access the normalization factors in a
+                        MRexperiment object
+normFactors<-           Replace the normalization factors in a
+                        MRexperiment object
+plotBubble              Basic plot of binned vectors.
+plotClassTimeSeries     Plot abundances by class
+plotCorr                Basic correlation plot function for normalized
+                        or unnormalized counts.
+plotFeature             Basic plot function of the raw or normalized
+                        data.
+plotGenus               Basic plot function of the raw or normalized
+                        data.
+plotMRheatmap           Basic heatmap plot function for normalized
+                        counts.
+plotOTU                 Basic plot function of the raw or normalized
+                        data.
+plotOrd                 Plot of either PCA or MDS coordinates for the
+                        distances of normalized or unnormalized counts.
+plotRare                Plot of rarefaction effect
+plotTimeSeries          Plot difference function for particular
+                        bacteria
+posteriorProbs          Access the posterior probabilities that results
+                        from analysis
+returnAppropriateObj    Check if MRexperiment or matrix and return
+                        matrix
+ssFit                   smoothing-splines anova fit
+ssIntervalCandidate     calculate interesting time intervals
+ssPerm                  class permutations for smoothing-spline time
+                        series analysis
+ssPermAnalysis          smoothing-splines anova fits for each
+                        permutation
+trapz                   Trapezoidal Integration
+ts2MRexperiment         With a list of fitTimeSeries results, generate
+                        an MRexperiment that can be plotted with
+                        metavizr
+uniqueFeatures          Table of features unique to a group
+wrenchNorm              Computes normalization factors using wrench
+                        instead of cumNorm
+zigControl              Settings for the fitZig function

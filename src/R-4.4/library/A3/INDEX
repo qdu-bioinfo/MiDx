@@ -1,0 +1,13 @@
+A3-package              A3 Error Metrics for Predictive Models
+a3                      A3 Results for Arbitrary Model
+a3.base                 Base A3 Results Calculation
+a3.gen.default          Stochastic Data Generators
+a3.lm                   A3 for Linear Regressions
+a3.r2                   Cross-Validated R^2
+housing                 Boston Housing Prices
+multifunctionality      Ecosystem Multifunctionality
+plot.A3                 Plot A3 Results
+plotPredictions         Plot Predicted versus Observed
+plotSlopes              Plot Distribution of Slopes
+print.A3                Print Fit Results
+xtable.A3               Nicely Formatted Fit Results

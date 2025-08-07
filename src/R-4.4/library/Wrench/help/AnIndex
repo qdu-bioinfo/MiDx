@@ -1,0 +1,10 @@
+.estimSummary	dot-estimSummary
+.getCondLogWeights	dot-getCondLogWeights
+.getCondWeights	dot-getCondWeights
+.getHurdle	dot-getHurdle
+.getMargWeights	dot-getMargWeights
+.getReference	dot-getReference
+.gets2	dot-gets2
+.getWeightedMean	dot-getWeightedMean
+.getWeightedMedian	dot-getWeightedMedian
+wrench	wrench

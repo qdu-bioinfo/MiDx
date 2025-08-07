@@ -1,0 +1,88 @@
+TibbleUtilites          Utilities For 'phyloseq-class' Slots to Tibbles
+abundances              Abundance Matrix from Phyloseq
+add_besthit             Adds 'best_hist' to a 'phyloseq-class' Object
+add_refseq              Add 'refseq' Slot for 'dada2' based 'phyloseq'
+                        Object
+aggregate_rare          Aggregate Rare Groups
+aggregate_taxa          Aggregate Taxa
+alpha                   Global Ecosystem State Variables
+associate               Cross Correlation Wrapper
+atlas1006               HITChip Atlas with 1006 Western Adults
+baseline                Pick Baseline Timepoint Samples
+bimodality              Bimodality Analysis
+bimodality_sarle        Sarle's Bimodality Coefficient
+boxplot_abundance       Abundance Boxplot
+boxplot_alpha           Alpha Boxplot
+cmat2table              Convert Correlation Matrix into a Table
+collapse_replicates     Collapse Replicate Samples
+core                    Core Microbiota
+core_abundance          Core Abundance
+core_heatmap            Core Heatmap
+core_matrix             Core Matrix
+core_members            Core Taxa
+coverage                Coverage Index
+default_colors          Default Colors
+densityplot             Density Plot
+dietswap                Diet Swap Data
+divergence              Divergence within a Sample Group
+diversity               Diversity Index
+dominance               Dominance Index
+dominant                Dominant taxa
+evenness                Evenness Index
+find_optima             Find Optima
+gktau                   gktau
+group_age               Age Classes
+group_bmi               Body-Mass Index (BMI) Classes
+heat                    Association Heatmap
+hitchip.taxonomy        HITChip Taxonomy
+hotplot                 Univariate Bimodality Plot
+inequality              Gini Index
+intermediate_stability
+                        Intermediate Stability
+is_compositional        Test Compositionality
+log_modulo_skewness     Log-Modulo Skewness Rarity Index
+low_abundance           Low Abundance Index
+map_levels              Map Taxonomic Levels
+merge_taxa2             Merge Taxa
+meta                    Retrieve Phyloseq Metadata as Data Frame
+microbiome-package      R package for microbiome studies
+multimodality           Multimodality Score
+neat                    Neatmap Sorting
+neatsort                Neatmap Sorting
+overlap                 Overlap Measure
+peerj32                 Probiotics Intervention Data
+plot_atlas              Visualize Samples of a Microbiota Atlas
+plot_composition        Taxonomic Composition Plot
+plot_core               Visualize OTU Core
+plot_density            Plot Density
+plot_frequencies        Plot Frequencies
+plot_landscape          Landscape Plot
+plot_regression         Visually Weighted Regression Plot
+plot_taxa_prevalence    Visualize Prevalence Distributions for Taxa
+plot_tipping            Variation Line Plot
+potential_analysis      Bootstrapped Potential Analysis
+potential_univariate    Potential Analysis for Univariate Data
+prevalence              OTU Prevalence
+psmelt2                 Convert 'phyloseq-class' object to long data
+                        format
+rare                    Rare Microbiota
+rare_abundance          Rare (Non-Core) Abundance Index
+rare_members            Rare Taxa
+rarity                  Rarity Index
+read_biom2phyloseq      Read BIOM File into a Phyloseq Object
+read_csv2phyloseq       Read Simple OTU Tables into a Phyloseq Object
+read_mothur2phyloseq    Read Mothur Output into a Phyloseq Object
+read_phyloseq           Import phyloseq Data
+readcount               Total Read Count
+remove_samples          Exclude Samples
+remove_taxa             Exclude Taxa
+richness                Richness Index
+spreadplot              Abundance Spread Plot
+summarize_phyloseq      Summarize phyloseq object
+taxa                    Taxa Names
+time_normalize          Normalize Phyloseq Metadata Time Field
+time_sort               Temporal Sorting Within Subjects
+timesplit               Time Split
+top                     Identify Top Entries
+top_taxa                Top Taxa
+transform               Data Transformations for phyloseq Objects

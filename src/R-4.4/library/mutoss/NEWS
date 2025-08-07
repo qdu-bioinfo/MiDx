@@ -1,0 +1,45 @@
+Version 0.1-13
+==============
+- ranktruncated warns for large numbers of p-values. (Thanks to Phillip Bredahl Mogensen for notification!)
+- noted that adaptiveBH is not equivalent to multcomp's ABH. (Thanks to David Swanepoel for notification!)
+
+Version 0.1-12
+==============
+- changed description according to CRAN policy
+
+Version 0.1-11
+==============
+- fixed CRAN notes and warnings
+- switched from RUnit to testthat
+
+Version 0.1-10
+==============
+- compatibility with qvalue 1.99.0
+
+Version 0.1-9
+=============
+- compatibility to qvalue 1.43.0
+
+Version 0.1-8
+=============
+- moving many packages from DEPENDS to IMPORTS
+- fixed layout in examples
+- fixed various warnings
+
+Version 0.1-7
+=============
+- corrections in the Hommel documentation
+- package multtest is a dependency
+
+Version 0.1-6
+=============
+- simulation Tool: Objects returned by simulation() use less memory and
+  generated data can be discarded.
+
+Version 0.1-5
+=============
+- jointCDF.orderedUnif which was only a helper function is now exported
+
+Version 0.1-4
+=============
+- Bug fix in ABH_pi0_est

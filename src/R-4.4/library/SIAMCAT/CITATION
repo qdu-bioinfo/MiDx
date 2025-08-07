@@ -1,0 +1,15 @@
+citHeader("To cite SIAMCAT in publications, please use:")
+
+citEntry(entry = "article",
+  author = "Jakob Wirbel, Konrad Zych, Morgan Essex, Nicolai Karcher,
+  Ece Kartal, Guillem Salazar, Peer Bork, Shinichi Sunagawa, Georg Zeller",
+  title = "Microbiome meta-analysis and cross-disease comparison enabled by
+  the SIAMCAT machine learning toolbox",
+  year = "2021",
+  url = "https://doi.org/10.1186/s13059-021-02306-1",
+  journal = 'Genome Biology',
+  textVersion = "Wirbel, J., Zych, K., Essex, M. et al. Microbiome
+  meta-analysis and cross-disease comparison enabled by the SIAMCAT machine
+  learning toolbox. Genome Biol 22, 93 (2021).
+  https://doi.org/10.1186/s13059-021-02306-1"
+)

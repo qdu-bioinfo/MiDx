@@ -1,0 +1,113 @@
+Changes in version 1.12
+   - updated documentation
+   - moved look-up table for allmetap to sysdata
+   - improved printing for allmetap
+   
+Changes in version 1.11
+   - updated documentation
+   - added log input to sumlog
+
+Changes in version 1.10
+   - updated documentation
+   - moved docontours to internal
+
+Changes in version 1.9
+   - updated documentation
+   - warning if qqconf not installed
+   - removed URL from DESCRIPTION
+   
+Changes in version 1.8
+   - updated documentation
+   - added using qqconf for plotting
+   - added new vignette on plotting p-values
+
+Changes in version 1.7
+   - updated data-set cholest
+   - added new data-set: zhang
+   - added log.p parameter to allmetap
+   - added new plotting function: albatros
+   - updated documentation
+
+Changes in version 1.6
+   - updated documentation
+   - added option to allow log inputs to selected functions
+   - updated vignette
+   - added more information to data-sets validity and cholest
+
+Changes in version 1.5
+   - updated vignette
+   - added option to return log p to selected functions
+   - combined all example data-sets into dat.metap
+   
+Changes in version 1.4
+   - fixed bug in votep (report by Wolfgang Viechtbauer)
+   - fixed bug in documentation for sump although
+     code was correct (report by Sebastian Canzler)
+   - use mathjaxr for HTML in Rd files
+   - add version dependencies for Rdpack and mathjaxr
+   
+Changes in version 1.3
+   - updated documentation
+   - updated vignette
+   - changed to use authors@R
+
+Changes in version 1.2
+   - new function truncated
+   - improved error handling (report by Ana Marija Sokovic)
+   - updated documentation
+
+Changes in version 1.1
+   - new plotting function plotp
+   - split vignette into two
+   
+Changes in version 1.0
+   - added new functions: inverse chisq, inverse t, mean z
+   - changed package Rd file to use system macros
+   - changed to using Rdpack for references in Rd files
+   - updated vignette
+   
+Changes in version 0.9
+   - added new function allmetap
+   - minor bug in sumz fixed
+   - updated vignette
+   
+Changes in version 0.8
+    - updated vignette to include method comparisons
+    
+Changes in version 0.7-1
+   - added maximump
+   - updated documentation
+   - this version never uploaded to CRAN
+   
+Changes in version 0.7
+   - added vignette
+   - minor bug fixes
+   
+Changes in version 0.6-3
+   - test for cancellation error in sump
+   - minor warnings fixes
+   - updated documentation
+   - this version never uploaded to CRAN
+   
+Changes in version 0.6-2
+   - importFrom added for CRAN
+   - Description enhanced
+
+Changes in version 0.6-1
+   - new maintainer email address
+   - added CITATION file
+   - this version never uploaded to CRAN
+
+Changes in version 0.6
+   - added weights to sumz
+   - updated documentation
+
+Changes in version 0.5-1
+
+   - updated DESCRIPTION
+   - First upload to CRAN
+
+Changes in version 0.5
+
+   - first substantial version
+

@@ -1,0 +1,48 @@
+NCI60                   Microarray gene expression profiles of the NCI
+                        60 cell lines from 4 different platforms
+aminoacids              Amino-Acids Dataset
+cellulose               NIR-Viscosity example data set to illustrate
+                        multivariate calibration using PLS, spectral
+                        filtering and OPLS
+checkW4M                Checking the consistency of a
+                        SummarizedExperiment or ExpressionSet instance
+                        with W4M format
+coef,opls-method        Coefficients method for (O)PLS models
+cornell                 Octane of various blends of gasoline
+fitted,opls-method      Fitted method for 'opls' objects
+foods                   Food consumption patterns accross European
+                        countries (FOODS)
+fromW4M                 fromW4M
+getEset                 getEset method
+getLoadingMN            getLoadingMN method for PCA/(O)PLS(-DA) models
+getMset                 getMset method
+getOpls                 Getting the models from a SummarizedExperiment
+                        or a MultiAssayExperiment object
+getPcaVarVn             getPcaVarVn method for PCA models
+getScoreMN              getScoreMN method for PCA/(O)PLS(-DA) models
+getSubsetVi             getSubsetVi method for (O)PLS(-DA) models
+getSummaryDF            getSummaryDF method for PCA/(O)PLS models
+getVipVn                getVipVn method for (O)PLS(-DA) models
+getWeightMN             getWeightMN method for (O)PLS(-DA) models
+linnerud                Linnerud Dataset
+lowarp                  A multi response optimization data set (LOWARP)
+mark                    'mark' Dataset
+opls                    PCA, PLS(-DA), and OPLS(-DA)
+opls-class              Class "opls"
+oplsMultiDataSet-class
+                        Class "oplsMultiDataSet"
+plot,oplsMultiDataSet,ANY-method
+                        Plot Method for (O)PLS(-DA)
+plot_score              PCA and (O)PLS(-DA) score plots
+predict,opls-method     Predict method for (O)PLS models
+print,opls-method       Print method for 'opls' objects
+residuals               Residuals method for (O)PLS models
+ropls-package           PCA, PLS(-DA) and OPLS(-DA) for multivariate
+                        analysis and feature selection of omics data
+sacurine                Analysis of the human adult urinary metabolome
+                        variations with age, body mass index and gender
+show,opls-method        Show method for 'opls' objects
+tested                  Tested method for (O)PLS models
+toW4M                   Exporting a SummarizedExperiment or
+                        ExpressionSet instance into 3 tabulated files.
+view                    view

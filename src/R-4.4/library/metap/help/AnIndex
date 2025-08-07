@@ -1,0 +1,54 @@
+metap-package	metap-package
+albatros	albatros
+allmetap	allmetap
+beckerp	dat.metap
+chi-square (2) method	sumlog
+cholest	dat.metap
+dat.metap	dat.metap
+docontours	metap-internal
+edgington	dat.metap
+Edgington's method	sump
+Fisher's method	sumlog
+invchisq	invchisq
+invt	invt
+Lancaster's method	invchisq
+logitp	logitp
+maximump	wilkinsonp
+meanp	meanp
+meanz	meanz
+metap	metap-package
+metap-internal	metap-internal
+minimump	wilkinsonp
+mourning	dat.metap
+naep	dat.metap
+plot.truncated	truncated
+plotp	plotp
+print.allmetap	allmetap
+print.invchisq	invchisq
+print.invt	invt
+print.logitp	logitp
+print.maximump	wilkinsonp
+print.meanp	meanp
+print.meanz	meanz
+print.minimump	wilkinsonp
+print.sumlog	sumlog
+print.sump	sump
+print.sumz	sumz
+print.truncated	truncated
+print.votep	votep
+print.wilkinsonp	wilkinsonp
+rosenthal	dat.metap
+schweder	schweder
+Stouffer's method	sumz
+Sum of normals method	sumz
+sumlog	sumlog
+summary.truncated	truncated
+sump	sump
+sumz	sumz
+teachexpect	dat.metap
+Tippett's method	wilkinsonp
+truncated	truncated
+two2one	two2one
+validity	dat.metap
+votep	votep
+wilkinsonp	wilkinsonp

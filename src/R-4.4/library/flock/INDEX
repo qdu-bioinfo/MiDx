@@ -1,0 +1,4 @@
+flock-package           Process synchronization using file locks.
+is.locked               Locking/Unlocking
+lock                    Locking/Unlocking
+unlock                  Locking/Unlocking

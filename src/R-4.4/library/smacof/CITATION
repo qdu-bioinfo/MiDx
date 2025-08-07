@@ -1,0 +1,26 @@
+bibentry(bibtype="Article",
+  title   = "Multidimensional Scaling Using Majorization: SMACOF in R",
+  author = c(person(given = "Jan", family = "de Leeuw", email = "jdeleeuw@icloud.com"),
+             person(given = "Patrick", family = "Mair", email = "mair@fas.harvard.edu", comment = c(ORCID = "0000-0003-0100-6511"))),
+  journal = "Journal of Statistical Software",
+  year    = "2009",
+  page    = "1--30",
+  volume  = "31",
+  issue   = "3",
+  doi = "10.18637/jss.v031.i03",
+  mheader = "The original JSS article:"
+)
+
+bibentry(bibtype="Article",
+  title   = "Multidimensional Scaling Using Majorization: SMACOF in R",
+  author = c(person(given = "Patrick", family = "Mair", email = "mair@fas.harvard.edu", comment = c(ORCID = "0000-0003-0100-6511")),
+             person(given = "Patrick", family = "Groenen", email = "groenen@ese.eur.nl"),
+             person(given = "Jan", family = "de Leeuw", email = "jdeleeuw@icloud.com")),
+  journal = "Journal of Statistical Software",
+  year    = "2022",
+  page    = "1--47",
+  volume  = "102",
+  issue   = "10",
+  doi = "10.18637/jss.v102.i10",
+  mheader = "The most recent JSS article:"
+)

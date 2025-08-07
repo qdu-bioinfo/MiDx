@@ -1,0 +1,47 @@
+AUC                     AUC
+FBM-class               Class FBM
+FBM-methods             Methods for the FBM class
+FBM.code256-class       Class FBM.code256
+asPlotlyText            Plotly text
+as_scaling_fun          Scaling function creator
+big_SVD                 Partial SVD
+big_apply               Split-Apply-Combine
+big_colstats            Standard univariate statistics
+big_copy                Copy as a Filebacked Big Matrix
+big_cor                 Correlation
+big_counts              Counts for class FBM.code256
+big_cprodMat            Cross-product with a matrix
+big_cprodVec            Cross-product with a vector
+big_crossprodSelf       Crossprod
+big_increment           Increment an FBM
+big_parallelize         Split-parApply-Combine
+big_prodMat             Product with a matrix
+big_prodVec             Product with a vector
+big_randomSVD           Randomized partial SVD
+big_read                Read a file as FBM
+big_scale               Some scaling functions
+big_spLinReg            Sparse linear regression
+big_spLogReg            Sparse logistic regression
+big_tcrossprodSelf      Tcrossprod
+big_transpose           Transpose an FBM
+big_univLinReg          Column-wise linear regression
+big_univLogReg          Column-wise logistic regression
+big_write               Write an FBM to a file
+block_size              Determine a correct value for the block.size
+                        parameter
+covar_from_df           Numeric matrix from data frame
+get_beta                Combine sets of coefficients
+pasteLoc                Get coordinates on plot
+pcor                    Partial correlation
+plot.big_SVD            Plot method
+plot.big_sp_list        Plot method
+plot.mhtest             Plot method
+predict.big_SVD         Scores of PCA
+predict.big_sp          Predict method
+predict.big_sp_list     Predict method
+predict.mhtest          Predict method
+sub_bk                  Replace extension '.bk'
+summary.big_sp_list     Summary method
+theme_bigstatsr         Theme ggplot2
+without_downcast_warning
+                        Temporarily disable downcast warning

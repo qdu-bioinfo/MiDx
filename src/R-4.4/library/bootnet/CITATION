@@ -1,0 +1,14 @@
+citHeader("To cite bootnet in publications, please use:")
+
+bibentry(
+  bibtype = "Article",
+  title        = "Estimating Psychological Networks and their Accuracy: A Tutorial Paper",
+  author       = c("Sacha Epskamp",
+                   "Denny Borsboom",
+                   "Eiko I. Fried"),
+  journal      = "Behavior Research Methods",
+   year         = "2018",
+  volume       = "50",
+  pages        = "195--212",
+  textVersion  = "Epskamp, S., Borsboom, D., & Fried, E. I. (2018). Estimating psychological networks and their accuracy: A tutorial paper. Behavior research methods, 50, 195-212")
+

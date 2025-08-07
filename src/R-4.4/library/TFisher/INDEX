@@ -1,0 +1,43 @@
+p.soft                  CDF of soft-thresholding Fisher's p-value
+                        combination statistic under the null
+                        hypothesis.
+p.soft.omni             CDF of omnibus soft-thresholding Fisher's
+                        p-value combination statistic under the null
+                        hypothesis.
+p.tfisher               CDF of thresholding Fisher's p-value
+                        combination statistic under the null
+                        hypothesis.
+p.tfisher.omni          CDF of omnibus thresholding Fisher's p-value
+                        combination statistic under the null
+                        hypothesis.
+p.tpm                   CDF of truncated product method statistic under
+                        the null hypothesis.
+p.tpm.omni              CDF of omnibus truncated product method
+                        statistic under the null hypothesis.
+power.soft              Statistical power of soft-thresholding Fisher's
+                        p-value combination test under Gaussian mixture
+                        model.
+power.tfisher           Statistical power of thresholding Fisher's
+                        p-value combination test under Gaussian mixture
+                        model.
+power.tpm               Statistical power of truncated product method
+                        test under Gaussian mixture model.
+q.soft                  Quantile of soft-thresholding Fisher's p-value
+                        combination statistic under the null
+                        hypothesis.
+q.tfisher               Quantile of thresholding Fisher's p-value
+                        combination statistic under the null
+                        hypothesis.
+q.tpm                   Quantile of truncated product method statistic
+                        under the null hypothesis.
+stat.soft               Construct soft-thresholding Fisher's p-value
+                        combination statistic.
+stat.soft.omni          Construct omnibus soft-thresholding Fisher's
+                        p-value combination statistic.
+stat.tfisher            Construct thresholding Fisher's p-value
+                        combination statistic.
+stat.tfisher.omni       Construct omnibus thresholding Fisher's
+                        (TFisher) p-value combination statistic.
+stat.tpm                Construct truncated product method statistic.
+stat.tpm.omni           Construct omnibus truncated product method
+                        statistic.

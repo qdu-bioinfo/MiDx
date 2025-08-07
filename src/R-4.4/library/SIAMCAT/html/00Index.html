@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head><title>R: Statistical Inference of Associations between Microbial
+Communities And host phenoTypes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+<h1> Statistical Inference of Associations between Microbial
+Communities And host phenoTypes
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+</h1>
+<hr/>
+<div style="text-align: center;">
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
+</div><h2>Documentation for package &lsquo;SIAMCAT&rsquo; version 2.10.0</h2>
+
+<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+<li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
+<li><a href="../NEWS">Package NEWS</a>.</li>
+</ul>
+
+<h2>Help Pages</h2>
+
+
+<table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="SIAMCAT-package.html">SIAMCAT-package</a></td>
+<td>SIAMCAT: Statistical Inference of Associations between Microbial Communities And host phenoTypes</td></tr>
+<tr><td style="width: 25%;"><a href="add.meta.pred.html">add.meta.pred</a></td>
+<td>Add metadata as predictors</td></tr>
+<tr><td style="width: 25%;"><a href="association.plot.html">association.plot</a></td>
+<td>Visualize associations between features and classes</td></tr>
+<tr><td style="width: 25%;"><a href="associations-methods.html">associations</a></td>
+<td>Retrieve the results of association testing from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="associations-methods.html">associations-method</a></td>
+<td>Retrieve the results of association testing from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="assoc_param-methods.html">assoc_param</a></td>
+<td>Retrieve the list of parameters for association testing from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="assoc_param-methods.html">assoc_param-method</a></td>
+<td>Retrieve the list of parameters for association testing from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="assoc_param-methods.html">assoc_param_param</a></td>
+<td>Retrieve the list of parameters for association testing from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="check.associations.html">check.associations</a></td>
+<td>Calculate associations between features and labels</td></tr>
+<tr><td style="width: 25%;"><a href="check.confounders.html">check.confounders</a></td>
+<td>Check for potential confounders in the metadata</td></tr>
+<tr><td style="width: 25%;"><a href="create.data.split.html">create.data.split</a></td>
+<td>Split a dataset into training and a test sets.</td></tr>
+<tr><td style="width: 25%;"><a href="create.label.html">create.label</a></td>
+<td>Create a label list</td></tr>
+<tr><td style="width: 25%;"><a href="data_split-methods.html">data_split</a></td>
+<td>Retrieve the data split from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="data_split-methods.html">data_split-method</a></td>
+<td>Retrieve the data split from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="evaluate.predictions.html">evaluate.predictions</a></td>
+<td>Evaluate prediction results</td></tr>
+<tr><td style="width: 25%;"><a href="eval_data-methods.html">eval_data</a></td>
+<td>Retrieve the evaluation metrics from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="eval_data-methods.html">eval_data-method</a></td>
+<td>Retrieve the evaluation metrics from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="feat.crc.zeller.html">feat.crc.zeller</a></td>
+<td>Example feature matrix</td></tr>
+<tr><td style="width: 25%;"><a href="feature_type-methods.html">feature_type</a></td>
+<td>Retrieve the feature type used for model training from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="feature_type-methods.html">feature_type-method</a></td>
+<td>Retrieve the feature type used for model training from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="feature_weights-methods.html">feature_weights</a></td>
+<td>Retrieve the matrix of feature weights from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="feature_weights-methods.html">feature_weights-method</a></td>
+<td>Retrieve the matrix of feature weights from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="filter.features.html">filter.features</a></td>
+<td>Perform unsupervised feature filtering.</td></tr>
+<tr><td style="width: 25%;"><a href="filter.label.html">filter.label</a></td>
+<td>Filter the label of a SIMACAT object</td></tr>
+<tr><td style="width: 25%;"><a href="filt_params-methods.html">filt_params</a></td>
+<td>Retrieve the list of parameters for feature filtering from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="filt_params-methods.html">filt_params-method</a></td>
+<td>Retrieve the list of parameters for feature filtering from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="get.filt_feat.matrix.html">get.filt_feat.matrix</a></td>
+<td>Retrieve the filtered features from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="get.norm_feat.matrix.html">get.norm_feat.matrix</a></td>
+<td>Retrieve the normalized features from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="get.orig_feat.matrix.html">get.orig_feat.matrix</a></td>
+<td>Retrieve the original features from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="label-methods.html">label</a></td>
+<td>Retrieve the label from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="label-methods.html">label-method</a></td>
+<td>Retrieve the label from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="make.predictions.html">make.predictions</a></td>
+<td>Make predictions on a test set</td></tr>
+<tr><td style="width: 25%;"><a href="meta-methods.html">meta</a></td>
+<td>Retrieve the metadata from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="meta-methods.html">meta-method</a></td>
+<td>Retrieve the metadata from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="meta.crc.zeller.html">meta.crc.zeller</a></td>
+<td>Example metadata matrix</td></tr>
+<tr><td style="width: 25%;"><a href="model.evaluation.plot.html">model.evaluation.plot</a></td>
+<td>Model Evaluation Plot</td></tr>
+<tr><td style="width: 25%;"><a href="model.interpretation.plot.html">model.interpretation.plot</a></td>
+<td>Model Interpretation Plot</td></tr>
+<tr><td style="width: 25%;"><a href="models-methods.html">models</a></td>
+<td>Retrieve list of trained models from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="models-methods.html">models-method</a></td>
+<td>Retrieve list of trained models from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="model_type-methods.html">model_type</a></td>
+<td>Retrieve the machine learning method from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="model_type-methods.html">model_type-method</a></td>
+<td>Retrieve the machine learning method from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="normalize.features.html">normalize.features</a></td>
+<td>Perform feature normalization</td></tr>
+<tr><td style="width: 25%;"><a href="norm_params-methods.html">norm_params</a></td>
+<td>Retrieve the list of parameters for feature normalization from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="norm_params-methods.html">norm_params-method</a></td>
+<td>Retrieve the list of parameters for feature normalization from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="pred_matrix-methods.html">pred_matrix</a></td>
+<td>Retrieve the prediction matrix from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="pred_matrix-methods.html">pred_matrix-method</a></td>
+<td>Retrieve the prediction matrix from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="read.label.html">read.label</a></td>
+<td>Read label file</td></tr>
+<tr><td style="width: 25%;"><a href="select.samples.html">select.samples</a></td>
+<td>Select samples based on metadata</td></tr>
+<tr><td style="width: 25%;"><a href="SIAMCAT-package.html">SIAMCAT</a></td>
+<td>SIAMCAT: Statistical Inference of Associations between Microbial Communities And host phenoTypes</td></tr>
+<tr><td style="width: 25%;"><a href="siamcat.html">siamcat</a></td>
+<td>SIAMCAT constructor function</td></tr>
+<tr><td style="width: 25%;"><a href="siamcat-class.html">siamcat-class</a></td>
+<td>The S4 SIAMCAT class</td></tr>
+<tr><td style="width: 25%;"><a href="siamcat_example.html">siamcat_example</a></td>
+<td>SIAMCAT example</td></tr>
+<tr><td style="width: 25%;"><a href="train.model.html">train.model</a></td>
+<td>Model training</td></tr>
+<tr><td style="width: 25%;"><a href="validate.data.html">validate.data</a></td>
+<td>Validate samples in labels, features, and metadata</td></tr>
+<tr><td style="width: 25%;"><a href="volcano.plot.html">volcano.plot</a></td>
+<td>Visualize associations between features and classes as volcano plot</td></tr>
+<tr><td style="width: 25%;"><a href="weight_matrix-methods.html">weight_matrix</a></td>
+<td>Retrieve the weight matrix from a SIAMCAT object</td></tr>
+<tr><td style="width: 25%;"><a href="weight_matrix-methods.html">weight_matrix-method</a></td>
+<td>Retrieve the weight matrix from a SIAMCAT object</td></tr>
+</table>
+</div></body></html>

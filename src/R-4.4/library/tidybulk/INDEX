@@ -1,0 +1,99 @@
+X_cibersort             Cibersort reference
+adjust_abundance        Adjust transcript abundance for unwanted
+                        variation
+aggregate_duplicates    Aggregates multiple counts from the same
+                        samples (e.g., from isoforms), concatenates
+                        other character columns, and averages other
+                        numeric columns
+arrange                 Arrange rows by column values
+as_SummarizedExperiment
+                        as_SummarizedExperiment
+as_matrix               Get matrix from tibble
+bind_cols               Left join datasets
+bind_rows               Efficiently bind multiple data frames by row
+                        and column
+breast_tcga_mini_SE     Needed for vignette breast_tcga_mini_SE
+cluster_elements        Get clusters of elements (e.g., samples or
+                        transcripts)
+counts_ensembl          Counts with ensembl annotation
+deconvolve_cellularity
+                        Get cell type proportions from samples
+describe_transcript     Get DESCRIPTION from gene SYMBOL for Human and
+                        Mouse
+distinct                distinct
+ensembl_symbol_mapping
+                        Data set
+ensembl_to_symbol       Add transcript symbol column from ensembl id
+                        for human and mouse data
+fill_missing_abundance
+                        Fill transcript abundance if missing from
+                        sample-transcript pairs
+filter                  Subset rows using column values
+flybaseIDs              flybaseIDs
+get_bibliography        Produces the bibliography list of your workflow
+group_by                Group by one or more variables
+identify_abundant       find abundant transcripts
+impute_missing_abundance
+                        impute transcript abundance if missing from
+                        sample-transcript pairs
+inner_join              Inner join datasets
+keep_abundant           Keep abundant transcripts
+keep_variable           Keep variable transcripts
+log10_reverse_trans     log10_reverse_trans
+logit_trans             logit scale
+mutate                  Create, modify, and delete columns
+pivot_sample            Extract sample-wise information
+pivot_transcript        Extract transcript-wise information
+quantile_normalise_abundance
+                        Normalise by quantiles the counts of
+                        transcripts/genes
+reduce_dimensions       Dimension reduction of the transcript abundance
+                        data
+remove_redundancy       Drop redundant elements (e.g., samples) for
+                        which feature (e.g., transcript/gene)
+                        abundances are correlated
+rename                  Rename columns
+resolve_complete_confounders_of_non_interest
+                        Resolve Complete Confounders of Non-Interest
+rotate_dimensions       Rotate two dimensions (e.g., principal
+                        components) of an arbitrary angle
+rowwise                 Group input by rows
+scale_abundance         Scale the counts of transcripts/genes
+se                      SummarizedExperiment
+se_mini                 SummarizedExperiment mini for vignette
+summarise               Summarise each group to fewer rows
+symbol_to_entrez        Get ENTREZ id from gene SYMBOL
+test_differential_abundance
+                        Perform differential transcription testing
+                        using edgeR quasi-likelihood (QLT), edgeR
+                        likelihood-ratio (LR), limma-voom,
+                        limma-voom-with-quality-weights or DESeq2
+test_differential_cellularity
+                        Add differential tissue composition information
+                        to a tbl
+test_gene_enrichment    analyse gene enrichment with EGSEA
+test_gene_overrepresentation
+                        analyse gene over-representation with GSEA
+test_gene_rank          analyse gene rank with GSEA
+test_stratification_cellularity
+                        Test of stratification of biological replicates
+                        based on tissue composition, one cell-type at
+                        the time, using Kaplan-meier curves.
+tidybulk                Creates an annotated 'tidybulk' tibble from a
+                        'tbl' or 'SummarizedExperiment' object
+tidybulk_SAM_BAM        Creates a 'tt' object from a list of file names
+                        of BAM/SAM
+tximeta_summarizeToGene_object
+                        Needed for tests
+                        tximeta_summarizeToGene_object, It is
+                        SummarizedExperiment from tximeta
+unnest                  unnest
+vignette_manuscript_signature_boxplot
+                        Needed for vignette
+                        vignette_manuscript_signature_boxplot
+vignette_manuscript_signature_tsne
+                        Needed for vignette
+                        vignette_manuscript_signature_tsne
+vignette_manuscript_signature_tsne2
+                        Needed for vignette
+                        vignette_manuscript_signature_tsne2

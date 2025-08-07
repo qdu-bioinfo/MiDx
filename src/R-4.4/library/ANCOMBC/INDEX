@@ -1,0 +1,14 @@
+QMP                     Quantitative Microbiome Project data
+ancom                   Analysis of Composition of Microbiomes (ANCOM)
+ancombc                 Analysis of Compositions of Microbiomes with
+                        Bias Correction (ANCOM-BC)
+ancombc2                Analysis of Compositions of Microbiomes with
+                        Bias Correction 2 (ANCOM-BC2)
+data_sanity_check       Data Sanity and Integrity Check
+secom_dist              Sparse estimation of distance correlations
+                        among microbiomes
+secom_linear            Sparse estimation of linear correlations among
+                        microbiomes
+sim_plnm                Simulate Microbial Absolute Abundance Data by
+                        Poisson lognormal (PLN) model Based on a Real
+                        Dataset

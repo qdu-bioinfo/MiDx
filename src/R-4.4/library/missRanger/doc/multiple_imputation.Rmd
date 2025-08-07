@@ -1,0 +1,82 @@
+---
+title: "Multiple Imputation"
+date: "`r Sys.Date()`"
+bibliography: "biblio.bib"
+link-citations: true
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Multiple Imputation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+## How to use {missRanger} for multiple imputation?
+
+For statistical inference, extra variability introduced by imputation has to be accounted for. This is usually done by multiple imputation.
+
+One of the standard approaches is to impute the dataset multiple times, generating, e.g., 10 or 100 versions of the complete data. Then, the intended analysis (t-test, linear model etc.) is performed with each of the datasets. Their results are then pooled, usually by Rubin's rule [@rubin]: Parameter *estimates* are averaged. Their *variances* are avaraged as well, and corrected upwards by adding the variance of the parameter estimates across imputations.
+
+The package {mice} [@buuren] takes care of this pooling step. The creation of multiple complete data sets can be done by {mice} or also by {missRanger}. In the latter case, in order to keep the variance of imputed values at a more realistic level, we suggest to use predictive mean matching with relatively large `pmm.k` on top of the random forest imputation. 
+
+## Example
+
+```r
+library(missRanger)
+library(mice)
+
+set.seed(19)
+
+iris_NA <- generateNA(iris, p = c(0, 0.1, 0.1, 0.1, 0.1))
+
+# Generate 20 complete data sets with relatively large pmm.k
+filled <- replicate(
+  20, 
+  missRanger(iris_NA, verbose = 0, num.trees = 100, pmm.k = 10), 
+  simplify = FALSE
+)
+                           
+# Run a linear model for each of the completed data sets                          
+models <- lapply(filled, function(x) lm(Sepal.Length ~ ., x))
+
+# Pool the results by mice
+summary(pooled_fit <- pool(models))
+
+#                term   estimate std.error statistic        df      p.value
+# 1       (Intercept)  2.3343548 0.3244342  7.195157  97.08106 1.314353e-10
+# 2       Sepal.Width  0.4715273 0.1041384  4.527891  88.55776 1.848669e-05
+# 3      Petal.Length  0.7700316 0.0768588 10.018783 122.02953 1.321441e-17
+# 4       Petal.Width -0.2506538 0.1739537 -1.440922  88.10220 1.531513e-01
+# 5 Speciesversicolor -0.6648375 0.2940828 -2.260715  81.17797 2.645368e-02
+# 6  Speciesvirginica -0.9065327 0.4055137 -2.235517  79.87581 2.817491e-02
+
+# Compare with model on original data
+summary(lm(Sepal.Length ~ ., data = iris))
+
+# Coefficients:
+#                   Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)        2.17127    0.27979   7.760 1.43e-12 ***
+# Sepal.Width        0.49589    0.08607   5.761 4.87e-08 ***
+# Petal.Length       0.82924    0.06853  12.101  < 2e-16 ***
+# Petal.Width       -0.31516    0.15120  -2.084  0.03889 *  
+# Speciesversicolor -0.72356    0.24017  -3.013  0.00306 ** 
+# Speciesvirginica  -1.02350    0.33373  -3.067  0.00258 ** 
+# ---
+# Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+# 
+# Residual standard error: 0.3068 on 144 degrees of freedom
+# Multiple R-squared:  0.8673,	Adjusted R-squared:  0.8627 
+# F-statistic: 188.3 on 5 and 144 DF,  p-value: < 2.2e-16
+```
+
+As expected, inference from multiple imputation seems to be less strong than of the original data without missings.
+
+## References

@@ -1,0 +1,6 @@
+add_class	add_class
+aggregate_cells	aggregate_cells
+bind_cols	dplyr-methods
+bind_rows	dplyr-methods
+join_features	join_features
+plot_ly	plot_ly

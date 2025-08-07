@@ -1,0 +1,36 @@
+Package: Maaslin2
+Title: "Multivariable Association Discovery in Population-scale
+        Meta-omics Studies"
+Year: 2021
+Version: 1.20.0
+Authors@R: c(
+  person("Himel", "Mallick", email = "himel.stat.iitk@gmail.com", role = "aut"), 
+  person("Ali", "Rahnavard", email = "gholamali.rahnavard@gmail.com", role = "aut"),
+  person("Lauren", "McIver", email = "lauren.j.mciver@gmail.com", role = c("aut", "cre"))
+  )
+Depends: R (>= 3.6)
+Description: MaAsLin2 is comprehensive R package for efficiently determining multivariable association between clinical metadata and microbial meta'omic features. MaAsLin2 relies on general linear models to accommodate most modern epidemiological study designs, including cross-sectional and longitudinal, and offers a variety of data exploration, normalization, and transformation methods. MaAsLin2 is the next generation of MaAsLin.
+License: MIT + file LICENSE
+Imports: robustbase, biglm, pcaPP, edgeR, metagenomeSeq, pbapply, car,
+        dplyr, vegan, chemometrics, ggplot2, pheatmap, logging,
+        data.table, lmerTest, hash, optparse, grDevices, stats, utils,
+        glmmTMB, MASS, cplm, pscl, lme4, tibble
+Suggests: knitr, testthat (>= 2.1.0), rmarkdown, markdown
+VignetteBuilder: knitr
+Collate: fit.R utility_scripts.R viz.R Maaslin2.R
+URL: http://huttenhower.sph.harvard.edu/maaslin2
+biocViews: Metagenomics, Software, Microbiome, Normalization
+BugReports: https://github.com/biobakery/maaslin2/issues
+git_url: https://git.bioconductor.org/packages/Maaslin2
+git_branch: RELEASE_3_20
+git_last_commit: 1cacd4c
+git_last_commit_date: 2024-10-29
+Repository: Bioconductor 3.20
+Date/Publication: 2025-01-02
+NeedsCompilation: no
+Packaged: 2025-01-03 00:59:04 UTC; biocbuild
+Author: Himel Mallick [aut],
+  Ali Rahnavard [aut],
+  Lauren McIver [aut, cre]
+Maintainer: Lauren McIver <lauren.j.mciver@gmail.com>
+Built: R 4.4.2; ; 2025-01-03 13:36:52 UTC; windows

@@ -1,0 +1,102 @@
+Archive                 Data Storage
+ArchiveAsync            Rush Data Storage
+ArchiveAsyncFrozen      Frozen Rush Data Storage
+ArchiveBatch            Data Table Storage
+CallbackAsync           Create Asynchronous Optimization Callback
+CallbackBatch           Create Batch Optimization Callback
+Codomain                Codomain of Function
+ContextAsync            Asynchronous Optimization Context
+ContextBatch            Batch Optimization Context
+Objective               Objective Function with Domain and Codomain
+ObjectiveRFun           Objective interface with custom R function
+ObjectiveRFunDt         Objective interface for basic R functions.
+ObjectiveRFunMany       Objective Interface with Custom R Function
+OptimInstance           Optimization Instance
+OptimInstanceAsync      Optimization Instance for Asynchronous
+                        Optimization
+OptimInstanceAsyncMultiCrit
+                        Multi Criteria Optimization Instance for
+                        Asynchronous Optimization
+OptimInstanceAsyncSingleCrit
+                        Single Criterion Optimization Instance for
+                        Asynchronous Optimization
+OptimInstanceBatch      Optimization Instance for Batch Optimization
+OptimInstanceBatchMultiCrit
+                        Multi Criteria Optimization Instance for Batch
+                        Optimization
+OptimInstanceBatchSingleCrit
+                        Single Criterion Optimization Instance for
+                        Batch Optimization
+OptimInstanceMultiCrit
+                        Multi Criteria Optimization Instance for Batch
+                        Optimization
+OptimInstanceSingleCrit
+                        Single Criterion Optimization Instance for
+                        Batch Optimization
+Optimizer               Optimizer
+OptimizerAsync          Asynchronous Optimizer
+OptimizerBatch          Batch Optimizer
+Progressor              Progressor
+Terminator              Abstract Terminator Class
+as_terminator           Convert to a Terminator
+bb_optimize             Black-Box Optimization
+bbotk-package           bbotk: Black-Box Optimization Toolkit
+bbotk.async_freeze_archive
+                        Freeze Archive Callback
+bbotk.backup            Backup Archive Callback
+branin                  Branin Function
+callback_async          Create Asynchronous Optimization Callback
+callback_batch          Create Batch Optimization Callback
+is_dominated            Calculate which points are dominated
+mlr_optimizers          Dictionary of Optimizer
+mlr_optimizers_async_design_points
+                        Asynchronous Optimization via Design Points
+mlr_optimizers_async_grid_search
+                        Asynchronous Optimization via Grid Search
+mlr_optimizers_async_random_search
+                        Asynchronous Optimization via Random Search
+mlr_optimizers_chain    Run Optimizers Sequentially
+mlr_optimizers_cmaes    Optimization via Covariance Matrix Adaptation
+                        Evolution Strategy
+mlr_optimizers_design_points
+                        Optimization via Design Points
+mlr_optimizers_focus_search
+                        Optimization via Focus Search
+mlr_optimizers_gensa    Optimization via Generalized Simulated
+                        Annealing
+mlr_optimizers_grid_search
+                        Optimization via Grid Search
+mlr_optimizers_irace    Optimization via Iterated Racing
+mlr_optimizers_local_search
+                        Optimization via Local Search
+mlr_optimizers_nloptr   Optimization via Non-linear Optimization
+mlr_optimizers_random_search
+                        Optimization via Random Search
+mlr_terminators         Dictionary of Terminators
+mlr_terminators_clock_time
+                        Clock Time Terminator
+mlr_terminators_combo   Combine Terminators
+mlr_terminators_evals   Terminator that stops after a number of
+                        evaluations
+mlr_terminators_none    None Terminator
+mlr_terminators_perf_reached
+                        Performance Level Terminator
+mlr_terminators_run_time
+                        Run Time Terminator
+mlr_terminators_stagnation
+                        Terminator that stops when optimization does
+                        not improve
+mlr_terminators_stagnation_batch
+                        Terminator that stops when optimization does
+                        not improve
+mlr_terminators_stagnation_hypervolume
+                        Stagnation Hypervolume Terminator
+oi                      Syntactic Sugar for Optimization Instance
+                        Construction
+oi_async                Syntactic Sugar for Asynchronous Optimization
+                        Instance Construction
+opt                     Syntactic Sugar Optimizer Construction
+shrink_ps               Shrink a ParamSet towards a point.
+terminated_error        Termination Error
+trafo_xs                Calculate the transformed x-values
+trm                     Syntactic Sugar Terminator Construction

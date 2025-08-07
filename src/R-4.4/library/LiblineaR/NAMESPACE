@@ -1,0 +1,6 @@
+S3method(predict,LiblineaR)
+export(LiblineaR)
+export(heuristicC)
+importFrom(methods,as)
+useDynLib(LiblineaR,predictLinear)
+useDynLib(LiblineaR,trainLinear)

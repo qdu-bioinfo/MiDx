@@ -1,0 +1,732 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb}
+%\usepackage{mydef2}
+\usepackage[round]{natbib}
+\usepackage{parskip,url}
+\usepackage{graphicx,subfig}
+\setlength{\topmargin}{0cm}
+\addtolength{\textheight}{2cm}
+%\lhead{}
+%\input{title}
+%\VignetteIndexEntry{Comparison of methods in the metap package}
+\title{Comparison of methods in the \pkg{metap} package}
+\author{Michael Dewey}
+\newcommand{\pkg}[1]{\texttt{#1}}
+\newcommand{\func}[1]{\texttt{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\codefont}{\footnotesize}
+\newcommand{\mygraph}[3]{%
+\begin{figure}[htbp]
+\includegraphics[height=6cm,width=10cm]{compare-#1}
+\caption{#2}
+\label{#3}
+\end{figure}
+}
+% in mypdf fourth parameter needs []
+\newcommand{\mypdf}[4]{%
+\begin{figure}[htbp]
+\includegraphics#4{#1.pdf}
+\caption{#2}
+\label{#3}
+\end{figure}
+}
+\newcommand{\twograph}[8]{%
+\begin{figure}[htbp]
+\subfloat[#2\label{#3}]{\includegraphics[height=6cm,width=7cm]{compare-#1}}%
+\subfloat[#5\label{#6}]{\includegraphics[height=6cm,width=7cm]{compare-#4}}
+\caption{#7}
+\label{#8}
+\end{figure}
+}
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+\subsection{What is this document for?}
+
+This document describes some methods for the meta--analysis of
+$p$--values
+(significance values)
+contained in the package \pkg{metap}
+and contains comments on
+the performance of the various algorithms
+under a small number of different
+scenarios with
+hints on the choice of method.
+
+
+\subsection{Notation}
+
+The $k$ studies give rise to $p$--values,
+$p_i,\;i = 1, \dots, k$.
+These are assumed to be independent.
+We shall also need the ordered $p$--values:
+$p_{[1]} \le p_{[2]}, \dots, \le p_{[k]}$
+and weights
+$w_i,\;i = 1, \dots, k$.
+Logarithms are natural.
+A function for combining $p$--values is denoted $g$.
+The size of the test is $\alpha$.
+We may also need $k$ degrees of freedom, $\nu_i$.
+
+The methods are referred to by the name of the
+function in \func{metap}.
+Table \ref{funcs} shows other
+descriptions of each method.
+
+\begin{table}[htbp]
+\begin{tabular}{lll}
+Function name & \multicolumn{2}{c}{Description(s)} \\[1ex]
+ & \multicolumn{1}{c}{Eponym} \\
+\func{invchisq} & Lancaster's method & Inverse chi square \\
+\func{invt} & & Inverse t \\
+\func{logitp} & & Logistic\\
+\func{meanp} \\
+\func{meanz} \\
+\func{maximump} \\
+\func{minimump} & Tippett's method \\
+\func{sumlog} & Fisher's method & Chi square (2 df)\\
+\func{sump} & Edgington's method & Uniform\\
+\func{sumz} & Stouffer's method & Normal\\
+\func{truncated} & Truncated Fisher\\
+\func{truncated} & & rank--truncated\\
+\func{votep} \\
+\func{wilkinsonp} & Wilkinson's method \\
+\end{tabular}
+\caption{Methods considered in this document}
+\label{funcs}
+\end{table}
+
+\section{Theoretical results}
+
+There have been various attempts to clarify the
+problem and to discuss optimality
+of the methods.
+A detailed account was provided by
+\citet{liptak58}.
+
+\citet{birnbaum54} considered the property of
+admissibility.
+A method is admissible if when it rejects $H_0$ for
+a set of $p_i$ it will also reject $H_0$ for
+$P^*_i$ where $p^*_i \le p_i$ for all $i$.
+He considered that Fisher's and Tippett's method were admissible.
+See also \citet{owen09}.
+
+He also points out the problem
+is poorly specified.
+This may
+account for the number of methods available
+and their differing behaviour.
+The null hypothesis $H_0$ is well defined,
+that all $p_i$ have a uniform distribution on the unit interval.
+There are
+two classes of alternative hypothesis
+\begin{itemize}
+\item
+$H_A$: all $p_i$ have the same (unknown)
+non--uniform, non--increasing density,
+\item
+$H_B$:
+at least one $p_i$ has an (unknown)
+non--uniform, non--increasing density.
+\end{itemize}
+
+If all the tests being combined come from
+what are basically replicates then $H_A$ is appropriate
+whereas if they are of different kinds
+of test or different conditions
+then $H_B$ is appropriate.
+Note that Birnbaum specifically considers the
+possibility that the tests being combined may be
+very different 
+for instance some tests of means, some of variances,
+and so on.
+
+
+\section{The methods}
+
+\subsection{Comparison scenarios}
+
+To provide a standard of comparison
+we shall use the following two situations.
+Some authors have also used the case of exactly two
+$p_i$.
+
+\begin{description}
+%\subsubsection{What if all $p_i = p$?\label{twopisection}}
+\item[What if all $p_i = p$?]\label{twopisection}
+Perhaps surprisingly there are substantial differences here
+as we shall see when we look at each method.
+We shall describe how the returned value
+varies with $p$ and $k$.
+%\subsubsection{Cancellation}
+\item[Cancellation]
+When the collection of primary studies
+contains a number of values significant in both directions
+the methods can give very different results.
+If the intention of the synthesis is to examine a directional
+hypothesis one would want a method where these cancelled out.
+The decision between methods should be made on theoretical
+grounds of course.
+We shall use the following four values as our
+example.
+\end{description}
+
+{\codefont
+<<>>=
+cancel <- c(0.001, 0.001, 0.999, 0.999)
+@
+}
+
+<<echo = FALSE>>=
+library(metap)
+data(dat.metap)
+validity <- dat.metap$validity$p
+genvec <- function(pvals, kvals, fun, name) {
+   ps <- length(pvals)
+   ks <- length(kvals)
+   temp <- matrix(-1, nrow = ps, ncol = ks)
+   for(i in 1:ps)
+   for(j in 1:ks) {
+      temp[i, j] <- fun(rep(pvals[i], kvals[j]))$p
+   }
+   temp2 <- as.vector(temp)
+   res <- data.frame(method = rep(name, length(temp2)),
+      p = rep(pvals, ks),
+      k = rep(kvals, each = ps),
+      g = temp2
+   )
+   res
+}
+@
+
+
+\subsection{Methods using transformation of the $p$--values}
+
+One class of methods relies on transforming the $p$--values
+first.
+
+\begin{table}[htbp]
+\begin{tabular}{lll}
+Function name & Definition & Critical value \\[1ex]
+\func{invchisq} & $\sum_{i=1}^k \chi^2_{\nu_i}(p_i)$ & $\chi^2_{\sum{\nu_i}}(\alpha)$ \\[1ex]
+\func{invt} & $\frac{\sum_{i=1}^k t_{\nu_i}(p_i)}%
+{\sqrt{\sum_{i=1}^k \frac{\nu_i}{\nu_i - 2}}}$ & $z(\alpha)$ \\[1ex]
+\func{logitp} & $\frac{\sum_{i=1}^k \log\frac{p}{1 - p}}{C}$ & $t_{5k+4}$ \\
+ & where $C = \sqrt\frac{k \pi^2 (5 k + 2)}{3(5 k + 4)}$ & \\[1ex]
+\func{meanz} & $\frac{\bar{z}}{s_{\bar{z}}}$ & $t_{k-1}(\alpha)$ \\
+ & where $\bar{z} = \sum_{i=1}^k \frac{z(p_i)}{k}$ \\
+ & and $s_{\bar{z}} = \frac{s_z}{\sqrt{k}}$ & \\[1ex]
+\func{sumlog} & $\sum_{i=1}^{k} - 2 \log p_i$ & $\chi_{2k}(\alpha)$ \\[1ex]
+\func{sumz} & $\frac{\sum_{i=1}^k z(p_i)}{\sqrt{k}}$ & $z(\alpha)$\\
+\end{tabular}
+\caption{Definitions of methods using transformation of the $p$ values}
+\label{transdefs}
+\end{table}
+
+<<echo = FALSE>>=
+   kvals <- c(4, 5, 6, 8, 10, 15, 20)
+   pvals <- c(0.2, 0.3, 0.3679, 0.4, 0.5, 0.6)
+   dat <- rbind(
+      genvec(pvals, kvals, logitp, "logitp"),
+      genvec(pvals, kvals, meanz, "meanz"),
+      genvec(pvals, kvals, sumlog, "sumlog"),
+      genvec(pvals, kvals, sumz, "sumz")
+   )
+@
+
+<<fig=TRUE,label=transeqp,include=FALSE,echo=FALSE>>=
+   lattice::xyplot(g ~ k | method, groups = p, type = "l", data = dat,
+      auto.key = list(space = "left", lines = TRUE, title = "p"),
+      ylab = "g(p)"
+   )
+@
+
+\subsubsection{The method of summation of logs, Fisher's method}
+
+See Table \ref{transdefs} for the definition.
+This works because $- 2 \log p_i$ is a $\chi^2_2$
+and the sum of $\chi^2$ is itself a $\chi^2$
+with degrees of freedom equal to the sum of the degrees
+of freedom of the
+individual $\chi^2$.
+Of course the sum of the log of the $p_i$
+is also the log of the product of the $p_i$.
+Fisher's method \citep{fisher25} is provided in \func{sumlog}.
+
+<<echo = FALSE>>=
+set.seed(18122019)
+temp <- matrix(runif(10000), nrow = 100)
+fisher <- apply(temp, 1, function(x) sumlog(x)$p)
+lanc4 <- apply(temp, 1, function(x) invchisq(x, 4)$p)
+lanc16 <- apply(temp, 1, function(x) invchisq(x, 16)$p)
+lanc256 <- apply(temp, 1, function(x) invchisq(x, 256)$p)
+banda <- function(x, y) {
+   res <- data.frame(sum = x + y, diff = (x - y))
+   res
+}
+dat <- data.frame(rbind(banda(fisher, lanc4),
+   banda(fisher, lanc16),
+   banda(fisher, lanc256),
+   banda(lanc4, lanc16),
+   banda(lanc4, lanc256),
+   banda(lanc16, lanc256)
+   ),
+   name = factor(c(rep("FL4", 100), rep("FL16", 100),
+      rep("FL256", 100), rep("L4L16", 100),
+      rep("L4L256", 100), rep("L16L256", 100)),
+      levels = c("FL4", "FL16", "FL256", "L4L16", "L4L256", "L16L256")
+   )
+)
+@
+
+<<fig=TRUE,label=fishlanc,include=FALSE,echo=FALSE>>=
+   lattice::xyplot(diff ~ sum | name, data = dat,
+   panel = function(x, y, ...) {
+      lattice::panel.xyplot(x, y, ...)
+      lattice::panel.abline(h = mean(y), lty = 2)
+      lattice::panel.abline(h = mean(y) + 1.96 * sd(y), lty = 3)
+      lattice::panel.abline(h = mean(y) - 1.96 * sd(y), lty = 3)
+   }
+   )
+@
+
+<<echo = FALSE>>=
+stouff <- apply(temp, 1, function(x) sumz(x)$p)
+invt4 <- apply(temp, 1, function(x) invt(x, 4)$p)
+invt16 <- apply(temp, 1, function(x) invt(x, 16)$p)
+invt256 <- apply(temp, 1, function(x) invt(x, 256)$p)
+banda <- function(x, y) {
+   res <- data.frame(sum = x + y, diff = (x - y))
+   res
+}
+dat <- data.frame(rbind(banda(stouff, invt4),
+   banda(stouff, invt16),
+   banda(stouff, invt256),
+   banda(invt4, invt16),
+   banda(invt4, invt256),
+   banda(invt16, invt256)
+   ),
+   name = factor(c(rep("St4", 100), rep("St16", 100),
+      rep("St256", 100), rep("t4t16", 100),
+      rep("t4t256", 100), rep("t16t256", 100)),
+      levels = c("St4", "St16", "St256", "t4t16", "t4t256", "t16t256")
+   )
+)
+@
+
+<<fig=TRUE,label=stouffinvt,include=FALSE,echo=FALSE>>=
+lattice::xyplot(diff ~ sum | name, data = dat,
+   panel = function(x, y, ...) {
+      lattice::panel.xyplot(x, y, ...)
+      lattice::panel.abline(h = mean(y), lty = 2)
+      lattice::panel.abline(h = mean(y) + 1.96 * sd(y), lty = 3)
+      lattice::panel.abline(h = mean(y) - 1.96 * sd(y), lty = 3)
+   }
+)
+@
+
+
+As can be seen in Figure \ref{equalp}
+when all the $p_i=p$
+\func{sumlog} returns
+a value which
+decreases with $k$
+when $p<0.32$, increases with $k$
+when $p>0.37$, and in between
+increases with $k$ and then
+decreases.
+Some detailed algebra provided in a post
+to https://stats.stackexchange.com/questions/243003 by Christoph Hanck
+suggests that the breakpoint is $e^{-1} = 0.3679$.
+Where the $p_i$ are less than this then for a sufficiently
+large $k$ (several
+hundred) the result will be significant and not if above that.
+Over the range of $k$ we are plotting this bound is not
+yet closely approached.
+
+\mygraph{transeqp}{Behaviour of the methods using transformed $p$ values for $k$ values of $p=p_i$}{equalp}
+
+\subsubsection{Inverse $\chi^2$ Lancaster's method}
+
+It would of course be possible to generalise
+Fisher's method to use
+transformation to $\chi^2$ with any other number
+of degrees of freedom rather than 2.
+\citet{lancaster61} suggests that this is highly correlated
+with \func{sumlog}.
+Lancaster's method is provided in \func{invchisq}.
+In fact the resemblance to \func{sumlog} becomes
+less as the number of degrees of freedom increases.
+Figure \ref{fishlanc} shows for a small number of selected
+degrees of freedom how it compares to Fisher's method.
+
+\twograph{fishlanc}{Fisher's method and Lancaster's method}{fishlanc}{stouffinvt}{Stouffer's method and inverse $t$}{stouffinvt}{Sum and difference plots of Fisher v Lancaster and Stouffer v inverse $t$}{compfishstouff}
+
+\subsubsection{The method of summation of $z$ values, Stouffer's method}
+
+The method of summation of $z$
+values is provided in \func{sumz} \citep{stouffer49}.
+See Table \ref{transdefs} for the definition.
+As can be seen in Figure \ref{equalp}
+it returns a value for our $p_i=p$
+example which
+decreases with $k$ when $p$ below 0.5
+and increases above.
+
+A weighted version of Stouffer's method is available
+%\begin{equation}
+$\frac{\sum_{i=1}^k w_i z(p_i)}{\sqrt {\sum_{i=1}^k w_i ^ 2}}$
+%\end{equation}
+where $w_i$ are the weights.
+In the absence of effect sizes (in which case a method
+using effect sizes would be more appropriate anyway)
+best results are believed to be obtained with weights
+proportional to the square root of the sample sizes
+\citep{zaykin11} following \citet{liptak58}.
+
+
+\subsubsection{Mean of normals method}
+
+There is also a method closely related to Stouffer's using
+the mean of normals provided in \func{meanz}
+also defined in Table \ref{transdefs}
+which has very similar properties except that
+when all the $p_i$ are equal it either gives 0 or 1
+as can be seen in Figure \ref{equalp}.
+
+<<>>=
+meanz(c(0.3, 0.31))$p
+meanz(c(0.1, 0.2))$p
+@
+
+The method of \func{meanz} also
+has the unusual property
+that a set of $p$--values which are all less than those in another
+set can still give rise to a larger overall $p$.
+See example above.
+This is the only method considered here which has this
+property so if it is a desirable one then that is the only method to consider.
+
+\subsubsection{The inverse $t$ method}
+
+A closely related method is the inverse $t$ method.
+See Table \ref{transdefs} for the definition.
+This method is provided in \func{invt}.
+As is clear from the definition this method tends to
+Stouffer's method as $\nu_i \to \infty$.
+Figure \ref{stouffinvt} shows this for selected degrees of
+freedom.
+
+\subsubsection{The method of summation of logits}
+
+See Table \ref{transdefs} for the definition.
+This method is provided in \func{logitp}.
+The constant $C$ was arrived at by equating
+skewness and kurtosis with that of the $t$--distribution
+\citep{loughin04}.
+As can be seen in Figure \ref{equalp}
+this method returns a value for our $p_i=p$
+example which
+decreases with $k$ when $p$ below 0.5
+and increases above.
+
+\subsubsection{Examples for methods using transformations of the $p$ values}
+
+<<echo=FALSE>>=
+log10p <- function(x) {
+   res <- round(-log(x, base = 10), 2)
+   res
+}
+@
+\begin{table}[htbp]
+\begin{tabular}{lll}
+Function name & \multicolumn{1}{c}{validity}  & \multicolumn{1}{c}{cancel} \\
+ & \multicolumn{1}{c}{value expressed} \\
+ & \multicolumn{1}{c}{as $-\log_{10}p$}  \\[1ex]
+\func{logitp} & \Sexpr{log10p(logitp(validity)$p)} & \Sexpr{logitp(cancel)$p} \\
+\func{meanz} & \Sexpr{log10p(meanz(validity)$p)} & \Sexpr{meanz(cancel)$p} \\
+\func{sumlog} & \Sexpr{log10p(sumlog(validity)$p)} & \Sexpr{round(sumlog(cancel)$p, 5)} \\
+\func{sumz} & \Sexpr{log10p(sumz(validity)$p)} & \Sexpr{sumz(cancel)$p}\\
+\end{tabular}
+\caption{Examples of methods using transformation of the $p$ values}
+\label{transexamples}
+\end{table}
+
+Using the same example dataset which we have already plotted and our cancellation
+dataset we have the values in Table \ref{transexamples}.
+As can be seen all the methods cancel except for \func{sumlog}.
+The agreement for the validity dataset is close except
+for \func{meanz} whoch gives a value several orders of magnitude
+greater than the other three.
+Lancaster's method and inverse $t$ are not shown as they are both
+infinite families of possible methods
+and in any event are similar to Fisher's method
+and Stouffer's method respectively.
+
+\subsection{Methods using untransformed $p$--values}
+
+\begin{table}[htbp]
+\begin{tabular}{lll}
+Function name & Definition & Critical value \\[1ex]
+\func{meanp} & $\bar p = \frac{\sum_{i=1}^k p_i}{k}$ \\
+ & $z = (0.5 - \bar{p}) \sqrt{12k}$ & $z(\alpha)$ \\
+\func{minimump} & $p_{[1]}$ & $1 - (1 - \alpha)^{\frac{1}{k}}$ \\
+\func{maximump} & $p_{[k]}$ & $\alpha^k$ \\
+\func{wilkinsonp} & $p_{[r]}$ & $\sum_{s=r}^k {k \choose s}\alpha^s (1 - \alpha)^{k-s}$\\[1ex]
+\func{sump} & $\frac{(S)^k}{k!}%
+- {k \choose 1}\frac{(S - 1)^k}{k!}%
++ {k \choose 2}\frac{(S - 2)^k}{k!} - \dots$ & $\alpha$ \\
+ & where $S = \sum_{i=1}^k p_i$ \\
+\end{tabular}
+\caption{Definitions of methods not using transformation of the $p$ values, %
+the series for \func{sump} continues
+until the term in in the numerator $(S-i)$
+becomes negative}
+\label{untransdefs}
+\end{table}
+
+
+<<echo = FALSE>>=
+   kvals <- c(4, 5, 6, 8, 10, 15, 20)
+   pvals <- c(0.2, 0.3, 0.3679, 0.4, 0.5, 0.6)
+   dat <- rbind(
+      genvec(pvals, kvals, meanp, "meanp"),
+      genvec(pvals, kvals, maximump, "maximump"),
+      genvec(pvals, kvals, minimump, "minimump"),
+      genvec(pvals, kvals, sump, "sump"),
+      genvec(pvals, kvals, votep, "votep")
+   )
+@
+
+<<fig=TRUE,label=untranseqp,include=FALSE,echo=FALSE>>=
+   lattice::xyplot(g ~ k | method, groups = p, type = "l", data = dat,
+      auto.key = list(space = "left", lines = TRUE, title = "p"),
+      ylab = "g(p)"
+   )
+@
+
+\mygraph{untranseqp}{Behaviour of the methods using untransformed $p$ values for $k$ values of $p=p_i$}{unequalp}
+
+
+\subsubsection{The method of minimum $p$, maximum $p$, and Wilkinson's method}
+
+The methods of minimum $p$ \citep{tippett31}, maximum $p$ and Wilkinson \citep{wilkinson51}
+are defined in Table \ref{untransdefs}.
+Wilkinson's method depends on which value
+(the $r$th) of $p_{[i]}$ is
+selected.
+% p is pbeta(p[r], r, k+1-r)
+% critical p is qbeta(alpha, r, k+1-r)
+Wilkinson's method is provided in \func{wilkinsonp} and a
+convenience function \func{minimump}
+with its own \code{print} method is provided for
+the minimum $p$ method ($r=1$).
+It is also possible to use the method for the
+maximum $p$ (that is $r=k$) and a convenience function \func{maximump}
+is provided for that purpose.
+
+As can be seen in Figure \ref{unequalp}
+these methods return a value for our $p_i=p$
+example which
+always increases with $k$
+which is true for
+\func{minimump}
+and
+which always decreases with $k$
+which is true for
+\func{maximump}
+
+\subsubsection{The method of summation of $p$--values, Edgington's method\label{sump}}
+
+Defined in Table \ref{untransdefs}
+\citep{edgington72a}.
+This method is provided in \func{sump}.
+As can be seen in Figure \ref{unequalp}
+this method returns a value for our $p_i=p$
+example which
+decreases with $k$ when $p$ below 0.5
+and increases above.
+
+Some authors use a simpler version, $\frac{(\sum p)^k}{k!}$,
+for instance \citet{rosenthal78} in the text
+although compare his Table 4.
+This can be very conservative when
+$\sum p > 1$
+There seems no particular need to use this method but
+it is returned by \func{sump}
+as the value of \code{conservativep}
+for use in checking published values.
+
+Note also that there can be numerical problems for extreme values
+of $S$ and in that case recourse might be made to
+\func{meanp} which has similar
+properties.
+
+\subsubsection{The mean $p$ method}
+
+Defined in Table \ref{untransdefs}.
+Although this method is attributed to Edgington \citep{edgington72b}
+when the phrase Edgington's method is used
+it refers to the method of summation of $p$--values
+described above in Section \ref{sump}.
+As can be seen in Figure \ref{unequalp}
+this method returns a value for our $p_i=p$
+example which
+decreases with $k$ when $p$ below 0.5
+and increases above.
+
+Not surprisingly this method gives very similar results
+to Edington's other method implemented
+in \func{sump} and since it does not have the
+numerical problems of that method it might perhaps be preferred.
+
+\subsubsection{Examples for methods using untransformed $p$--values}
+
+Using the same example dataset which we have already plotted and our cancellation
+dataset we have the values in Table \ref{untransexamples}.
+As can be seen \func{meanp} and \func{sump} cancel but the
+other two do not.
+Agreement here is not so good especially for the maximum p method.
+Wilkinson's method not shown as it depends on the value of $r$.
+
+\begin{table}[htbp]
+\begin{tabular}{lrl}
+Function name & \multicolumn{1}{c}{validity}  & \multicolumn{1}{c}{cancel} \\
+ & \multicolumn{1}{c}{value expressed} \\
+ & \multicolumn{1}{c}{as $-\log_{10}p$}  \\[1ex]
+ \\[1ex]
+\func{minimump} & \Sexpr{log10p(minimump(validity)$p)} & \Sexpr{round(minimump(cancel)$p, 5)} \\
+\func{maximump} & \Sexpr{log10p(maximump(validity)$p)} & \Sexpr{round(maximump(cancel)$p, 5)} \\
+\func{meanp} & \Sexpr{log10p(meanp(validity)$p)} & \Sexpr{meanp(cancel)$p}\\
+\func{sump} & \Sexpr{log10p(sump(validity)$p)} & \Sexpr{sump(cancel)$p} \\
+\end{tabular}
+\caption{Examples for methods using the untransformed $p$ values}
+\label{untransexamples}
+\end{table}
+
+\subsection{Other methods}
+
+\subsubsection{The method of vote--counting}
+
+A simple way of looking at the problem is
+vote counting.
+Strictly speaking this is not a method which combines
+$p$--values in the same sense as the other methods.
+If most of the studies have produced results in favour of the
+alternative hypothesis irrespective of whether any of them is
+individually significant then that might be regarded as evidence
+for that alternative.
+The numbers for and against may be compared with what
+would be expected under the null using the binomial distribution.
+A variation on this would allow for a neutral zone of studies
+which are considered neither for nor against.
+For instance one might only
+count studies which have reached some conventional level of
+statistical significance in the two different directions.
+
+This method returns a value for our $p_i=p$
+example which
+is 1 for $p$
+values above 0.5 and otherwise invariant with $p$
+but decreases with $k$.
+This method does cancel significant values in both
+directions.
+
+\begin{table}[htbp]
+\begin{tabular}{lll}
+Function name & validity  & cancel \\[1ex]
+\func{votep} & \Sexpr{round(votep(validity)$p, 6)} &
+ \Sexpr{round(votep(cancel)$p, 5)} \\
+\end{tabular}
+\caption{Examples for vote counting}
+\label{votepexamples}
+\end{table}
+
+\subsubsection{Methods not using all $p$--values}
+
+If there is a hypothesis that the signal will be
+concentrated in only a few $p$--values then alternative methods
+are available in \func{truncated}.
+This is a wrapper to two packages available on
+CRAN: \pkg{TFisher} which provides the
+truncated Fisher method \citep{zaykin07,zhang18}
+and \pkg{mutoss} which provides
+the rank--truncated Fisher
+method \citep{dudbridge03}.
+Note that Table \ref{truncatedexamples} only shows
+results for the validity data--set as, since the
+methods explicitly only consider results in one direction
+the cancellation issue does not arise.
+
+\begin{table}[htbp]
+\begin{tabular}{lll}
+Function name & truncated at $p$ = 0.5  & truncated at rank = 5 \\[1ex]
+\func{truncated} & \Sexpr{log10p(truncated(validity, ptrunc = 0.5)$p)}
+ & \Sexpr{log10p(truncated(validity, rtrunc = 5)$p)} \\
+\end{tabular}
+\caption{Examples for truncated using the validity data--set
+ expressed as $-\log_{10}p$}
+\label{truncatedexamples}
+\end{table}
+
+These methods are appropriate for the situation where it is
+known that many of the $p$--values are noise and
+there will only be a few signals.
+
+\section{Loughin's recommendations}
+
+In his simulation study \citet{loughin04} carried out extensive comparisons.
+Note that he did not consider all the methods implemented here.
+These omissions are not too important for our purposes.
+The methods implemented here as \func{invchisq}, \func{invt},
+\func{meanp} and \func{meanz} are all very similar to ones which he did
+study.
+The truncation methods appeared about the same time as
+his work but in any case are fundamentally different.
+Vote counting is arguably not a method of the same sort.
+
+As Loghin points out
+the first thing to consider is whether large $p$--values
+should cancel small ones.
+If this is not desired then the only methods to
+consider are those in \func{sumlog} (Fisher),
+\func{minimump} (Tippett) and \func{maximump}.
+
+\mypdf{struct}{Loughin's recommendations based on structure}{struct}{[height=6cm,width=8cm]}
+
+He bases his recommendations on criteria of structure and the
+arrangement of evidence against $H_0$.
+Figure \ref{struct} shows a summary of his recommendations
+about the structure of the evidence.
+
+\mypdf{strength}{Loughin's recommendations based on where the strength of the evidence is located}{strength}{[height=8cm,width=12cm]}
+
+Figure \ref{strength} summarise his recommendations
+about the arrangement of evidence.
+
+Overall he considered the choice to lie between
+Stouffer's method, Fisher's method
+and the logistic method
+implemented in \func{logitp}.
+As has already been mentioned Fisher's method cancels
+whereas the other two do not so if the weak evidence
+in a small number of $p$--values is not to be
+over--whelmed by the others then Fisher is the
+best choice.
+However where the evidence is more evenly spread
+Stouffer's method may be preferred.
+The logistic method represents a compromise between
+them and is perhaps best suited where the pattern
+of evidence is not clear in advance.
+The other methods are not universally ruled out
+and may be helpful in the specific circumstance
+outlined in his summaries.
+
+
+\bibliography{metap}
+\bibliographystyle{plainnat}
+\end{document}
+

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Menglu Liang^1, Huang Lin^1" />
+<meta name="author" content="^1University of Maryland, College Park, MD 20742" />
+
+<meta name="date" content="2025-01-09" />
+
+<title>Tutorial on Data Sanity and Integrity Checks</title>
+
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Tutorial on Data Sanity and Integrity Checks</h1>
+<h4 class="author">Menglu Liang<span class="math inline">\(^1\)</span>, Huang Lin<span class="math inline">\(^1\)</span></h4>
+<h4 class="author"><span class="math inline">\(^1\)</span>University of Maryland, College Park, MD 20742</h4>
+<h4 class="date">January 09, 2025</h4>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">warning =</span> <span class="ot">FALSE</span>, <span class="dt">comment =</span> <span class="ot">NA</span>,</span>
+<span id="cb1-2"><a href="#cb1-2"></a>                      <span class="dt">fig.width =</span> <span class="fl">6.25</span>, <span class="dt">fig.height =</span> <span class="dv">5</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">library</span>(ANCOMBC)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<div id="introduction" class="section level1">
+<h1>1. Introduction</h1>
+<p>The <code>data_sanity_check</code> function performs essential validations on the input data to ensure its integrity before further processing. It verifies data types, confirms the structure of the input data, and checks for consistency between sample names in the metadata and the feature table, safeguarding against common data input errors.</p>
+</div>
+<div id="installation" class="section level1">
+<h1>2. Installation</h1>
+<p>Download package.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb2-2"><a href="#cb2-2"></a>    <span class="kw">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a>BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">&quot;ANCOMBC&quot;</span>)</span></code></pre></div>
+<p>Load the package.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">library</span>(ANCOMBC)</span></code></pre></div>
+</div>
+<div id="examples" class="section level1">
+<h1>3. Examples</h1>
+<div id="import-a-phyloseq-object" class="section level2">
+<h2>3.1 Import a <code>phyloseq</code> object</h2>
+<p>The HITChip Atlas dataset contains genus-level microbiota profiling with HITChip for 1006 western adults with no reported health complications, reported in <span class="citation">(Lahti et al. 2014)</span>. The dataset is available via the microbiome R package <span class="citation">(Lahti et al. 2017)</span> in phyloseq <span class="citation">(McMurdie and Holmes 2013)</span> format.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">data</span>(atlas1006, <span class="dt">package =</span> <span class="st">&quot;microbiome&quot;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>atlas1006</span></code></pre></div>
+<pre><code>phyloseq-class experiment-level object
+otu_table()   OTU Table:         [ 130 taxa and 1151 samples ]
+sample_data() Sample Data:       [ 1151 samples by 10 sample variables ]
+tax_table()   Taxonomy Table:    [ 130 taxa by 3 taxonomic ranks ]</code></pre>
+<p>List the taxonomic levels available for data aggregation.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>phyloseq<span class="op">::</span><span class="kw">rank_names</span>(atlas1006)</span></code></pre></div>
+<pre><code>[1] &quot;Phylum&quot; &quot;Family&quot; &quot;Genus&quot; </code></pre>
+<p>List the variables available in the sample metadata.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">colnames</span>(microbiome<span class="op">::</span><span class="kw">meta</span>(atlas1006))</span></code></pre></div>
+<pre><code> [1] &quot;age&quot;                   &quot;sex&quot;                   &quot;nationality&quot;          
+ [4] &quot;DNA_extraction_method&quot; &quot;project&quot;               &quot;diversity&quot;            
+ [7] &quot;bmi_group&quot;             &quot;subject&quot;               &quot;time&quot;                 
+[10] &quot;sample&quot;               </code></pre>
+<p>Data sanity and integrity check.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># With `group` variable</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>check_results =<span class="st"> </span><span class="kw">data_sanity_check</span>(<span class="dt">data =</span> atlas1006,</span>
+<span id="cb10-3"><a href="#cb10-3"></a>                                  <span class="dt">tax_level =</span> <span class="st">&quot;Family&quot;</span>,</span>
+<span id="cb10-4"><a href="#cb10-4"></a>                                  <span class="dt">fix_formula =</span> <span class="st">&quot;age + sex + bmi_group&quot;</span>,</span>
+<span id="cb10-5"><a href="#cb10-5"></a>                                  <span class="dt">group =</span> <span class="st">&quot;bmi_group&quot;</span>,</span>
+<span id="cb10-6"><a href="#cb10-6"></a>                                  <span class="dt">struc_zero =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb10-7"><a href="#cb10-7"></a>                                  <span class="dt">global =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb10-8"><a href="#cb10-8"></a>                                  <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>Checking the input data type ...</code></pre>
+<pre><code>The input data is of type: phyloseq</code></pre>
+<pre><code>PASS</code></pre>
+<pre><code>Checking the sample metadata ...</code></pre>
+<pre><code>The specified variables in the formula: age, sex, bmi_group</code></pre>
+<pre><code>The available variables in the sample metadata: age, sex, nationality, DNA_extraction_method, project, diversity, bmi_group, subject, time, sample</code></pre>
+<pre><code>PASS</code></pre>
+<pre><code>Checking other arguments ...</code></pre>
+<pre><code>The number of groups of interest is: 6</code></pre>
+<pre><code>The sample size per group is: underweight = 21, lean = 484, overweight = 197, obese = 222, severeobese = 99, morbidobese = 22</code></pre>
+<pre><code>PASS</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># Without `group` variable</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>check_results =<span class="st"> </span><span class="kw">data_sanity_check</span>(<span class="dt">data =</span> atlas1006,</span>
+<span id="cb22-3"><a href="#cb22-3"></a>                                  <span class="dt">tax_level =</span> <span class="st">&quot;Family&quot;</span>,</span>
+<span id="cb22-4"><a href="#cb22-4"></a>                                  <span class="dt">fix_formula =</span> <span class="st">&quot;age + sex + bmi_group&quot;</span>,</span>
+<span id="cb22-5"><a href="#cb22-5"></a>                                  <span class="dt">group =</span> <span class="ot">NULL</span>,</span>
+<span id="cb22-6"><a href="#cb22-6"></a>                                  <span class="dt">struc_zero =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb22-7"><a href="#cb22-7"></a>                                  <span class="dt">global =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb22-8"><a href="#cb22-8"></a>                                  <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>Checking the input data type ...</code></pre>
+<pre><code>The input data is of type: phyloseq</code></pre>
+<pre><code>PASS</code></pre>
+<pre><code>Checking the sample metadata ...</code></pre>
+<pre><code>The specified variables in the formula: age, sex, bmi_group</code></pre>
+<pre><code>The available variables in the sample metadata: age, sex, nationality, DNA_extraction_method, project, diversity, bmi_group, subject, time, sample</code></pre>
+<pre><code>PASS</code></pre>
+<pre><code>Checking other arguments ...</code></pre>
+<pre><code>PASS</code></pre>
+</div>
+<div id="import-a-tse-object" class="section level2">
+<h2>3.2 Import a <code>tse</code> object</h2>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>tse =<span class="st"> </span>mia<span class="op">::</span><span class="kw">makeTreeSummarizedExperimentFromPhyloseq</span>(atlas1006)</span></code></pre></div>
+<p>List the taxonomic levels available for data aggregation.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>mia<span class="op">::</span><span class="kw">taxonomyRanks</span>(tse)</span></code></pre></div>
+<pre><code>[1] &quot;Phylum&quot; &quot;Family&quot; &quot;Genus&quot; </code></pre>
+<p>List the variables available in the sample metadata.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="kw">colnames</span>(SummarizedExperiment<span class="op">::</span><span class="kw">colData</span>(tse))</span></code></pre></div>
+<pre><code> [1] &quot;age&quot;                   &quot;sex&quot;                   &quot;nationality&quot;          
+ [4] &quot;DNA_extraction_method&quot; &quot;project&quot;               &quot;diversity&quot;            
+ [7] &quot;bmi_group&quot;             &quot;subject&quot;               &quot;time&quot;                 
+[10] &quot;sample&quot;               </code></pre>
+<p>Data sanity and integrity check.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>check_results =<span class="st"> </span><span class="kw">data_sanity_check</span>(<span class="dt">data =</span> tse,</span>
+<span id="cb37-2"><a href="#cb37-2"></a>                                  <span class="dt">assay_name =</span> <span class="st">&quot;counts&quot;</span>,</span>
+<span id="cb37-3"><a href="#cb37-3"></a>                                  <span class="dt">tax_level =</span> <span class="st">&quot;Family&quot;</span>,</span>
+<span id="cb37-4"><a href="#cb37-4"></a>                                  <span class="dt">fix_formula =</span> <span class="st">&quot;age + sex + bmi_group&quot;</span>,</span>
+<span id="cb37-5"><a href="#cb37-5"></a>                                  <span class="dt">group =</span> <span class="st">&quot;bmi_group&quot;</span>,</span>
+<span id="cb37-6"><a href="#cb37-6"></a>                                  <span class="dt">struc_zero =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb37-7"><a href="#cb37-7"></a>                                  <span class="dt">global =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb37-8"><a href="#cb37-8"></a>                                  <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>Checking the input data type ...</code></pre>
+<pre><code>The input data is of type: TreeSummarizedExperiment</code></pre>
+<pre><code>PASS</code></pre>
+<pre><code>Checking the sample metadata ...</code></pre>
+<pre><code>The specified variables in the formula: age, sex, bmi_group</code></pre>
+<pre><code>The available variables in the sample metadata: age, sex, nationality, DNA_extraction_method, project, diversity, bmi_group, subject, time, sample</code></pre>
+<pre><code>PASS</code></pre>
+<pre><code>Checking other arguments ...</code></pre>
+<pre><code>The number of groups of interest is: 6</code></pre>
+<pre><code>The sample size per group is: underweight = 21, lean = 484, overweight = 197, obese = 222, severeobese = 99, morbidobese = 22</code></pre>
+<pre><code>PASS</code></pre>
+</div>
+<div id="import-a-matrix-or-data.frame" class="section level2">
+<h2>3.3 Import a <code>matrix</code> or <code>data.frame</code></h2>
+<p>Both abundance data and sample metadata are required for this import method.</p>
+<p>Note that aggregating taxa to higher taxonomic levels is not supported in this method. Ensure that the data is already aggregated to the desired taxonomic level before proceeding. If aggregation is needed, consider creating a <code>phyloseq</code> or <code>tse</code> object for importing.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>abundance_data =<span class="st"> </span>microbiome<span class="op">::</span><span class="kw">abundances</span>(atlas1006)</span>
+<span id="cb49-2"><a href="#cb49-2"></a>meta_data =<span class="st"> </span>microbiome<span class="op">::</span><span class="kw">meta</span>(atlas1006)</span></code></pre></div>
+<p>Ensure that the <code>rownames</code> of the metadata correspond to the <code>colnames</code> of the abundance data.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="kw">all</span>(<span class="kw">rownames</span>(meta_data) <span class="op">%in%</span><span class="st"> </span><span class="kw">colnames</span>(abundance_data))</span></code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+<p>List the variables available in the sample metadata.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="kw">colnames</span>(meta_data)</span></code></pre></div>
+<pre><code> [1] &quot;age&quot;                   &quot;sex&quot;                   &quot;nationality&quot;          
+ [4] &quot;DNA_extraction_method&quot; &quot;project&quot;               &quot;diversity&quot;            
+ [7] &quot;bmi_group&quot;             &quot;subject&quot;               &quot;time&quot;                 
+[10] &quot;sample&quot;               </code></pre>
+<p>Data sanity and integrity check.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>check_results =<span class="st"> </span><span class="kw">data_sanity_check</span>(<span class="dt">data =</span> abundance_data,</span>
+<span id="cb54-2"><a href="#cb54-2"></a>                                  <span class="dt">assay_name =</span> <span class="st">&quot;counts&quot;</span>,</span>
+<span id="cb54-3"><a href="#cb54-3"></a>                                  <span class="dt">tax_level =</span> <span class="st">&quot;Family&quot;</span>,</span>
+<span id="cb54-4"><a href="#cb54-4"></a>                                  <span class="dt">meta_data =</span> meta_data,</span>
+<span id="cb54-5"><a href="#cb54-5"></a>                                  <span class="dt">fix_formula =</span> <span class="st">&quot;age + sex + bmi_group&quot;</span>,</span>
+<span id="cb54-6"><a href="#cb54-6"></a>                                  <span class="dt">group =</span> <span class="st">&quot;bmi_group&quot;</span>,</span>
+<span id="cb54-7"><a href="#cb54-7"></a>                                  <span class="dt">struc_zero =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb54-8"><a href="#cb54-8"></a>                                  <span class="dt">global =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb54-9"><a href="#cb54-9"></a>                                  <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>Checking the input data type ...</code></pre>
+<pre><code>The input data is of type: matrix</code></pre>
+<pre><code>The imported data is in a generic &#39;matrix&#39;/&#39;data.frame&#39; format.</code></pre>
+<pre><code>PASS</code></pre>
+<pre><code>Checking the sample metadata ...</code></pre>
+<pre><code>The specified variables in the formula: age, sex, bmi_group</code></pre>
+<pre><code>The available variables in the sample metadata: age, sex, nationality, DNA_extraction_method, project, diversity, bmi_group, subject, time, sample</code></pre>
+<pre><code>PASS</code></pre>
+<pre><code>Checking other arguments ...</code></pre>
+<pre><code>The number of groups of interest is: 6</code></pre>
+<pre><code>The sample size per group is: underweight = 21, lean = 484, overweight = 197, obese = 222, severeobese = 99, morbidobese = 22</code></pre>
+<pre><code>PASS</code></pre>
+</div>
+</div>
+<div id="session-information" class="section level1">
+<h1>Session information</h1>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a><span class="kw">sessionInfo</span>()</span></code></pre></div>
+<pre><code>R version 4.4.2 (2024-10-31 ucrt)
+Platform: x86_64-w64-mingw32/x64
+Running under: Windows Server 2022 x64 (build 20348)
+
+Matrix products: default
+
+
+locale:
+[1] LC_COLLATE=C                          
+[2] LC_CTYPE=English_United States.utf8   
+[3] LC_MONETARY=English_United States.utf8
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.utf8    
+
+time zone: America/New_York
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] doRNG_1.8.6     rngtools_1.5.2  foreach_1.5.2   DT_0.33        
+ [5] lubridate_1.9.4 forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4    
+ [9] purrr_1.0.2     readr_2.1.5     tidyr_1.3.1     tibble_3.2.1   
+[13] ggplot2_3.5.1   tidyverse_2.0.0 ANCOMBC_2.8.1  
+
+loaded via a namespace (and not attached):
+  [1] splines_4.4.2                   cellranger_1.1.0               
+  [3] DirichletMultinomial_1.48.0     rpart_4.1.24                   
+  [5] lifecycle_1.0.4                 Rdpack_2.6.2                   
+  [7] doParallel_1.0.17               lattice_0.22-6                 
+  [9] MASS_7.3-64                     MultiAssayExperiment_1.32.0    
+ [11] crosstalk_1.2.1                 backports_1.5.0                
+ [13] magrittr_2.0.3                  Hmisc_5.2-1                    
+ [15] sass_0.4.9                      rmarkdown_2.29                 
+ [17] jquerylib_0.1.4                 yaml_2.3.10                    
+ [19] gld_2.6.6                       DBI_1.2.3                      
+ [21] minqa_1.2.8                     ade4_1.7-22                    
+ [23] multcomp_1.4-26                 abind_1.4-8                    
+ [25] zlibbioc_1.52.0                 expm_1.0-0                     
+ [27] Rtsne_0.17                      GenomicRanges_1.58.0           
+ [29] BiocGenerics_0.52.0             phyloseq_1.50.0                
+ [31] yulab.utils_0.1.9               nnet_7.3-20                    
+ [33] TH.data_1.1-2                   sandwich_3.1-1                 
+ [35] GenomeInfoDbData_1.2.13         IRanges_2.40.1                 
+ [37] S4Vectors_0.44.0                ggrepel_0.9.6                  
+ [39] irlba_2.3.5.1                   tidytree_0.4.6                 
+ [41] vegan_2.6-8                     rbiom_1.0.3                    
+ [43] microbiome_1.28.0               DelayedMatrixStats_1.28.1      
+ [45] permute_0.9-7                   codetools_0.2-20               
+ [47] DelayedArray_0.32.0             scuttle_1.16.0                 
+ [49] energy_1.7-12                   tidyselect_1.2.1               
+ [51] UCSC.utils_1.2.0                farver_2.1.2                   
+ [53] viridis_0.6.5                   ScaledMatrix_1.14.0            
+ [55] lme4_1.1-35.5                   gmp_0.7-5                      
+ [57] matrixStats_1.5.0               stats4_4.4.2                   
+ [59] base64enc_0.1-3                 jsonlite_1.8.9                 
+ [61] BiocNeighbors_2.0.1             multtest_2.62.0                
+ [63] e1071_1.7-16                    decontam_1.26.0                
+ [65] mia_1.14.0                      Formula_1.2-5                  
+ [67] survival_3.8-3                  scater_1.34.0                  
+ [69] iterators_1.0.14                tools_4.4.2                    
+ [71] treeio_1.30.0                   DescTools_0.99.58              
+ [73] Rcpp_1.0.13-1                   glue_1.8.0                     
+ [75] gridExtra_2.3                   SparseArray_1.6.0              
+ [77] xfun_0.50                       mgcv_1.9-1                     
+ [79] MatrixGenerics_1.18.1           GenomeInfoDb_1.42.1            
+ [81] TreeSummarizedExperiment_2.14.0 withr_3.0.2                    
+ [83] numDeriv_2016.8-1.1             fastmap_1.2.0                  
+ [85] bluster_1.16.0                  boot_1.3-31                    
+ [87] rhdf5filters_1.18.0             rsvd_1.0.5                     
+ [89] digest_0.6.37                   timechange_0.3.0               
+ [91] R6_2.5.1                        colorspace_2.1-1               
+ [93] lpSolve_5.6.23                  gtools_3.9.5                   
+ [95] generics_0.1.3                  DECIPHER_3.2.0                 
+ [97] data.table_1.16.4               class_7.3-23                   
+ [99] CVXR_1.0-15                     httr_1.4.7                     
+[101] htmlwidgets_1.6.4               S4Arrays_1.6.0                 
+[103] pkgconfig_2.0.3                 gtable_0.3.6                   
+[105] Exact_3.3                       Rmpfr_1.0-0                    
+[107] SingleCellExperiment_1.28.1     XVector_0.46.0                 
+[109] htmltools_0.5.8.1               biomformat_1.34.0              
+[111] scales_1.3.0                    Biobase_2.66.0                 
+[113] lmom_3.2                        knitr_1.49                     
+[115] rstudioapi_0.17.1               tzdb_0.4.0                     
+[117] reshape2_1.4.4                  checkmate_2.3.2                
+[119] nlme_3.1-166                    nloptr_2.1.1                   
+[121] proxy_0.4-27                    cachem_1.1.0                   
+[123] zoo_1.8-12                      rhdf5_2.50.2                   
+[125] rootSolve_1.8.2.4               vipor_0.4.7                    
+[127] parallel_4.4.2                  foreign_0.8-87                 
+[129] pillar_1.10.1                   grid_4.4.2                     
+[131] vctrs_0.6.5                     slam_0.1-55                    
+[133] BiocSingular_1.22.0             beachmat_2.22.0                
+[135] cluster_2.1.8                   beeswarm_0.4.0                 
+[137] htmlTable_2.4.3                 evaluate_1.0.1                 
+[139] mvtnorm_1.3-2                   cli_3.6.3                      
+[141] compiler_4.4.2                  rlang_1.1.4                    
+[143] crayon_1.5.3                    labeling_0.4.3                 
+[145] mediation_4.5.0                 ggbeeswarm_0.7.2               
+[147] plyr_1.8.9                      fs_1.6.5                       
+[149] stringi_1.8.4                   viridisLite_0.4.2              
+[151] BiocParallel_1.40.0             lmerTest_3.1-3                 
+[153] munsell_0.5.1                   Biostrings_2.74.1              
+[155] gsl_2.1-8                       lazyeval_0.2.2                 
+[157] Matrix_1.7-1                    hms_1.1.3                      
+[159] sparseMatrixStats_1.18.0        bit64_4.5.2                    
+[161] Rhdf5lib_1.28.0                 SummarizedExperiment_1.36.0    
+[163] haven_2.5.4                     rbibutils_2.3                  
+[165] igraph_2.1.3                    RcppParallel_5.1.9             
+[167] bslib_0.8.0                     bit_4.5.0.1                    
+[169] readxl_1.4.3                    ape_5.8-1                      </code></pre>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references">
+<div id="ref-lahti2014tipping">
+<p>Lahti, Leo, Jarkko Salojärvi, Anne Salonen, Marten Scheffer, and Willem M De Vos. 2014. “Tipping Elements in the Human Intestinal Ecosystem.” <em>Nature Communications</em> 5 (1): 1–10.</p>
+</div>
+<div id="ref-lahti2017tools">
+<p>Lahti, Leo, Sudarshan Shetty, T Blake, J Salojarvi, and others. 2017. “Tools for Microbiome Analysis in R.” <em>Version</em> 1: 10013.</p>
+</div>
+<div id="ref-mcmurdie2013phyloseq">
+<p>McMurdie, Paul J, and Susan Holmes. 2013. “Phyloseq: An R Package for Reproducible Interactive Analysis and Graphics of Microbiome Census Data.” <em>PloS One</em> 8 (4): e61217.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

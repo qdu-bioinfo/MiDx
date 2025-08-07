@@ -1,0 +1,40 @@
+MultiDataSet            MultiDataSet: Implementation of the BRGE's
+                        basic classes
+MultiDataSet-class      MultiDataSet instances
+ResultSet               Class ResultSet
+add_eset                Method to add an 'eSet' to 'MultiDataSet'.
+add_genexp              Method to add an expression microarray dataset
+                        to 'MultiDataSet'.
+add_methy               Method to add a slot of methylation to
+                        'MultiDataSet'.
+add_rnaseq              Method to add an expression RNA seq dataset to
+                        'MultiDataSet'.
+add_rse                 Method to add a 'RangedSummarizedExperiment' to
+                        'MultiDataSet'.
+add_se                  Method to add a 'SummarizedExperiment' to
+                        'MultiDataSet'.
+add_snps                Method to add a slot of SNPs to 'MultiDataSet'.
+add_table               Method to add a 'matrix' to 'MultiDataSet'.
+chrNumToChar            Convert chr numbers to chr strings
+commonIds               Get the name of the ids common to all datasets
+commonSamples           Method to select samples that are present in
+                        all datasets.
+getAssociation          Method to extrat feature result from a
+                        ResultSet
+lambdaClayton           Lambda Calculation for a vector of P-Values
+mae2mds                 Convert a 'MultiAssayExperiment' to a
+                        'MultiDataSet'
+mds2mae                 Convert a 'MultiDataSet' to a
+                        'MultiAssayExperiment'
+opt                     Method to get the options sued to create the
+                        ResultSet
+qq_plot                 Function to draw a QQ Plot from a vector of
+                        numbers
+rowRangesElements       Get the name of the datasets that have
+                        rowRanges
+rset                    Example 'ResultSet'
+volcano_plot            Function to draw a Volcano Plot
+w_iclusterplus          Apply iClusterPlus clustering method to a
+                        MultiDataSet object
+w_mcia                  Apply mcia integration method to a MultiDataSet
+                        object

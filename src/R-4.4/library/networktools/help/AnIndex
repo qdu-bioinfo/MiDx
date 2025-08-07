@@ -1,0 +1,16 @@
+networktools-package	networktools-package
+assumptionCheck	assumptionCheck
+bridge	bridge
+coerce_to_adjacency	coerce_to_adjacency
+depression	depression
+EIGENnet	EIGENnet
+expectedInf	expectedInf
+goldbricker	goldbricker
+MDSnet	MDSnet
+networktools	networktools-package
+net_reduce	net_reduce
+PCAnet	PCAnet
+plot.bridge	plot.bridge
+plot.expectedInf	plot.expectedInf
+PROCRUSTESnet	PROCRUSTESnet
+social	social

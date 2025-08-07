@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head><title>R: Implementation of MultiDataSet and ResultSet</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+<h1> Implementation of MultiDataSet and ResultSet
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+</h1>
+<hr/>
+<div style="text-align: center;">
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
+</div><h2>Documentation for package &lsquo;MultiDataSet&rsquo; version 1.34.0</h2>
+
+<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+<li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
+<li><a href="../NEWS">Package NEWS</a>.</li>
+</ul>
+
+<h2>Help Pages</h2>
+
+
+<table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="add_eset.html">add_eset</a></td>
+<td>Method to add an 'eSet' to 'MultiDataSet'.</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">add_eset-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="add_genexp.html">add_genexp</a></td>
+<td>Method to add an expression microarray dataset to 'MultiDataSet'.</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">add_genexp-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="add_methy.html">add_methy</a></td>
+<td>Method to add a slot of methylation to 'MultiDataSet'.</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">add_methy-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="add_rnaseq-methods.html">add_rnaseq</a></td>
+<td>Method to add an expression RNA seq dataset to 'MultiDataSet'.</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">add_rnaseq-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="add_rse.html">add_rse</a></td>
+<td>Method to add a 'RangedSummarizedExperiment' to 'MultiDataSet'.</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">add_rse-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="add_se.html">add_se</a></td>
+<td>Method to add a 'SummarizedExperiment' to 'MultiDataSet'.</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">add_se-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="add_snps.html">add_snps</a></td>
+<td>Method to add a slot of SNPs to 'MultiDataSet'.</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">add_snps-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="add_table.html">add_table</a></td>
+<td>Method to add a 'matrix' to 'MultiDataSet'.</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">add_table-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">as.list</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">as.list-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">assayData</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">assayData-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="chrNumToChar.html">chrNumToChar</a></td>
+<td>Convert chr numbers to chr strings</td></tr>
+<tr><td style="width: 25%;"><a href="commonIds.html">commonIds</a></td>
+<td>Get the name of the ids common to all datasets</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">commonIds-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="commonSamples.html">commonSamples</a></td>
+<td>Method to select samples that are present in all datasets.</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">commonSamples-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">createMultiDataSet</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="ResultSet-class.html">create_resultset</a></td>
+<td>Class ResultSet</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">dims</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">dims-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">fData</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">fData-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="ResultSet-class.html">fData-method</a></td>
+<td>Class ResultSet</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">featureData</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">featureData-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="getAssociation-methods.html">getAssociation</a></td>
+<td>Method to extrat feature result from a ResultSet</td></tr>
+<tr><td style="width: 25%;"><a href="ResultSet-class.html">getAssociation-method</a></td>
+<td>Class ResultSet</td></tr>
+<tr><td style="width: 25%;"><a href="lambdaClayton.html">lambdaClayton</a></td>
+<td>Lambda Calculation for a vector of P-Values</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">length</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">length-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="ResultSet-class.html">length-method</a></td>
+<td>Class ResultSet</td></tr>
+<tr><td style="width: 25%;"><a href="mae2mds.html">mae2mds</a></td>
+<td>Convert a 'MultiAssayExperiment' to a 'MultiDataSet'</td></tr>
+<tr><td style="width: 25%;"><a href="mds2mae.html">mds2mae</a></td>
+<td>Convert a 'MultiDataSet' to a 'MultiAssayExperiment'</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet.html">MultiDataSet</a></td>
+<td>MultiDataSet: Implementation of the BRGE's basic classes</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">MultiDataSet-class</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">MultiDataSet-methods</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">MultiDataSet-methods,</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">names</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">names-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="ResultSet-class.html">names-method</a></td>
+<td>Class ResultSet</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">ncol</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">ncol-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">nrow</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">nrow-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="opt-methods.html">opt</a></td>
+<td>Method to get the options sued to create the ResultSet</td></tr>
+<tr><td style="width: 25%;"><a href="ResultSet-class.html">opt-method</a></td>
+<td>Class ResultSet</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">pData</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">pData-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">phenoData</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">phenoData-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="ResultSet-class.html">plot-method</a></td>
+<td>Class ResultSet</td></tr>
+<tr><td style="width: 25%;"><a href="qq_plot.html">qq_plot</a></td>
+<td>Function to draw a QQ Plot from a vector of numbers</td></tr>
+<tr><td style="width: 25%;"><a href="ResultSet-class.html">ResultSet</a></td>
+<td>Class ResultSet</td></tr>
+<tr><td style="width: 25%;"><a href="ResultSet-class.html">ResultSet-class</a></td>
+<td>Class ResultSet</td></tr>
+<tr><td style="width: 25%;"><a href="ResultSet-class.html">ResultSet-methods</a></td>
+<td>Class ResultSet</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">rowRanges</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">rowRanges-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="rowRangesElements.html">rowRangesElements</a></td>
+<td>Get the name of the datasets that have rowRanges</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">rowRangesElements-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="rset.html">rset</a></td>
+<td>Example 'ResultSet'</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">sampleNames-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">subset-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="ResultSet-class.html">varLabels-method</a></td>
+<td>Class ResultSet</td></tr>
+<tr><td style="width: 25%;"><a href="volcano_plot.html">volcano_plot</a></td>
+<td>Function to draw a Volcano Plot</td></tr>
+<tr><td style="width: 25%;"><a href="w_iclusterplus.html">w_iclusterplus</a></td>
+<td>Apply iClusterPlus clustering method to a MultiDataSet object</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">w_iclusterplus-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="w_mcia.html">w_mcia</a></td>
+<td>Apply mcia integration method to a MultiDataSet object</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">w_mcia-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">[</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">[-method</a></td>
+<td>MultiDataSet instances</td></tr>
+<tr><td style="width: 25%;"><a href="MultiDataSet-class.html">[[-method</a></td>
+<td>MultiDataSet instances</td></tr>
+</table>
+</div></body></html>

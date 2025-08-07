@@ -1,0 +1,7 @@
+flock-package	flock-package
+flock	flock-package
+is.locked	is.locked
+is.locked,FileLock-method	is.locked
+lock	lock
+unlock	unlock
+unlock,FileLock-method	unlock

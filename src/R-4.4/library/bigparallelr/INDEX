@@ -1,0 +1,10 @@
+assert_cores            Check number of cores
+get_blas_ncores         Number of cores used by BLAS (matrix
+                        computations)
+nb_cores                Recommended number of cores to use
+plus                    Add
+register_parallel       Register parallel
+split_costs             Split costs in blocks
+split_len               Split length in blocks
+split_parapply          Split-parApply-Combine
+split_vec               Split object in blocks

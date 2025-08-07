@@ -1,0 +1,30 @@
+autofacet               automatically split barplot or dotplot into
+                        several facets
+barplot.enrichResult    barplot
+cnetplot.enrichResult   cnetplot
+color_palette           color_palette
+dotplot                 dotplot
+dotplot2                dotplot2
+emapplot                emapplot
+fortify.compareClusterResult
+                        fortify
+geom_gsea_gene          geom_gsea_gene
+ggtable                 ggtable
+goplot                  goplot
+gsInfo                  gsInfo
+gseadist                gseadist
+gseaplot                gseaplot
+gseaplot2               gseaplot2
+gsearank                gsearank
+heatplot                heatplot
+hplot                   hplot
+pairwise_termsim        pairwise_termsim
+plotting.clusterProfile
+                        plotting-clusterProfile
+pmcplot                 pmcplot
+ridgeplot               ridgeplot
+set_enrichplot_color    set_enrichplot_color
+ssplot                  ssplot
+treeplot                treeplot
+upsetplot               upsetplot method
+volplot                 volplot

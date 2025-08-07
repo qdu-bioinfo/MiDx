@@ -1,0 +1,28 @@
+digraph test {
+   rankdir = "LR"
+   fontname = "Helvetica"
+   node[fontname = "Helvetica"]
+   edge[fontname = "Helvetica"]
+     structure [label = "What\nis\nstructure?",  shape=diamond]
+     small  [label = <
+         <TABLE BORDER = "0">
+         <TR><TD ALIGN = "LEFT"><B>sumlog</B></TD><TD> (Fisher)</TD></TR>
+         <TR><TD><B>minimump</B></TD><TD> (Tippett)</TD></TR>
+         </TABLE>
+     >]
+     large  [label = <
+         <TABLE BORDER = "0">
+         <TR><TD ALIGN = "LEFT"><B>sump</B></TD><TD> (Edgington)</TD></TR>
+         <TR><TD><B>maximump</B></TD></TR>
+         </TABLE>
+     >]
+     equal  [label = <
+         <TABLE BORDER = "0">
+         <TR><TD ALIGN = "LEFT"><B>sumz</B></TD><TD> (Stouffer)</TD></TR>
+         <TR><TD><B>logitp</B></TD></TR>
+         </TABLE>
+     >]
+    structure -> small [label = "Emphasise small p-values"]
+    structure -> large [label = "Emphasise large p-values"]
+    structure -> equal [label = "Emphasise p-values equally"]
+}

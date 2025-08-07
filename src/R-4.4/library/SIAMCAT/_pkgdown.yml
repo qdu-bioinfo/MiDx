@@ -1,0 +1,119 @@
+# url: http://siamcat.embl.de
+
+title: SIAMCAT
+
+destination: ../website
+
+template:
+    params:
+        bootswatch: cosmo
+    path: inst/templates
+
+navbar:
+  title: "SIAMCAT"
+  left:
+    - text: "Get Started"
+      href: articles/SIAMCAT_vignette.html
+    - text: "Vignettes"
+      menu:
+          - text: "Introduction to SIAMCAT"
+            href: articles/SIAMCAT_vignette.html
+          - text: "SIAMCAT example with confounders"
+            href: articles/SIAMCAT_confounder.html
+          - text: "Holdout testing with SIAMCAT"
+            href: articles/SIAMCAT_holdout.html
+          - text: "SIAMCAT machine learning meta-analysis"
+            href: articles/SIAMCAT_meta.html
+          - text: "Machine learning pitfalls"
+            href: articles/SIAMCAT_ml_pitfalls.html
+          - text: "SIAMCAT input formats"
+            href: articles/SIAMCAT_read-in.html
+    - text: "Functions"
+      href: reference/index.html
+    - text: "News"
+      href: news/index.html
+  right:
+   - icon: fa-twitter
+     href: https://twitter.com/siamcat_dev
+   - icon: fa-github
+     href: https://github.com/zellerlab/siamcat
+
+home:
+  sidebar:
+   structure: [links, license, dev, citation, custom]
+   components:
+     links:
+         title: Links
+         text:
+             - "The source code is available on Github: <a href=https://github.com/zellerlab/siamcat>https://github.com/zellerlab/siamcat</a>"
+             - "SIAMCAT is part of the EMBL microbiome tools</a>. Find out more here: <a href=https://microbiome-tools.embl.de>https://microbiome-tools.embl.de</a>"
+             - "<a href=https://microbiome-tools.embl.de> <img src='man/figures/embl_microbiome_tools_logo.png' width=50% height=auto/> </a>"
+     custom:
+       title: Funding
+       text:
+           - "We are grateful for funding from the Federal Ministry of Education and Research (BMBF):\n"
+           - "<a href=https://www.bmbf.de> <img src='man/figures/BMBF.png' width=50% height=auto/> </a>"
+           - "\nSIAMCAT is also part of the de.NBI infrastructure:\n"
+           - "<a href=https://www.denbi.de> <img src='man/figures/denbi.png' width=50% height=auto/> </a>"
+
+reference:
+    - title: Main Functions
+      desc: Functions that provide the main workflow of the package.
+      contents:
+      - check.associations
+      - filter.features
+      - create.data.split
+      - normalize.features
+      - train.model
+      - make.predictions
+      - evaluate.predictions
+    - title: Plots
+      desc: "Functions to produce the major visual output, i.e. the model
+      evaluation and model interpretation plot"
+      contents:
+      - check.confounders
+      - model.evaluation.plot
+      - model.interpretation.plot
+    - title: Miscellaneous
+      desc: "Other functions for general data manipulation (some of them are
+      probably mostly for internal use)"
+      contents:
+      - summarize.features
+      - filter.label
+      - select.samples
+      - add.meta.pred
+      - create.label
+      - validate.data
+      - read.label
+    - title: SIAMCAT class
+      desc: The SIAMCAT class and the constructor function
+      contents:
+      - siamcat-class
+      - siamcat
+      - SIAMCAT-package
+    - title: Accessor functions
+      desc: Functions to retrieve information out of the SIAMCAT object
+      contents:
+      - label
+      - meta
+      - get.orig_feat.matrix
+      - associations
+      - assoc_param
+      - filt_params
+      - get.filt_feat.matrix
+      - data_split
+      - norm_params
+      - get.norm_feat.matrix
+      - models
+      - model_type
+      - feature_type
+      - feature_weights
+      - weight_matrix
+      - pred_matrix
+      - eval_data
+    - title: Included data
+      desc: Data included in the package
+      contents:
+      - feat.crc.zeller
+      - meta.crc.zeller
+      - siamcat_example

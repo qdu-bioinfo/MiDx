@@ -1,0 +1,39 @@
+Package: annotate
+Title: Annotation for microarrays
+Version: 1.84.0
+Author: R. Gentleman
+Authors@R: c(
+        person("Jeff", "Gentry", role = "aut"),
+        person("Kritika", "Verma", role = "ctb",
+                comment = "Converted chromLOC vignette from Sweave to RMarkdown / HTML."),
+        person("Manvi", "Yaduvanshi", role = "ctb",
+                comment = "Converted useDataPkgs vignette from Sweave to RMarkdown / HTML."),
+        person("Bioconductor Package Maintainer",
+                email = "maintainer@bioconductor.org", role = "cre"))
+Description: Using R enviroments for annotation.
+Depends: R (>= 2.10), AnnotationDbi (>= 1.27.5), XML
+Imports: Biobase, DBI, xtable, graphics, utils, stats, methods,
+        BiocGenerics (>= 0.13.8), httr
+Suggests: hgu95av2.db, genefilter, Biostrings (>= 2.25.10), IRanges,
+        rae230a.db, rae230aprobe, tkWidgets, GO.db, org.Hs.eg.db,
+        org.Mm.eg.db, humanCHRLOC, Rgraphviz, RUnit, BiocStyle, knitr
+VignetteBuilder: knitr
+License: Artistic-2.0
+LazyLoad: yes
+Collate: AllGenerics.R ACCNUMStats.R Amat.R AnnMaps.R chromLocation.R
+        compatipleVersions.R findNeighbors.R getData.R getPMInfo.R
+        getSeq4ACC.R GOhelpers.R homoData.R html.R isValidKey.R
+        LL2homology.R pmid2MIAME.R probesByLL.R pubMedAbst.R query.R
+        readGEOAnn.R serializeEnv.R blastSequences.R zzz.R
+        test_annotate_package.R
+biocViews: Annotation, Pathways, GO
+Packaged: 2024-10-30 01:06:12 UTC; biocbuild
+git_url: https://git.bioconductor.org/packages/annotate
+git_branch: RELEASE_3_20
+git_last_commit: 6188ffb
+git_last_commit_date: 2024-10-29
+Repository: Bioconductor 3.20
+Date/Publication: 2024-10-29
+NeedsCompilation: no
+Maintainer: Bioconductor Package Maintainer <maintainer@bioconductor.org>
+Built: R 4.4.1; ; 2024-10-30 15:24:38 UTC; windows

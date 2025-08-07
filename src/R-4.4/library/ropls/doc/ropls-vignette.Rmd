@@ -1,0 +1,1060 @@
+---
+title: "*ropls*: PCA, PLS(-DA) and OPLS(-DA) for multivariate analysis and feature selection of omics data"
+author: "Etienne A. Thevenot"
+date: "`r doc_date()`"
+package: "`r pkg_ver('ropls')`"
+vignette: >
+  %\VignetteIndexEntry{ropls-vignette}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteKeywords{Regression, Classification, PrincipalComponent, Transcriptomics, Proteomics, Metabolomics, Lipidomics, MassSpectrometry}
+  %\VignetteEngine{knitr::rmarkdown}
+bibliography: "ropls-vignette.bib"
+output:
+  BiocStyle::html_document:
+    fig_caption: yes
+    toc: yes
+    toc_depth: 4
+    toc_float:
+      collapsed: false
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width = 6,
+                      fig.height = 6,
+                      fig.path = 'figures/')
+```
+
+# The *ropls* package
+
+The
+[`ropls`](http://bioconductor.org/packages/release/bioc/html/ropls.html)
+R package implements the **PCA**, **PLS(-DA)** and **OPLS(-DA)**
+approaches with the original, **NIPALS**-based, versions of the
+algorithms [@Wold2001; @Trygg2002]. It includes the **R2** and **Q2**
+quality metrics [@Eriksson2001; @Tenenhaus1998], the permutation
+**diagnostics** [@Szymanska2012], the computation of the **VIP** values
+[@Wold2001], the score and orthogonal distances to detect **outliers**
+[@Hubert2005], as well as many **graphics** (scores, loadings,
+predictions, diagnostics, outliers, etc).
+
+# Context
+
+## Orthogonal Partial Least-Squares
+
+**Partial Least-Squares (PLS)**, which is a latent variable regression
+method based on covariance between the predictors and the response, has
+been shown to efficiently handle datasets with multi-collinear
+predictors, as in the case of spectrometry measurements [@Wold2001].
+More recently, @Trygg2002 introduced the **Orthogonal Partial
+Least-Squares (OPLS)** algorithm to model separately the variations of
+the predictors correlated and orthogonal to the response.
+
+OPLS has a similar predictive capacity compared to PLS and improves the
+**interpretation** of the predictive components and of the systematic
+variation [@Pinto2012a]. In particular, OPLS modeling of single
+responses only requires one predictive component.
+
+**Diagnostics** such as the **Q2Y** metrics and permutation testing are
+of high importance to **avoid overfitting** and assess the statistical
+significance of the model. The **Variable Importance in Projection
+(VIP)**, which reflects both the loading weights for each component and
+the variability of the response explained by this component
+[@Pinto2012a; @Mehmood2012], can be used for feature selection
+[@Trygg2002; @Pinto2012a].
+
+## OPLS software
+
+OPLS is available in the **SIMCA-P** commercial software (Umetrics,
+Umea, Sweden; @Eriksson2001). In addition, the kernel-based version of
+OPLS [@Bylesjo2008a] is available in the open-source R statistical
+environment [@RCoreTeam2016], and a single implementation of the linear
+algorithm in R has been described [@Gaude2013].
+
+# The *sacurine* metabolomics dataset
+
+The *sacurine* metabolomics dataset will be used as a case study to
+describe the features from the **ropls** pacakge.
+
+## Study objective
+
+The objective was to study the influence of **age**, **body mass index
+(bmi)**, and **gender** on metabolite concentrations in **urine**, by
+analysing 183 samples from a **cohort** of adults with liquid
+chromatography coupled to high-resolution mass spectrometry
+(**LC-HRMS**; @Thevenot2015).
+
+## Pre-processing and annotation
+
+Urine samples were analyzed by using an LTQ Orbitrap in the negative
+ionization mode. A total of **109 metabolites** were identified or
+annotated at the MSI level 1 or 2. After retention time alignment with
+XCMS, peaks were integrated with Quan Browser. Signal drift and batch
+effect were corrected, and each urine profile was normalized to the
+osmolality of the sample. Finally, the data were log10 transformed
+[@Thevenot2015].
+
+## Covariates
+
+The volunteers' **`age`**, **body mass index (`bmi`)**, and **`gender`**
+were recorded.
+
+# Hands-on
+
+## Loading
+
+We first load the
+[`ropls`](http://bioconductor.org/packages/release/bioc/html/ropls.html)
+package:
+
+```{r load, message = FALSE}
+library(ropls)
+```
+
+We then load the **`sacurine`** dataset which contains:
+
+1.  The **`dataMatrix`** matrix of numeric type containing the intensity
+    profiles (log10 transformed),
+
+2.  The **`sampleMetadata`** data frame containg sample metadata,
+
+3.  The **`variableMetadata`** data frame containg variable metadata
+
+```{r sacurine, message = FALSE}
+data(sacurine)
+names(sacurine)
+```
+
+We display a summary of the
+content of the **dataMatrix**, **sampleMetadata** and
+**variableMetadata** with the `view` method from the
+[ropls](http://bioconductor.org/packages/release/bioc/html/ropls.html)
+package:
+
+```{r strF}
+view(sacurine$dataMatrix)
+view(sacurine$sampleMetadata)
+view(sacurine$variableMetadata)
+```
+
+Note:
+
+1.  the `view` method applied to a numeric matrix also generates a
+    graphical display
+
+2.  the `view` method can also be applied to an ExpressionSet object
+    (see below)
+
+## Principal Component Analysis (PCA)
+
+We perform a **PCA** on the **dataMatrix** matrix (samples as rows,
+variables as columns), with the `opls` method:
+
+```{r pca_code, eval = FALSE}
+sacurine.pca <- opls(sacurine$dataMatrix)
+```
+
+A **summary** of the model (8 components were selected) is printed:
+
+```{r pca_result, echo = FALSE}
+sacurine.pca <- opls(sacurine$dataMatrix, fig.pdfC = "none")
+```
+
+In addition the default **summary** figure is displayed:
+
+```{r pca_figure, echo = FALSE, fig.show = 'hold'}
+plot(sacurine.pca)
+```
+
+**Figure 1: PCA summary plot.** **Top left** `overview`: the **scree**
+plot (i.e., inertia barplot) suggests that 3 components may be
+sufficient to capture most of the inertia; **Top right** `outlier`: this
+graphics shows the distances within and orthogonal to the projection
+plane [@Hubert2005]: the name of the samples with a high value for at
+least one of the distances are indicated (see the Comments section for the code used to compute these metrics and the thresholds); **Bottom left** `x-score`: the
+variance along each axis equals the variance captured by each component:
+it therefore depends on the total variance of the dataMatrix *X* and of
+the percentage of this variance captured by the component (indicated in
+the labels); it decreases when going from one component to a component
+with higher indice; **Bottom right** `x-loading`: the 3 variables with
+most extreme values (positive and negative) for each loading are black
+colored and labeled.
+
+Note:
+
+1.  Since **dataMatrix** does not contain missing value, the singular
+    value decomposition was used by default; NIPALS can be selected with
+    the `algoC` argument specifying the *algo*rithm (*C*haracter),
+
+2.  The `predI = NA` default number of *pred*ictive components
+    (*I*nteger) for PCA means that components (up to 10) will be
+    computed until the cumulative variance exceeds 50%. If the 50% have
+    not been reached at the 10th component, a warning message will be
+    issued (you can still compute the following components by specifying
+    the `predI` value).
+
+Let us see if we notice any partition according to gender, by
+labeling/coloring the samples according to *gender* (`parAsColFcVn`) and
+drawing the Mahalanobis ellipses for the male and female subgroups
+(`parEllipseL`).
+
+```{r pca-col}
+genderFc <- sacurine$sampleMetadata[, "gender"]
+plot(sacurine.pca,
+     typeVc = "x-score",
+     parAsColFcVn = genderFc)
+```
+
+**Figure 2: PCA score plot colored according to gender.**
+
+Note:
+
+1.  The plotting *par*ameter to be used *As* *Col*ors (*F*actor of
+    *c*haracter type or *V*ector of *n*umeric type) has a length equal
+    to the number of rows of the **dataMatrix** (ie of samples) and that
+    this qualitative or quantitative variable is converted into colors
+    (by using an internal palette or color scale, respectively). We
+    could have visualized the *age* of the individuals by specifying
+    `parAsColFcVn = sampleMetadata[, "age"]`.
+
+2.  The displayed components can be specified with `parCompVi` (plotting
+    *par*ameter specifying the *Comp*onents: *V*ector of 2 *i*ntegers)
+
+3.  The labels and the color palette can be personalized with the
+    `parLabVc` and `parPaletteVc` parameters, respectively:
+
+```{r pca-col-personalized}
+plot(sacurine.pca,
+     typeVc = "x-score",
+     parAsColFcVn = genderFc,
+     parLabVc = as.character(sacurine$sampleMetadata[, "age"]),
+     parPaletteVc = c("green4", "magenta"))
+```
+
+
+## Partial least-squares: PLS and PLS-DA
+
+For **PLS (and OPLS)**, the **Y** response(s) must be provided to the
+`opls` method. **Y** can be either a numeric vector (respectively
+matrix) for single (respectively multiple) **(O)PLS regression**, or a
+character factor for **(O)PLS-DA classification** as in the following
+example with the *gender* qualitative response:
+
+```{r plsda}
+sacurine.plsda <- opls(sacurine$dataMatrix, genderFc)
+```
+
+**Figure 3: PLS-DA model of the gender response.** **Top left**:
+`inertia` barplot: the graphic here suggests that 3 orthogonal
+components may be sufficient to capture most of the inertia; **Top
+right**: `significance` diagnostic: the **R2Y** and **Q2Y** of the model
+are compared with the corresponding values obtained after random
+permutation of the *y* response; **Bottom left**: `outlier` diagnostics;
+**Bottom right**: `x-score` plot: the number of components and the
+cumulative **R2X**, **R2Y** and **Q2Y** are indicated below the plot.
+
+Note:
+
+1.  When set to NA (as in the default), **the number of components**
+    `predI` is determined automatically as follows [@Eriksson2001]: A
+    new component *h* is added to the model if:
+
+-   $R2Y_h \geq 0.01$, i.e., the percentage of **Y** dispersion (i.e.,
+    sum of squares) explained by component *h* is more than 1 percent,
+    and
+
+-   $Q2Y_h=1-PRESS_h/RSS_{h-1} \geq 0$ for PLS (or 5% when the number of
+    samples is less than 100) or 1% for OPLS: $Q2Y_h \geq 0$ means that
+    the predicted residual sum of squares ($PRESS_h$) of the model
+    including the new component *h* estimated by 7-fold cross-validation
+    is less than the residual sum of squares ($RSS_{h-1}$) of the model
+    with the previous components only (with $RSS_0$ being the sum of
+    squared **Y** values).
+
+2.  The **predictive performance** of the full model is assessed by the
+    cumulative **Q2Y** metric: $Q2Y=1-\prod\limits_{h=1}^r (1-Q2Y_h)$.
+    We have $Q2Y \in [0,1]$, and the higher the **Q2Y**, the better the
+    performance. Models trained on datasets with a larger number of
+    features compared with the number of samples can be prone to
+    **overfitting**: in that case, high **Q2Y** values are obtained by
+    chance only. To estimate the significance of **Q2Y** (and **R2Y**)
+    for single response models, permutation testing [@Szymanska2012] can
+    be used: models are built after random permutation of the **Y**
+    values, and $Q2Y_{perm}$ are computed. The *p*-value is equal to the
+    proportion of $Q2Y_{perm}$ above $Q2Y$ (the **default number of
+    permutations is 20** as a compromise between quality control and
+    computation speed; it can be increased with the `permI` parameter,
+    e.g. to 1,000, to assess if the model is significant at the 0.05
+    level),
+
+3.  The **NIPALS** algorithm is used for PLS (and OPLS); *dataMatrix*
+    matrices with (a moderate amount of) missing values can thus be
+    analysed.
+
+We see that our model with 3 predictive (*pre*) components has
+significant and quite high R2Y and Q2Y values.
+
+## Orthogonal partial least squares: OPLS and OPLS-DA
+
+To perform **OPLS(-DA)**, we set `orthoI` (number of components which
+are *ortho*gonal; *I*nteger) to either a specific number of orthogonal
+components, or to NA. Let us build an OPLS-DA model of the *gender*
+response.
+
+```{r oplsda}
+sacurine.oplsda <- opls(sacurine$dataMatrix, genderFc,
+                        predI = 1, orthoI = NA)
+```
+
+**Figure 4: OPLS-DA model of the gender response.**
+
+Note:
+
+1.  For OPLS modeling of a single response, the number of predictive
+    component is 1,
+
+2.  In the (`x-score` plot), the predictive component is displayed as
+    abscissa and the (selected; default = 1) orthogonal component as
+    ordinate.
+
+Let us assess the **predictive performance** of our model. We first
+train the model on a subset of the samples (here we use the `odd` subset
+value which splits the data set into two halves with similar proportions
+of samples for each class; alternatively, we could have used a specific
+subset of indices for training):
+
+```{r oplsda_subset, warning=FALSE}
+sacurine.oplsda <- opls(sacurine$dataMatrix, genderFc,
+                        predI = 1, orthoI = NA,
+                        subset = "odd")
+```
+
+We first check the predictions on the **training** subset:
+
+```{r train}
+trainVi <- getSubsetVi(sacurine.oplsda)
+confusion_train.tb <- table(genderFc[trainVi], fitted(sacurine.oplsda))
+confusion_train.tb
+```
+
+We then compute the performances on the **test** subset:
+
+```{r test}
+confusion_test.tb <- table(genderFc[-trainVi],
+                           predict(sacurine.oplsda,
+                                   sacurine$dataMatrix[-trainVi, ]))
+confusion_test.tb
+```
+
+As expected, the predictions on the test subset are (slightly) lower.
+The classifier however still achieves
+`r round(sum(diag(confusion_test.tb)) / sum(confusion_test.tb) * 100)`%
+of correct predictions.
+
+## Working on `SummarizedExperiment` objects
+
+The **`SummarizedExperiment`** class from the
+[SummarizedExperiment](https://www.bioconductor.org/packages/SummarizedExperiment/)
+bioconductor package has been developed to conveniently handle
+preprocessed omics objects, including the *variable x sample* matrix of
+intensities, and two DataFrames containing the sample and variable
+metadata, which can be accessed by the `assay`, `colData` and `rowData`
+methods respectively (remember that the data matrix is stored with
+samples in columns).
+
+The `opls` method can be applied to a **`SummarizedExperiment`** object,
+by using the object as the `x` argument, and, for (O)PLS(-DA), by
+indicating as the `y` argument the name of the sample metadata to be
+used as the response (i.e. the name of the column in the `colData`). It
+returns the updated **`SummarizedExperiment`** object with the loading,
+score, VIP, etc. data as new columns in the `colData` and `rowData`, and
+with the PCA/(O)PLS(-DA) models in the `metadata` slot.
+
+Getting the sacurine dataset as a `SummarizedExperiment` (see the
+Appendix to see how such an `SummarizedExperiment` was built):
+
+```{r get_se}
+data(sacurine)
+sac.se <- sacurine$se
+```
+
+We then build the PLS-DA model of the gender response
+
+```{r se_plsda, echo = TRUE, results = "hide"}
+sac.se <- opls(sac.se, "gender")
+```
+
+Note that the `opls` method returns an updated `SummarizedExperiment`
+with the metadata about scores, loadings, VIPs, etc. stored in the
+`colData` and `rowData` DataFrames:
+
+```{r se_updated, message = FALSE}
+suppressPackageStartupMessages(library(SummarizedExperiment))
+message("colData:\n")
+head(SummarizedExperiment::colData(sac.se))
+message("\nrowData:\n")
+head(SummarizedExperiment::rowData(sac.se))
+```
+
+The opls model(s) are stored in the metadata of the sac.se
+`SummarizedExperiment` object, and can be accessed with the `getOpls`
+method:
+
+```{r se_model}
+sac_opls.ls <- getOpls(sac.se)
+names(sac_opls.ls)
+plot(sac_opls.ls[["gender_PLSDA"]], typeVc = "x-score")
+```
+
+Note that the scores can be conveniently plotted by a direct call to the `SummarizedExperiment` object once the `opls` models have been computed. The `plot_score` method, by specifying the model of interest, outputs the score plot either as a `ggplot` or a `plotly` object. In the example below, we select a `plotly` output which displays all information available in the sample metadata as interactive labels: 
+
+```{r plot_score_se, message=FALSE, warning=FALSE}
+plot_score(sac.se, model.c = "gender_PLSDA", plotly.l = TRUE, info.vc = "all")
+```
+
+### `ExpressionSet` format
+
+The `ExpressionSet` format is currently supported as a legacy
+representation from the previous versions of the `ropls` package (\<
+1.28.0) but will now be supplanted by `SummarizedExperiment` in future
+versions. Note that the `as(x, "SummarizedExperiment")` method from the
+`SummarizedExperiment` package enables to convert an `ExpressionSet`
+into the `SummarizedExperiment` format.
+
+`exprs`, `pData`, and `fData` for `ExpressionSet` are similar to
+`assay`, `colData` and `rowData` for `SummarizedExperiment` except that
+`assay` is a list which can potentially include several matrices, and
+that `colData` and `rowData` are of the `DataFrame` format.
+`SummarizedExperiment` format further enables to store additional
+metadata (such as models or ggplots) in a dedicated `metadata` slot.
+
+In the example below, we will first build a minimal **`ExpressionSet`**
+object from the *sacurine* data set and view the data, and we
+subsequently perform an OPLS-DA.
+
+Getting the sacurine dataset as an `ExpressionSet` (see the Appendix to
+see how such an `ExpressionSet` was built)
+
+```{r get_eset}
+data("sacurine")
+sac.set <- sacurine$eset
+# viewing the ExpressionSet
+# ropls::view(sac.set)
+```
+
+We then build the PLS-DA model of the gender response
+
+```{r eset_plsda, echo = TRUE, results = "hide"}
+# performing the PLS-DA
+sac.plsda <- opls(sac.set, "gender")
+```
+
+Note that this time `opls` returns the model as an object of the `opls`
+class. The updated `ExpressionSet` object can be accessed with the
+`getEset` method:
+
+```{r eset_updated}
+sac.set <- getEset(sac.plsda)
+library(Biobase)
+head(Biobase::pData(sac.set))
+```
+
+## Working on `MultiAssayExperiment` objects
+
+The `MultiAssayExperiment` format is useful to handle **multi-omics**
+datasets [@Ramos_SoftwareIntegrationMultiomics_2017]. (O)PLS(-DA) models
+can be built in parallel for each dataset by applying `opls` to such
+formats. We provide an example based on the `NCI60_4arrays` cancer
+dataset from the `omicade4` package (which has been made available in
+this `ropls` package in the `MultiAssayExperiment` format).
+
+Getting the `NCI60` dataset as a `MultiAssayExperiment` (see the
+Appendix to see how such a `MultiAssayExperiment` can be built):
+
+```{r nci60_mae, message = FALSE}
+data("NCI60")
+nci.mae <- NCI60[["mae"]]
+```
+
+Building the PLS-DA model of the `cancer` response for each dataset:
+
+```{r mae_plsda}
+nci.mae <- opls(nci.mae, "cancer",
+                predI = 2, fig.pdfC = "none")
+```
+
+The `opls` method returns an updated `MultiAssayExperiment` with the
+metadata about scores, loadings, VIPs, etc. stored in the `colData` and
+`rowData` of the individual `SummarizedExperiment`:
+
+```{r mae_updated}
+SummarizedExperiment::colData(nci.mae[["agilent"]])
+```
+
+The opls model(s) are stored in the metadata of the individual
+`SummarizedExperiment` objects included in the `MultiAssayExperiment`,
+and can be accessed with the `getOpls` method:
+
+```{r mae_model}
+mae_opls.ls <- getOpls(nci.mae)
+names(mae_opls.ls)
+plot(mae_opls.ls[["agilent"]][["cancer_PLSDA"]], typeVc = "x-score")
+```
+
+### `MultiDataSet` objects
+
+The `MultiDataSet` format [@Ramos_SoftwareIntegrationMultiomics_2017] is
+currently supported as a legacy representation from the previous
+versions of the `ropls` package (\<1.28.0) but will now be supplanted by
+`MultiAssayExperiment` in future versions. Note that the `mds2mae`
+method from the `MultiDataSet` package enables to convert a
+`MultiDataSet` into the `MultiAssayExperiment` format.
+
+Getting the `NCI60` dataset as a `MultiDataSet` (see the Appendix to see
+how such a `MultiDataSet` can be built):
+
+```{r get_mds}
+data("NCI60")
+nci.mds <- NCI60[["mds"]]
+```
+
+Building PLS-DA models for the cancer type:
+
+```{r mds_plsda, echo = TRUE, results = "hide"}
+# Restricting to the "agilent" and "hgu95" datasets
+nci.mds <- nci.mds[, c("agilent", "hgu95")]
+# Restricting to the 'ME' and 'LE' cancer types
+library(Biobase)
+sample_names.vc <- Biobase::sampleNames(nci.mds[["agilent"]])
+cancer_type.vc <- Biobase::pData(nci.mds[["agilent"]])[, "cancer"]
+nci.mds <- nci.mds[sample_names.vc[cancer_type.vc %in% c("ME", "LE")], ]
+# Building PLS-DA models for the cancer type
+nci.plsda <- ropls::opls(nci.mds, "cancer", predI = 2)
+```
+
+Getting back the updated `MultiDataSet`:
+
+```{r mds_getmset}
+nci.mds <- ropls::getMset(nci.plsda)
+```
+
+## Importing/exporting data
+
+The datasets from the `SummarizedExperiment` and `MultiAssayExperiment`
+(as well as `ExpressionSet` and `MultiDataSet`) can be imported/exported
+to text files with the `reading` and `writing` functions from the
+[`phenomis`](https://bioconductor.org/packages/phenomis/) package also available on Bioconductor.
+
+Each dataset is imported/exported to 3 text files (tsv tabular format):
+
+-   dataMatrix.tsv: data matrix with features as rows and samples as
+    columns
+
+-   sampleMetadata.tsv: sample metadata
+
+-   variableMetadata.tsv: feature metadata
+
+```{r phenomis, eval = FALSE}
+library(phenomis)
+sacurine.se <- sacurine$se
+phenomis::writing(sacurine.se, dir.c = getwd())
+```
+
+## Graphical User Interface
+
+The features from the `ropls` package can also be accessed via a
+graphical user interface in the **Multivariate** module from the
+[Workflow4Metabolomics.org](https://workflow4metabolomics.usegalaxy.fr/)
+online resource for computational metabolomics, based on the Galaxy
+environment.
+
+
+# Comments
+
+## Overfitting
+
+**Overfitting** (i.e., building a model with good performances on the
+training set but poor performances on a new test set) is a major caveat
+of machine learning techniques applied to data sets with more variables
+than samples. A simple simulation of a random **X** data set and a **y**
+response shows that perfect PLS-DA classification can be achieved as
+soon as the number of variables exceeds the number of samples, as
+detailed in the example below, adapted from @Wehrens2011:
+
+```{r overfit, echo = FALSE}
+set.seed(123)
+obsI <- 20
+featVi <- c(2, 20, 200)
+featMaxI <- max(featVi)
+xRandMN <- matrix(runif(obsI * featMaxI), nrow = obsI)
+yRandVn <- sample(c(rep(0, obsI / 2), rep(1, obsI / 2)))
+
+layout(matrix(1:4, nrow = 2, byrow = TRUE))
+for (featI in featVi) {
+  randPlsi <- opls(xRandMN[, 1:featI], yRandVn,
+                   predI = 2,
+                   permI = ifelse(featI == featMaxI, 100, 0),
+                   fig.pdfC = "none",
+                   info.txtC = "none")
+  plot(randPlsi, typeVc = "x-score",
+       parCexN = 1.3, parTitleL = FALSE,
+       parCexMetricN = 0.5)
+  mtext(featI/obsI, font = 2, line = 2)
+  if (featI == featMaxI)
+    plot(randPlsi,
+         typeVc = "permutation",
+         parCexN = 1.3)
+}
+mtext(" obs./feat. ratio:",
+      adj = 0, at = 0, font = 2,
+      line = -2, outer = TRUE)
+```
+
+**Figure 5: Risk of PLS overfitting.** In the simulation above, a
+**random matrix X** of 20 observations x 200 features was generated by
+sampling from the uniform distribution $U(0, 1)$. A **random y**
+response was obtained by sampling (without replacement) from a vector of
+10 zeros and 10 ones. **Top left**, **top right**, and **bottom left**:
+the X-**score plots** of the PLS modeling of **y** by the (sub)matrix of
+**X** restricted to the first 2, 20, or 200 features, are displayed
+(i.e., the observation/feature ratios are 0.1, 1, and 10, respectively).
+Despite the good separation obtained on the bottom left score plot, we
+see that the **Q2Y** estimation of predictive performance is low
+(negative); **Bottom right**: a significant proportion of the models
+trained after random permutations of the labels have a higher **Q2Y**
+value than the model trained with the true labels, confirming that PLS
+cannot specifically model the **y** response with the **X** predictors,
+as expected.
+
+This simple simulation illustrates that PLS overfit can occur, in
+particular when the number of features exceeds the number of
+observations. **It is therefore essential to check that the** $Q2Y$
+value of the model is significant by random permutation of the labels.
+
+## VIP from OPLS models
+
+The classical **VIP** metric is not useful for OPLS modeling of a single
+response since [@Galindo-Prieto2014; @Thevenot2015]: 1. **VIP** values
+remain identical whatever the number of orthogonal components selected,
+2. **VIP** values are univariate (i.e., they do not provide information
+about interactions between variables). In fact, when features are
+standardized, we can demonstrate a mathematical relationship between VIP
+and *p*-values from a Pearson correlation test [@Thevenot2015], as
+illustrated by the figure below:
+
+```{r vip}
+ageVn <- sacurine$sampleMetadata[, "age"]
+
+pvaVn <- apply(sacurine$dataMatrix, 2,
+               function(feaVn) cor.test(ageVn, feaVn)[["p.value"]])
+
+vipVn <- getVipVn(opls(sacurine$dataMatrix, ageVn,
+                       predI = 1, orthoI = NA,
+                       fig.pdfC = "none"))
+
+quantVn <- qnorm(1 - pvaVn / 2)
+rmsQuantN <- sqrt(mean(quantVn^2))
+
+opar <- par(font = 2, font.axis = 2, font.lab = 2,
+            las = 1,
+            mar = c(5.1, 4.6, 4.1, 2.1),
+            lwd = 2, pch = 16)
+
+plot(pvaVn, vipVn,
+     col = "red",
+     pch = 16,
+     xlab = "p-value", ylab = "VIP", xaxs = "i", yaxs = "i")
+
+box(lwd = 2)
+
+curve(qnorm(1 - x / 2) / rmsQuantN, 0, 1, add = TRUE, col = "red", lwd = 3)
+
+abline(h = 1, col = "blue")
+abline(v = 0.05, col = "blue")
+
+par(opar)
+```
+
+**Figure 6: Relationship between VIP from one-predictive PLS or OPLS
+models with standardized variables, and p-values from Pearson
+correlation test.** The $(p_j, VIP_j)$ pairs corresponding respectively
+to the VIP values from OPLS modelling of the *age* response with the
+*sacurine* dataset, and the *p*-values from the Pearson correlation test
+are shown as red dots. The $y = \Phi^{-1}(1 - x/2) / z_{rms}$ curve is
+shown in red (where $\Phi^{-1}$ is the inverse of the probability
+density function of the standard normal distribution, and $z_{rms}$ is
+the quadratic mean of the $z_j$ quantiles from the standard normal
+distribution; $z_{rms} = 2.6$ for the *sacurine* dataset and the *age*
+response). The vertical (resp. horizontal) blue line corresponds to
+univariate (resp. multivariate) thresholds of $p=0.05$ and $VIP=1$,
+respectively [@Thevenot2015].
+
+The **VIP** properties above result from:
+
+1.  OPLS models of a single response have a single predictive component,
+
+2.  in the case of one-predictive component (O)PLS models, the general
+    formula for VIPs can be simplified to
+    $VIP_j = \sqrt{m} \times |w_j|$ for each feature $j$, were $m$ is
+    the total number of features and **w** is the vector of loading
+    weights,
+
+3.  in OPLS, **w** remains identical whatever the number of extracted
+    orthogonal components,
+
+4.  for a single-response model, **w** is proportional to **X'y** (where
+    **'** denotes the matrix transposition),
+
+5.  if **X** and **y** are standardized, **X'y** is the vector of the
+    correlations between the features and the response.
+
+@Galindo-Prieto2014 have recently suggested new VIP metrics for OPLS,
+**VIP_pred** and **VIP_ortho**, to separately measure the influence of
+the features in the modeling of the dispersion correlated to, and
+orthogonal to the response, respectively [@Galindo-Prieto2014].
+
+For OPLS(-DA) models, you can therefore get from the model generated
+with `opls`:
+
+1.  the **predictive VIP vector** (which corresponds to the
+    $VIP_{4,pred}$ metric measuring the variable importance in
+    prediction) with `getVipVn(model)`,
+
+2.  the orthogonal VIP vector which is the $VIP_{4,ortho}$ metric
+    measuring the variable importance in orthogonal modeling with
+    `getVipVn(model, orthoL = TRUE)`. As for the classical **VIP**, we
+    still have the mean of $VIP_{pred}^2$ (and of $VIP_{ortho}^2$)
+    which, each, equals 1.
+
+## (Orthogonal) Partial Least Squares Discriminant Analysis: (O)PLS-DA
+
+### Two classes
+
+When the **y** response is a factor of 2 levels (character vectors are
+also allowed), it is internally transformed into a vector of values
+$\in \{0,1\}$ encoding the classes. The vector is centered and
+unit-variance scaled, and the (O)PLS analysis is performed.
+
+@Brereton2014 have demonstrated that when the sizes of the 2 classes are
+**unbalanced**, a **bias** is introduced in the computation of the
+decision rule, which penalizes the class with the highest size
+[@Brereton2014]. In this case, an external procedure using
+**resampling** (to balance the classes) and taking into account the
+class sizes should be used for optimal results.
+
+### Multiclass
+
+In the case of **more than 2 levels**, the **y** response is internally
+transformed into a matrix (each class is encoded by one column of values
+$\in \{0,1\}$). The matrix is centered and unit-variance scaled, and the
+PLS analysis is performed.
+
+In this so-called **PLS2** implementation, the proportions of 0 and 1 in
+the columns is usually unbalanced (even in the case of balanced size of
+the classes) and the bias described previously occurs [@Brereton2014].
+The multiclass PLS-DA results from
+[ropls](http://bioconductor.org/packages/release/bioc/html/ropls.html)
+are therefore indicative only, and we recommend to set an external
+procedure where each column of the matrix is modeled separately (as
+described above) and the resulting probabilities are aggregated (see for
+instance @Bylesjo2006).
+
+
+# Appendix
+
+## Additional datasets
+
+In addition to the *sacurine* dataset presented above, the package
+contains the following datasets to illustrate the functionalities of
+PCA, PLS and OPLS (see the examples in the documentation of the opls
+function):
+
+-   **aminoacids** Amino-Acids Dataset. Quantitative structure property
+    relationship (QSPR) [@Wold2001].
+
+-   **cellulose** NIR-Viscosity example data set to illustrate
+    multivariate calibration using PLS, spectral filtering and OPLS
+    (Multivariate calibration using spectral data. Simca tutorial.
+    Umetrics, Sweden).
+
+-   **cornell** Octane of various blends of gasoline: Twelve mixture
+    component proportions of the blend are analysed [@Tenenhaus1998].
+
+-   **foods** Food consumption patterns accross European countries
+    (FOODS). The relative consumption of 20 food items was compiled for
+    16 countries. The values range between 0 and 100 percent and a high
+    value corresponds to a high consumption. The dataset contains 3
+    missing data [@Eriksson2001].
+
+-   **linnerud** Three physiological and three exercise variables are
+    measured on twenty middle-aged men in a fitness club
+    [@Tenenhaus1998].
+
+-   **lowarp** A multi response optimization data set (LOWARP)
+    [@Eriksson2001].
+
+-   **mark** Marks obtained by french students in mathematics, physics,
+    french and english. Toy example to illustrate the potentialities of
+    PCA [@Baccini2010].
+
+## Cheat sheets for Bioconductor (multi)omics containers
+
+### `SummarizedExperiment`
+
+The `SummarizedExperiment` format has been designed by the Bioconductor
+team to handle (single) omics datasets [@Morgan2022].
+
+An example of `SummarizedExperiment` creation and a summary of useful
+methods are provided below.
+
+Please refer to [package
+vignettes](https://bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html)
+for a full description of `SummarizedExperiment` objects .
+
+```{r se_build}
+# Preparing the data (matrix) and sample and variable metadata (data frames):
+data(sacurine, package = "ropls")
+data.mn <- sacurine$dataMatrix # matrix: samples x variables
+samp.df <- sacurine$sampleMetadata # data frame: samples x sample metadata
+feat.df <- sacurine$variableMetadata # data frame: features x feature metadata
+
+# Creating the SummarizedExperiment (package SummarizedExperiment)
+library(SummarizedExperiment)
+sac.se <- SummarizedExperiment(assays = list(sacurine = t(data.mn)),
+                               colData = samp.df,
+                               rowData = feat.df)
+# note that colData and rowData main format is DataFrame, but data frames are accepted when building the object
+stopifnot(validObject(sac.se))
+
+# Viewing the SummarizedExperiment
+# ropls::view(sac.se)
+```
+
+| [Methods]{.smallcaps}                           | [Description]{.smallcaps}                           | [Returned class]{.smallcaps}      |
+|--------------------------|----------------------------|-------------------|
+| [**Constructors**]{.smallcaps}                  |                                                     |                                   |
+| **`SummarizedExperiment`**                      | Create a SummarizedExperiment object                | `SummarizedExperiment`            |
+| **`makeSummarizedExperimentFromExpressionSet`** |                                                     | `SummarizedExperiment`            |
+| [**Accessors**]{.smallcaps}                     |                                                     |                                   |
+| **`assayNames`**                                | Get or set the names of assay() elements            | `character`                       |
+| **`assay`**                                     | Get or set the ith (default first) assay element    | `matrix`                          |
+| **`assays`**                                    | Get the list of experimental data numeric matrices  | `SimpleList`                      |
+| **`rowData`**                                   | Get or set the row data (features)                  | `DataFrame`                       |
+| **`colData`**                                   | Get or set the column data (samples)                | `DataFrame`                       |
+| **`metadata`**                                  | Get or set the experiment data                      | `list`                            |
+| **`dim`**                                       | Get the dimensions (features of interest x samples) | `integer`                         |
+| **`dimnames`**                                  | Get or set the dimension names                      | `list` of length 2 character/NULL |
+| **`rownames`**                                  | Get the feature names                               | `character`                       |
+| **`colnames`**                                  | Get the sample names                                | `character`                       |
+| [**Conversion**]{.smallcaps}                    |                                                     |                                   |
+| **`as(, "SummarizedExperiment")`**              | Convert an ExpressionSet to a SummarizedExperiment  | `SummarizedExperiment`            |
+
+### `MultiAssayExperiment`
+
+The `MultiAssayExperiment` format has been designed by the Bioconductor
+team to handle multiomics datasets
+[@Ramos_SoftwareIntegrationMultiomics_2017].
+
+An example of `MultiAssayExperiment` creation and a summary of useful
+methods are provided below. Please refer to [package
+vignettes](https://bioconductor.org/packages/MultiAssayExperiment/) or
+to the original publication for a full description of
+`MultiAssayExperiment` objects
+[@Ramos_SoftwareIntegrationMultiomics_2017].
+
+Loading the `NCI60_4arrays` from the `omicade4` package:
+
+```{r mae_build_load}
+data("NCI60_4arrays", package = "omicade4")
+```
+
+Creating the `MultiAssayExperiment`:
+
+```{r mae_build, message = FALSE, warning=FALSE}
+library(MultiAssayExperiment)
+# Building the individual SummarizedExperiment instances
+experiment.ls <- list()
+sampleMap.ls <- list()
+for (set.c in names(NCI60_4arrays)) {
+  # Getting the data and metadata
+  assay.mn <- as.matrix(NCI60_4arrays[[set.c]])
+  coldata.df <- data.frame(row.names = colnames(assay.mn),
+                           .id = colnames(assay.mn),
+                           stringsAsFactors = FALSE) # the 'cancer' information will be stored in the main colData of the mae, not the individual SummarizedExperiments
+  rowdata.df <- data.frame(row.names = rownames(assay.mn),
+                           name = rownames(assay.mn),
+                           stringsAsFactors = FALSE)
+  # Building the SummarizedExperiment
+  assay.ls <- list(se = assay.mn)
+  names(assay.ls) <- set.c
+  se <- SummarizedExperiment(assays = assay.ls,
+                             colData = coldata.df,
+                             rowData = rowdata.df)
+  experiment.ls[[set.c]] <- se
+  sampleMap.ls[[set.c]] <- data.frame(primary = colnames(se),
+                                      colname = colnames(se)) # both datasets use identical sample names
+}
+sampleMap <- listToMap(sampleMap.ls)
+
+# The sample metadata are stored in the colData data frame (both datasets have the same samples)
+stopifnot(identical(colnames(NCI60_4arrays[[1]]),
+                    colnames(NCI60_4arrays[[2]])))
+sample_names.vc <- colnames(NCI60_4arrays[[1]])
+colData.df <- data.frame(row.names = sample_names.vc,
+                         cancer = substr(sample_names.vc, 1, 2))
+
+nci.mae <- MultiAssayExperiment(experiments = experiment.ls,
+                                colData = colData.df,
+                                sampleMap = sampleMap)
+
+stopifnot(validObject(nci.mae))
+```
+
+| [Methods]{.smallcaps}          | [Description]{.smallcaps}                                            | [Returned class]{.smallcaps} |
+|------------------|-------------------------------------|------------------|
+| [**Constructors**]{.smallcaps} |                                                                      |                              |
+| **`MultiAssayExperiment`**     | Create a MultiAssayExperiment object                                 | `MultiAssayExperiment`       |
+| **`ExperimentList`**           | Create an ExperimentList from a List or list                         | `ExperimentList`             |
+| [**Accessors**]{.smallcaps}    |                                                                      |                              |
+| **`colData`**                  | Get or set data that describe the patients/biological units          | `DataFrame`                  |
+| **`experiments`**              | Get or set the list of experimental data objects as original classes | `experimentList`             |
+| **`assays`**                   | Get the list of experimental data numeric matrices                   | `SimpleList`                 |
+| **`assay`**                    | Get the first experimental data numeric matrix                       | `matrix`, matrix-like        |
+| **`sampleMap`**                | Get or set the map relating observations to subjects                 | `DataFrame`                  |
+| **`metadata`**                 | Get or set additional data descriptions                              | `list`                       |
+| **`rownames`**                 | Get row names for all experiments                                    | `CharacterList`              |
+| **`colnames`**                 | Get column names for all experiments                                 | `CharacterList`              |
+| [**Subsetting**]{.smallcaps}   |                                                                      |                              |
+| **`mae[i, j, k]`**             | Get rows, columns, and/or experiments                                | `MultiAssayExperiment`       |
+| **`mae[i, ,]`**                | i: GRanges, character, integer, logical, List, list                  | `MultiAssayExperiment`       |
+| **`mae[,j,]`**                 | j: character, integer, logical, List, list                           | `MultiAssayExperiment`       |
+| **`mae[,,k]`**                 | k: character, integer, logical                                       | `MultiAssayExperiment`       |
+| **`mae[[i]]`**                 | Get or set object of arbitrary class from experiments                | (Varies)                     |
+| **`mae[[i]]`**                 | Character, integer, logical                                          |                              |
+| **`mae$column`**               | Get or set colData column                                            | `vector` (varies)            |
+| [**Management**]{.smallcaps}   |                                                                      |                              |
+| **`complete.cases`**           | Identify subjects with complete data in all experiments              | `vector` (logical)           |
+| **`duplicated`**               | Identify subjects with replicate observations per experiment         | `list` of `LogicalLists`     |
+| **`mergeReplicates`**          | Merge replicate observations within each experiment                  | `MultiAssayExperiment`       |
+| **`intersectRows`**            | Return features that are present for all experiments                 | `MultiAssayExperiment`       |
+| **`intersectColumns`**         | Return subjects with data available for all experiments              | `MultiAssayExperiment`       |
+| **`prepMultiAssay`**           | Troubleshoot common problems when constructing main class            | `list`                       |
+| [**Reshaping**]{.smallcaps}    |                                                                      |                              |
+| **`longFormat`**               | Return a long and tidy DataFrame with optional colData columns       | `DataFrame`                  |
+| **`wideFormat`**               | Create a wide DataFrame, one row per subject                         | `DataFrame`                  |
+| [**Combining**]{.smallcaps}    |                                                                      |                              |
+| **`c`**                        | Concatenate an experiment                                            | `MultiAssayExperiment`       |
+| [**Viewing**]{.smallcaps}      |                                                                      |                              |
+| **`upsetSamples`**             | Generalized Venn Diagram analog for sample membership                | `upset`                      |
+| [**Exporting**]{.smallcaps}    |                                                                      |                              |
+| **`exportClass`**              | Exporting to flat files                                              | `csv` or `tsv` files         |
+
+### `ExpressionSet`
+
+The `ExpressionSet` format (`Biobase` package) was designed by the
+Bioconductor team as the first format to handle (single) omics data. It
+has now been supplanted by the `SummarizedExperiment` format.
+
+An example of `ExpressionSet` creation and a summary of useful methods
+are provided below. Please refer to ['An introduction to Biobase and
+ExpressionSets'](https://bioconductor.org/packages/release/bioc/vignettes/Biobase/inst/doc/ExpressionSetIntroduction.pdf)
+from the documentation from the
+[`Biobase`](https://doi.org/doi:10.18129/B9.bioc.Biobase) package for a
+full description of `ExpressionSet` objects.
+
+```{r eset_build, message = FALSE, warning = FALSE}
+# Preparing the data (matrix) and sample and variable metadata (data frames):
+data(sacurine)
+data.mn <- sacurine$dataMatrix # matrix: samples x variables
+samp.df <- sacurine$sampleMetadata # data frame: samples x sample metadata
+feat.df <- sacurine$variableMetadata # data frame: features x feature metadata
+# Creating the ExpressionSet (package Biobase)
+sac.set <- Biobase::ExpressionSet(assayData = t(data.mn))
+Biobase::pData(sac.set) <- samp.df
+Biobase::fData(sac.set) <- feat.df
+stopifnot(validObject(sac.set))
+# Viewing the ExpressionSet
+# ropls::view(sac.set)
+```
+
+| [Methods]{.smallcaps} | [Description]{.smallcaps}                         | [Returned class]{.smallcaps} |
+|------------------|----------------------------------|--------------------|
+| **`exprs`**           | 'variable times samples' numeric matrix           | `matrix`                     |
+| **`pData`**           | sample metadata                                   | `data.frame`                 |
+| **`fData`**           | variable metadata                                 | `data.frame`                 |
+| **`sampleNames`**     | sample names                                      | `character`                  |
+| **`featureNames`**    | variable names                                    | `character`                  |
+| **`dims`**            | 2x1 matrix of 'Features' and 'Samples' dimensions | `matrix`                     |
+| **`varLabels`**       | Column names of the sample metadata data frame    | `character`                  |
+| **`fvarLabels`**      | Column names of the variable metadata data frame  | `character`                  |
+
+### `MultiDataSet`
+
+Loading the `NCI60_4arrays` from the `omicade4` package:
+
+```{r mset_build_load}
+data("NCI60_4arrays", package = "omicade4")
+```
+
+Creating the `MultiDataSet`:
+
+```{r mset_build, message = FALSE, warning=FALSE}
+library(MultiDataSet)
+# Creating the MultiDataSet instance
+nci.mds <- MultiDataSet::createMultiDataSet()
+# Adding the two datasets as ExpressionSet instances
+for (set.c in names(NCI60_4arrays)) {
+  # Getting the data
+  expr.mn <- as.matrix(NCI60_4arrays[[set.c]])
+  pdata.df <- data.frame(row.names = colnames(expr.mn),
+                        cancer = substr(colnames(expr.mn), 1, 2),
+                        stringsAsFactors = FALSE)
+  fdata.df <- data.frame(row.names = rownames(expr.mn),
+                        name = rownames(expr.mn),
+                        stringsAsFactors = FALSE)
+  # Building the ExpressionSet
+  eset <- Biobase::ExpressionSet(assayData = expr.mn,
+                                 phenoData = new("AnnotatedDataFrame",
+                                                 data = pdata.df),
+                                 featureData = new("AnnotatedDataFrame",
+                                                   data = fdata.df),
+                                 experimentData = new("MIAME",
+                                                      title = set.c))
+  # Adding to the MultiDataSet
+  nci.mds <- MultiDataSet::add_eset(nci.mds, eset, dataset.type = set.c,
+                                     GRanges = NA, warnings = FALSE)
+}
+stopifnot(validObject(nci.mds))
+```
+
+| [Methods]{.smallcaps}          | [Description]{.smallcaps}                        | [Returned class]{.smallcaps} |
+|---------------------|--------------------------------|--------------------|
+| [**Constructors**]{.smallcaps} |                                                  |                              |
+| **`createMultiDataSet`**       | Create a MultiDataSet object                     | `MultiDataSet`               |
+| **`add_eset`**                 | Create a MultiAssayExperiment object             | `MultiDataSet`               |
+| [**Subsetting**]{.smallcaps}   |                                                  |                              |
+| **`mset[i, ]`**                | i: character,logical (samples to select)         | `MultiDataSet`               |
+| **`mset[, k]`**                | k: character (names of datasets to select)       | `MultiDataSet`               |
+| **`mset[[k]]`**                | k: character (name of the datast to select)      | `ExpressionSet`              |
+| [**Accessors**]{.smallcaps}    |                                                  |                              |
+| **`as.list`**                  | Get the list of data matrices                    | `list`                       |
+| **`pData`**                    | Get the list of sample metadata                  | `list`                       |
+| **`fData`**                    | Get the list of variable metadata                | `list`                       |
+| **`sampleNames`**              | Get the list of sample names                     | `list`                       |
+| [**Management**]{.smallcaps}   |                                                  |                              |
+| **`commonSamples`**            | Select samples that are present in all datasets  | `MultiDataSet`               |
+| [**Conversion**]{.smallcaps}   |                                                  |                              |
+| **`mds2mae`**                  | Convert a MultiDataSet to a MultiAssayExperiment | `MultiAssayExperiment`       |
+
+# Session info
+
+Here is the output of `sessionInfo()` on the system on which this
+document was compiled:
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
+
+# References

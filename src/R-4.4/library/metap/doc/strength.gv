@@ -1,0 +1,83 @@
+digraph test {
+   rankdir = "LR"
+   fontname = "Helvetica"
+   node[fontname = "Helvetica"]
+   edge[fontname = "Helvetica"]
+     {rank = same; eqklt10; eqany; someklt10; someany; majority; modst; anypower; strongtot; modtot; weaktot;}
+      evidence [label = "Location\nof\nevidence", shape = diamond]
+      eqinall [label = "N\nof\nstudies", shape = diamond]
+      evidence -> eqinall [label = "Equally in all"]
+      eqklt10 [label = <
+         <TABLE BORDER = "0">
+         <TR><TD ALIGN = "LEFT"><B>sump</B></TD><TD> (Edgington)</TD></TR>
+         <TR><TD><B>maximump</B></TD></TR>
+         </TABLE>
+     >]
+      eqany [label = <
+         <TABLE BORDER = "0">
+         <TR><TD ALIGN = "LEFT"><B>sumz</B></TD><TD> (Stouffer)</TD></TR>
+         <TR><TD><B>logitp</B></TD></TR>
+         </TABLE>
+     >]
+     eqinall -> eqklt10 [label = "< 10"]
+      eqinall -> eqany [label = "any"]
+      someinall [label = "N\nof\nstudies", shape = diamond]
+      evidence -> someinall [label = "Some in all"]
+      someklt10  [label = <
+         <TABLE BORDER = "0">
+         <TR><TD ALIGN = "LEFT"><B>sump</B></TD><TD> (Edgington)</TD></TR>
+         <TR><TD><B>maximump</B></TD></TR>
+         </TABLE>
+     >]
+      someany  [label = <
+         <TABLE BORDER = "0">
+         <TR><TD ALIGN = "LEFT"><B>sumz</B></TD><TD> (Stouffer)</TD></TR>
+         <TR><TD><B>logitp</B></TD></TR>
+         </TABLE>
+     >]
+     someinall -> someklt10 [label = "< 10"]
+      someinall -> someany [label = "any"]
+      majority   [label = <
+         <TABLE BORDER = "0">
+         <TR><TD ALIGN = "LEFT"><B>sumz</B></TD><TD> (Stouffer)</TD></TR>
+         <TR><TD><B>logitp</B></TD></TR>
+         </TABLE>
+     >]
+      evidence -> majority [label = "In the majority"]
+      minority [label = "Strength\nof\nevidence", shape = diamond]
+      evidence -> minority [label = "In the minority"]
+      modst  [label = <
+         <TABLE BORDER = "0">
+         <TR><TD ALIGN = "LEFT"><B>sumlog</B></TD><TD> (Fisher)</TD></TR>
+         </TABLE>
+     >]
+      anypower   [label = <
+         <TABLE BORDER = "0">
+         <TR><TD ALIGN = "LEFT"><B>sumz</B></TD><TD> (Stouffer)</TD></TR>
+         <TR><TD><B>logitp</B></TD></TR>
+         </TABLE>
+     >]
+      minority -> modst [label = "Moderate or strong"]
+      minority -> anypower [label = "Any power"]
+     onetest [label = "Strength\nof\ntotal evidence", shape = diamond]
+      evidence -> onetest [label = "In one test only"]
+      strongtot [label = <
+         <TABLE BORDER = "0">
+         <TR><TD ALIGN = "LEFT"><B>minimump</B></TD><TD> (Tippett)</TD></TR>
+         </TABLE>
+     >] 
+      modtot [label = <
+         <TABLE BORDER = "0">
+         <TR><TD ALIGN = "LEFT"><B>sumlog</B></TD><TD> (Fisher)</TD></TR>
+         </TABLE>
+     >]
+      weaktot  [label = <
+         <TABLE BORDER = "0">
+         <TR><TD ALIGN = "LEFT"><B>sumz</B></TD><TD> (Stouffer)</TD></TR>
+         <TR><TD><B>logitp</B></TD></TR>
+         </TABLE>
+     >]
+      onetest -> strongtot [label = "Strong total evidence"]
+      onetest -> modtot [label = "Moderate total evidence"]
+      onetest -> weaktot [label = "Weak total evidence"]
+}

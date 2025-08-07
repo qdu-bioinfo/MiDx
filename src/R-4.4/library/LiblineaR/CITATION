@@ -1,0 +1,29 @@
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
+vers <- paste("R package version", meta$Version)
+
+bibentry(
+
+	bibtype="Manual",
+
+	header="To cite package 'LiblineaR' in publications use:",
+
+	textVersion =
+		paste("Thibault Helleputte, Pierre Gramme, Jérôme Paul ",
+		"(",year,"). 
+		LiblineaR: Linear Predictive Models Based On The Liblinear C/C++ Library.",
+		vers, ".", sep=""),
+	
+	
+	title = "LiblineaR: Linear Predictive Models Based on the LIBLINEAR C/C++ Library",
+	
+	author =  c(
+  		person("Thibault","Helleputte",email="thibault.helleputte@dnalytics.com",role=c("cre","aut","cph")),
+        	person("Jérôme","Paul",role=c("aut")),
+        	person("Pierre","Gramme",role=c("aut")) 
+        	),
+        
+	year = year,
+	
+	note = vers
+	
+)

@@ -1,0 +1,107 @@
+ABH_pi0_est             Lowest Slope Line (LSL) method of Hochberg and
+                        Benjamini for estimating pi0
+BH                      Benjamini-Hochberg (1995) linear step-up
+                        procedure
+BL                      Benjamini-Liu (1999) step-down procedure
+BR_pi0_est              Estimate of pi0 using the one-step
+                        Blanchard-Roquain procedure
+BY                      Benjamini-Yekutieli (2001) step-up procedure
+BlaRoq                  Blanchard-Roquain (2008) step-up Procedure for
+                        arbitrary dependent p-Values...
+ErrorControl-class      Class ErrorControl
+Mutoss-class            Class Mutoss
+MutossMethod-class      Class MutossMethod
+Qvalue                  Storey's (2001) q-value Procedure...
+SD                      A general step-down procedure.
+SU                      A general step-up procedure.
+SUD                     A general step-up-down procedure.
+SidakSD                 Sidak-like (1987) step-down procedure
+TSBKY_pi0_est           Two-step estimation method of Benjamini,
+                        Krieger and Yekutieli for estimating pi0
+adaptiveBH              Benjamini-Hochberg (2000) adaptive linear
+                        step-up procedure
+adaptiveSTS             Storey-Taylor-Siegmund (2004) adaptive step-up
+                        procedure
+adjPValuesPlot          A function plotting adjusted p-values...
+aorc                    Step-up-down test based on the asymptotically
+                        optimal rejection curve.
+augmentation            Wrapper function to the augmentation methods of
+                        the multtest package.
+bonferroni              Bonferroni correction...
+calculateBetaAdjustment
+                        Calculating the beta adjustment factor for the
+                        asymptotically optimal rejection curve.
+compareMutoss           Functions for comparing outputs of different
+                        procedures.
+fisher22.marginal       Fisher (2x2) table association analysis for
+                        calculating all marginal p-values...
+fisher22_fast           Fisher (2x2) table association analysis for
+                        calculating one (marginal) p-value...
+fisher23.marginal       Fisher-type (2x3) table association analysis
+                        for calculating all marginal p-values...
+fisher23.model          Mutoss Models
+fisher23_fast           Fisher-type (2x3) table association analysis
+                        for calculating one (marginal) p-value...
+ftest.marginal          Marginal F test
+gao                     Xin Gao's non-parametric multiple test
+                        procedure is applied to Data.
+gatherParameters        Extracts the parameters from the
+                        simulation()-Object
+gatherStatistics        Gathering statistics from simulation()-Object
+hochberg                Hochberg (1988) step-up procedure
+holm                    Holm's (1979) step-down-procedure
+hommel                  Hommel's (1988) step-up-procedure
+indepBR                 Blanchard-Roquain (2009) 1-stage adaptive
+                        step-up
+jointCDF.orderedUnif    Joint cumulative distribution function of order
+                        statistics of n iid. U(0,1)-distributed random
+                        variables
+linearStepUp            Linear Step Up Service Function...
+mu.test.class           Test for compatible classes for comparison...
+mu.test.name            Tests if all hypotheses have the same names.
+mu.test.rates           Tests that different procedures used the same
+                        error rates.
+mu.test.same.data       Tests if the same pvalues were used by
+                        different procedures.
+mu.test.type            Tests that different procedures use the same
+                        error types.
+multcomp.wrapper        Simultaneous confidence intervals for arbitrary
+                        parametric contrasts in unbalanced one-way
+                        layouts.
+multiple.down           Benjamini-Krieger-Yekutieli (2006) Multi-Stage
+                        Step-Down
+multiple.down.adjust    A service function used by multiple...
+mutoss.apply            Applies a function to a Mutoss object.
+mutoss.plotCI           mutoss.plotCI
+notterman               Notterman data set
+nparcomp                Simultaneous confidence intervals for relative
+                        contrast effects...
+nparcomp.wrapper        Simultaneous confidence intervals for relative
+                        contrast effects...
+onesamp.marginal        Marginal one sample test
+oracleBH                Bejamini-Hochberg (2000) oracle linear step-up
+                        Procedure...
+pValuesPlot             A function plotting p-values...
+paired.marginal         Marginal paired two sample test
+printRejected           Internal MuTossProjekt-Function
+pval2locfdr             Strimmer et al.'s fdrtool-based local fdr
+pval2qval               Strimmer et al.'s fdrtool-based q-values
+ranktruncated           Rank truncated p-Value procedure...
+regwq                   REGWQ - Ryan / Einot and Gabriel / Welsch test
+                        procedure...
+reject                  reject
+requireLibrary          Tries to load a package.
+rom                     Rom's (1990) step-up-procedure.
+sidak                   Sidak correction
+simulation              Simulation studies
+snk                     Student - Newman - Keuls rejective test
+                        procedure.
+storey_pi0_est          Storey-Taylor-Siegmund estimation of pi0
+                        (finite sample version)
+tukey.wrapper           Tukey HSD test and simultaneous confidence
+                        intervals for all pairs comparisons...
+two.stage               A p-value procedure which controls the FDR for
+                        independent test statistics.
+twosamp.marginal        Marginal two sample test
+twostageBR              Blanchard-Roquain (2009) 2-stage adaptive
+                        step-up...

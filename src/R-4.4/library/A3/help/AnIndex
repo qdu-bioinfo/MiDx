@@ -1,0 +1,17 @@
+A3-package	a3-package
+a3	a3
+a3.base	a3.base
+a3.gen.autocor	a3.gen.default
+a3.gen.bootstrap	a3.gen.default
+a3.gen.default	a3.gen.default
+a3.gen.normal	a3.gen.default
+a3.gen.resample	a3.gen.default
+a3.lm	a3.lm
+a3.r2	a3.r2
+housing	housing
+multifunctionality	multifunctionality
+plot.A3	plot.A3
+plotPredictions	plotPredictions
+plotSlopes	plotSlopes
+print.A3	print.A3
+xtable.A3	xtable.A3

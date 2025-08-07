@@ -1,0 +1,96 @@
+EMP-class               Class "EMP" This class represents the ...
+EMPT-class              Class "EMPT" This class represents the ...
+EMP_GSEA_analysis       Gene set enrichment analysis.
+EMP_GSEA_plot           Gsea plot for enrichment result
+EMP_WGCNA_cluster_analysis
+                        WGCNA cluster analysis
+EMP_WGCNA_cor_analysis
+                        EMP_WGCNA_cor_analysis
+EMP_adjust_abundance    Adjust experssion or abundance for unexpected
+                        bias or batch effect
+EMP_alpha_analysis      Diversity Indices
+EMP_assay_extract       Extract assay data
+EMP_boxplot             Boxplot for EMPT result
+EMP_cluster_analysis    Identify clusters for sample or feature
+EMP_coldata_extract     Extract coldata
+EMP_collapse            Aggregates abundace or experssion from the same
+                        attributes in the coldata or rowdata
+EMP_cor_analysis        Correlation analysis
+EMP_decostand           Standardization Methods
+EMP_diff_analysis       Differential expression or abundance analysis
+EMP_dimension_analysis
+                        Dimension reduction of the abundance or
+                        experssion data
+EMP_easy_import         Easily import data into SummariseExperiment or
+                        MultiAssayExperiment
+EMP_enrich_analysis     Enrichment for EMPT object
+EMP_enrich_dotplot      Dotplot for enrichment result
+EMP_enrich_netplot      Netplot for enrichment result
+EMP_feature_convert     Covert feature of microbial taxonomy, gene
+                        experssion or compund abundance
+EMP_filter              Filer experssion or abundance data that match a
+                        condition
+EMP_fitline_plot        Two variable regression plot
+EMP_function_import     Import kegg data into SummariseExperiment
+EMP_heatmap_plot        EMP heatmap plot
+EMP_history             Get history from EMPT or EMP object
+EMP_identify_assay      Identify the most core experssion and abudnace
+                        from sparse data
+EMP_impute              Fast Imputation of Missing Values by Chained
+                        Random Forests
+EMP_marker_analysis     Marker discover based on classify or regression
+                        model
+EMP_message             Info output with style and color
+EMP_modify_assay        Modify assay in condition for some special
+                        cases
+EMP_multi_analysis      Multi analysis for diff reslut or enrichment
+EMP_network_analysis    Network analysis
+EMP_network_plot        Network plot
+EMP_normal_import       Import table data into SummariseExperiment
+EMP_result              Extract the existed result or inject external
+                        result into EMPT
+EMP_rowdata_extract     Extract rowdata
+EMP_rrarefy             Rarefaction abundance or experssion Richness
+EMP_sankey_plot         EMP_sankey_plot
+EMP_save_var            Save result into environment
+EMP_scatterplot         Scatterplot for EMPT result
+EMP_structure_plot      Structure plot for EMPT result
+EMP_summary             Visual charts for MultiAssayExperiment or EMP
+                        object
+EMP_taxonomy_import     Import microbial data into SummariseExperiment
+EMP_to_EMP1             Transfer microbial data from EasyMultiProfiler
+                        to EasyMciroPlot
+EMP_volcanol_plot       EMP volcanol plot
+EasyMultiProfiler       EasyMultiProfiler: An Efficient and Convenient
+                        R package in Multi-omics Down-Stream Analysis
+                        and Visualization
+MAE                     MAE
+NetEnrich               NetEnrich
+NetEnrich_rank          NetEnrich_rank
+NetPEA                  NetPEA
+NetPEA2                 NetPEA2 weighted NetPEA(EnrichNet2)
+RWR                     Random Walk with Restart
+build_gson              Build the KEGG gason file including KO, EC,
+                        compound.
+cmi                     Conditional mutual information
+geneID                  geneID generic
+geneInCategory          geneInCategory generic
+get_Xd                  get_Xd
+get_Xd2                 get_Xd2
+list2dataframe          Transform the result data of gene differential
+                        expression from list to dataframe
+multiEnrichResult-class
+                        Class "multiEnrichResult" This class represents
+                        the result of multi-omics ORA enrichment
+                        analysis.
+multiEnrichResult2enrichResult
+                        multiEnrichResult2enrichResult
+multiEnrichment         Multi-omics enrichment analysis
+multiGseaResult-class   Class "multiGseaResult" This class represents
+                        the result of multi-omics GSEA analysis
+multiNetEnrich          multiNetEnrich
+r                       Mutual information
+str_detect_multi        Multi-detect the presence/absence of a match
+top_detect              Detect the top or bottom number
+wide2long               wide2long
+wide2long_spMatrix      wide2long undirected spMatrix network

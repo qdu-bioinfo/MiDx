@@ -1,0 +1,15 @@
+EIGENnet                EIGENnet
+MDSnet                  MDSnet
+PCAnet                  PCAnet
+PROCRUSTESnet           PROCRUSTESnet
+assumptionCheck         Assumption Checking Function
+bridge                  Bridge Centrality
+coerce_to_adjacency     Coerce to adjacency matrix
+depression              Simulated Depression Profiles
+expectedInf             Expected Influence
+goldbricker             Goldbricker - Identifying redundant nodes in
+                        networks using compared correlations
+net_reduce              net_reduce
+plot.bridge             Plot "bridge" objects
+plot.expectedInf        Plot "expectedInf" objects
+social                  Simulated Social Engagement Data

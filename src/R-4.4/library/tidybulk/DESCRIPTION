@@ -1,0 +1,50 @@
+Type: Package
+Package: tidybulk
+Title: Brings transcriptomics to the tidyverse
+Version: 1.18.0
+Authors@R: c(person("Stefano", "Mangiola", email = "mangiolastefano@gmail.com",
+                  role = c("aut", "cre")),
+            person("Maria", "Doyle", email = "Maria.Doyle@petermac.org",
+            role = c("ctb"))
+                  )
+Description: This is a collection of utility functions that allow
+    to perform exploration of and calculations to RNA sequencing data, in
+    a modular, pipe-friendly and tidy fashion.
+License: GPL-3
+Depends: R (>= 4.4.0), ttservice (>= 0.3.6)
+Imports: tibble, readr, dplyr (>= 1.1.0), magrittr, tidyr, stringi,
+        stringr, rlang, purrr, tidyselect, preprocessCore, stats,
+        parallel, utils, lifecycle, scales, SummarizedExperiment,
+        GenomicRanges, methods, S4Vectors, crayon, Matrix
+Suggests: BiocStyle, testthat, vctrs, AnnotationDbi, BiocManager,
+        Rsubread, e1071, edgeR, limma, org.Hs.eg.db, org.Mm.eg.db, sva,
+        GGally, knitr, qpdf, covr, Seurat, KernSmooth, Rtsne, ggplot2,
+        widyr, clusterProfiler, msigdbr, DESeq2, broom, survival, boot,
+        betareg, tidyHeatmap, pasilla, ggrepel, devtools, functional,
+        survminer, tidySummarizedExperiment, markdown, uwot,
+        matrixStats, igraph, EGSEA, IRanges, here, glmmSeq, pbapply,
+        pbmcapply, lme4, glmmTMB, MASS, pkgconfig
+VignetteBuilder: knitr
+RdMacros: lifecycle
+Biarch: true
+biocViews: AssayDomain, Infrastructure, RNASeq, DifferentialExpression,
+        GeneExpression, Normalization, Clustering, QualityControl,
+        Sequencing, Transcription, Transcriptomics
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
+LazyDataCompression: xz
+URL: https://github.com/stemangiola/tidybulk
+BugReports: https://github.com/stemangiola/tidybulk/issues
+git_url: https://git.bioconductor.org/packages/tidybulk
+git_branch: RELEASE_3_20
+git_last_commit: 1f836b7
+git_last_commit_date: 2024-10-29
+Repository: Bioconductor 3.20
+Date/Publication: 2024-10-29
+NeedsCompilation: no
+Packaged: 2024-10-30 06:05:45 UTC; biocbuild
+Author: Stefano Mangiola [aut, cre],
+  Maria Doyle [ctb]
+Maintainer: Stefano Mangiola <mangiolastefano@gmail.com>
+Built: R 4.4.1; ; 2024-10-30 16:55:46 UTC; windows

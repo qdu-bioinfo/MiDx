@@ -1,0 +1,61 @@
+# exportPattern("^[[:alpha:]]+")
+
+
+# --- Packages mgm depends on ---
+# import(matrixcalc) # archived on CRAN
+import(stringr)
+import(Hmisc)
+import(qgraph) # for FactorGraph()
+import(gtools)
+#import(glmnet) # now specificly below
+
+#importFrom("gtools", "permutations")
+importFrom("glmnet", "coef.glmnet", "glmnet", "cv.glmnet")
+
+
+# Recommended by build check
+importFrom("stats", "as.formula", "coef", "dnorm", "dpois",
+             "model.matrix", "var", "quantile")
+importFrom("utils", "combn", "setTxtProgressBar", "txtProgressBar")
+importFrom("stats", "rnorm", "rpois")
+importFrom("graphics", "abline", "axis", "layout", "par", "plot.new",
+             "plot.window", "points", "segments", "text")
+importFrom("graphics", "rect")
+importFrom("stats", "sd")
+
+
+# --- Exported functions ---
+export(mgm)
+export(mvar)
+
+export(tvmgm)
+export(tvmvar)
+export(bwSelect)
+
+
+export(mgmsampler)
+export(mvarsampler)
+export(tvmgmsampler)
+export(tvmvarsampler)
+
+export(resample)
+export(showInteraction)
+export(plotRes)
+
+export(FactorGraph)
+export(condition)
+
+
+# Exported S3 Methods
+S3method(predict, mgm)
+S3method(print, mgm)
+S3method(print, resample)
+S3method(print, int)
+
+
+# Export old functions with defunct msg
+export(mgmfit)
+export(var.mgm)
+export(tv.mgmfit)
+export(tv_var.mgm)
+

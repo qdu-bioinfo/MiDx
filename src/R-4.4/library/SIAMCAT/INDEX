@@ -1,0 +1,62 @@
+SIAMCAT-package         SIAMCAT: Statistical Inference of Associations
+                        between Microbial Communities And host
+                        phenoTypes
+add.meta.pred           Add metadata as predictors
+assoc_param             Retrieve the list of parameters for association
+                        testing from a SIAMCAT object
+association.plot        Visualize associations between features and
+                        classes
+associations            Retrieve the results of association testing
+                        from a SIAMCAT object
+check.associations      Calculate associations between features and
+                        labels
+check.confounders       Check for potential confounders in the metadata
+create.data.split       Split a dataset into training and a test sets.
+create.label            Create a label list
+data_split              Retrieve the data split from a SIAMCAT object
+eval_data               Retrieve the evaluation metrics from a SIAMCAT
+                        object
+evaluate.predictions    Evaluate prediction results
+feat.crc.zeller         Example feature matrix
+feature_type            Retrieve the feature type used for model
+                        training from a SIAMCAT object
+feature_weights         Retrieve the matrix of feature weights from a
+                        SIAMCAT object
+filt_params             Retrieve the list of parameters for feature
+                        filtering from a SIAMCAT object
+filter.features         Perform unsupervised feature filtering.
+filter.label            Filter the label of a SIMACAT object
+get.filt_feat.matrix    Retrieve the filtered features from a SIAMCAT
+                        object
+get.norm_feat.matrix    Retrieve the normalized features from a SIAMCAT
+                        object
+get.orig_feat.matrix    Retrieve the original features from a SIAMCAT
+                        object
+label                   Retrieve the label from a SIAMCAT object
+make.predictions        Make predictions on a test set
+meta                    Retrieve the metadata from a SIAMCAT object
+meta.crc.zeller         Example metadata matrix
+model.evaluation.plot   Model Evaluation Plot
+model.interpretation.plot
+                        Model Interpretation Plot
+model_type              Retrieve the machine learning method from a
+                        SIAMCAT object
+models                  Retrieve list of trained models from a SIAMCAT
+                        object
+norm_params             Retrieve the list of parameters for feature
+                        normalization from a SIAMCAT object
+normalize.features      Perform feature normalization
+pred_matrix             Retrieve the prediction matrix from a SIAMCAT
+                        object
+read.label              Read label file
+select.samples          Select samples based on metadata
+siamcat                 SIAMCAT constructor function
+siamcat-class           The S4 SIAMCAT class
+siamcat_example         SIAMCAT example
+train.model             Model training
+validate.data           Validate samples in labels, features, and
+                        metadata
+volcano.plot            Visualize associations between features and
+                        classes as volcano plot
+weight_matrix           Retrieve the weight matrix from a SIAMCAT
+                        object

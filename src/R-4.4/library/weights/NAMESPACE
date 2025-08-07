@@ -1,0 +1,23 @@
+useDynLib(weights, .registration = TRUE)
+
+export("wtd.hist", "wtd.chi.sq", "wtd.t.test", "wtd.cor", "nalevs", "dummify", "wpct", "starmaker", "stdz", "rd")
+export(findwtdinteraction, plotwtdinteraction, plotinteractpreds, findwtdinteraction.mira, findwtdinteraction.default, findwtdinteraction.lmerMod, findwtdinteraction.list, findwtdinteraction.multinom, plotinteractpreds.default, plotinteractpreds.interactpreds, plotinteractpreds.interactpredsmnl)
+export(wtd.cors)
+
+importFrom(Hmisc, wtd.table, wtd.mean, wtd.var)
+importFrom(mice, pool.scalar)
+importFrom(gdata, drop.levels)
+importFrom(lme4, bootMer)
+importFrom("grDevices", "nclass.FD", "nclass.Sturges", "nclass.scott", "gray")
+importFrom("stats", "coef", "lm", "model.matrix", "pchisq", "pt",
+     "weights", "xtabs", "cor", "predict", "var", "na.omit", "sd")
+importFrom("graphics", "axis", "lines", "par", "plot", "polygon")
+
+S3method(findwtdinteraction, default)
+S3method(findwtdinteraction, mira)
+S3method(findwtdinteraction, lmerMod)
+S3method(findwtdinteraction, list)
+S3method(findwtdinteraction, multinom)
+S3method(plotinteractpreds, default)
+S3method(plotinteractpreds, interactpreds)
+S3method(plotinteractpreds, interactpredsmnl)

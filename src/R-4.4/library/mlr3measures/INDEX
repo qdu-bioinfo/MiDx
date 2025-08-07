@@ -1,0 +1,59 @@
+acc                     Classification Accuracy
+ae                      Absolute Error (per observation)
+ape                     Absolute Percentage Error (per observation)
+auc                     Area Under the ROC Curve
+bacc                    Balanced Accuracy
+bbrier                  Binary Brier Score
+bias                    Bias
+ce                      Classification Error
+confusion_matrix        Calculate Binary Confusion Matrix
+dor                     Diagnostic Odds Ratio
+fbeta                   F-beta Score
+fdr                     False Discovery Rate
+fn                      False Negatives
+fnr                     False Negative Rate
+fomr                    False Omission Rate
+fp                      False Positives
+fpr                     False Positive Rate
+gmean                   Geometric Mean of Recall and Specificity
+gpr                     Geometric Mean of Precision and Recall
+jaccard                 Jaccard Similarity Index
+ktau                    Kendall's tau
+linex                   Linear-Exponential Loss (per observation)
+logloss                 Log Loss
+mae                     Mean Absolute Error
+mape                    Mean Absolute Percent Error
+mauc_aunu               Multiclass AUC Scores
+maxae                   Max Absolute Error
+maxse                   Max Squared Error
+mbrier                  Multiclass Brier Score
+mcc                     Matthews Correlation Coefficient
+measures                Measure Registry
+medae                   Median Absolute Error
+medse                   Median Squared Error
+mlr3measures-package    mlr3measures: Performance Measures for 'mlr3'
+mse                     Mean Squared Error
+msle                    Mean Squared Log Error
+npv                     Negative Predictive Value
+pbias                   Percent Bias
+phi                     Phi Coefficient Similarity
+pinball                 Average Pinball Loss
+ppv                     Positive Predictive Value
+prauc                   Area Under the Precision-Recall Curve
+rae                     Relative Absolute Error
+rmse                    Root Mean Squared Error
+rmsle                   Root Mean Squared Log Error
+rrse                    Root Relative Squared Error
+rse                     Relative Squared Error
+rsq                     R Squared
+sae                     Sum of Absolute Errors
+se                      Squared Error (per observation)
+sle                     Squared Log Error (per observation)
+smape                   Symmetric Mean Absolute Percent Error
+srho                    Spearman's rho
+sse                     Sum of Squared Errors
+tn                      True Negatives
+tnr                     True Negative Rate
+tp                      True Positives
+tpr                     True Positive Rate
+zero_one                Zero-One Classification Loss (per observation)

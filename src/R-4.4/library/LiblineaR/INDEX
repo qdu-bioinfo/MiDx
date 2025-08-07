@@ -1,0 +1,5 @@
+LiblineaR               Linear predictive models estimation based on
+                        the LIBLINEAR C/C++ Library.
+heuristicC              Fast Heuristics For The Estimation Of the C
+                        Constant Of A Support Vector Machine.
+predict.LiblineaR       Predictions with LiblineaR model

@@ -1,0 +1,302 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb}
+%\usepackage{mydef2}
+\usepackage[round]{natbib}
+\usepackage{parskip,url}
+\usepackage{graphicx,subfig}
+\setlength{\topmargin}{0cm}
+\addtolength{\textheight}{2cm}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.5}
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\floatpagefraction}{0.8}
+%\lhead{}
+%\input{title}
+%\VignetteIndexEntry{Plotting in the metap package}
+\title{Plotting in the \pkg{metap} package}
+\author{Michael Dewey}
+\newcommand{\pkg}[1]{\texttt{#1}}
+\newcommand{\func}[1]{\texttt{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\codefont}{\footnotesize}
+\newcommand{\mygraph}[3]{%
+\begin{figure}[htbp]
+\includegraphics[height=6cm,width=10cm]{#1}
+\caption{#2}
+\label{#3}
+\end{figure}
+}
+\newcommand{\twograph}[8]{%
+\begin{figure}[htbp]
+\subfloat[#2\label{#3}]{\includegraphics[height=6cm,width=7cm]{#1}}%
+\subfloat[#5\label{#6}]{\includegraphics[height=6cm,width=7cm]{#4}}
+\caption{#7}
+\label{#8}
+\end{figure}
+}
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+\subsection{What is this document for?}
+
+This document describes how and why to plot
+$p$--values in the \pkg{metap} package.
+Examining the $p$--values
+graphically or otherwise before subjecting them to further analysis
+is useful to provide a visual impression
+of their distribution and to check for excess $p$--values at
+both extremes..
+Three functions are provided for this purpose:
+\func{albatros}, \func{plotp},
+and \func{schweder}.
+
+
+\subsection{Example datasets}
+As our example we use various data-sets:
+\begin{description}
+\item[\func{teachexpect}]
+Effect of teacher expectations on student IQ \citep{becker94}
+\item[\code{validity}]
+The validity of
+student ratings of their instructors \citep{becker94}.
+\item[\code{zhang}]
+The effect of the timing of exercise interventions
+for patients with cardiovascular disease \citep{zhang16}
+\end{description}
+
+{\codefont
+<<>>=
+library(metap)
+data(dat.metap)
+teach <- dat.metap$teachexpect
+validity <- dat.metap$validity$p
+zhang <- dat.metap$zhang
+print(validity)
+@
+}
+
+\section{Plotting using \func{plotp}}
+
+The \func{plotp} provides a Q--Q plot of
+the $p$--values to detect departure from
+the uniform distribution.
+
+<<fig=TRUE,label=plotp,include=FALSE>>=
+plotp(validity, main = "Validity data")
+@
+
+\twograph{plotmetap-plotp}{Q--Q plot from \func{plotp}}{plotp}{plotmetap-plotfunc}{Legacy Q--Q plot}{plotfunc}{Plots of validity data}{plotvalid}
+%\mygraph{plotmetap-plotp}{Q--Q plot from \func{plotp}}{plotp}
+%\mygraph{plotmetap-plotfunc}{Q--Q plot an object of class \func{metap}}{plotfunc}
+
+Figure \ref{plotp} shows the resulting plot.
+The line represents a fit to the uniform
+distribution and the polygon is a simultaneous
+confidence region such that if any point lies
+outside it we reject the null hypothesis
+that the points are drawn iid from a uniform.
+Small $p$--values are to the left of the plot
+
+The format of plot shown in Figure \ref{plotp} was first introduced
+in version 1.8 of \func{metap}.
+The previous plotting function is still available
+and it is possible to produce this plot by setting
+the \func{plotversion} parameter to "old" in the call
+to \func{plotp}.
+An example is shown in Figure \ref{plotfunc}
+which first calls \func{sumlog}.
+The
+legacy one will always remain an option.
+
+{\codefont
+<<fig=TRUE,label=plotfunc,include=FALSE>>=
+plotp(validity, main = "Validity data", plotversion = "old")
+@
+}
+
+Note that the \func{plot} method for objects
+of class \code{"metap"} uses the new version
+of the plot. This change was introduced in version 1.9
+of this package.
+
+There are many possible options which can be passed to
+the plotting function and hence
+to the \func{qqconf} plotting
+routine.
+The documentation for
+the \func{qqconf} package should be consulted for details.
+The \func{qqconf} package vignette is also very helpful.
+We will look at one of those options here though.
+
+{\codefont
+<<fig=TRUE,label=teachlinear,include=FALSE>>=
+plotp(teach)
+@
+}
+{\codefont
+<<fig=TRUE,label=teachlog,include=FALSE>>=
+plotp(teach, log10 = TRUE)
+@
+}
+\twograph{plotmetap-teachlinear}{Linear scaling}{teachlinear}{plotmetap-teachlog}{Log scaling}{teachlog}{Teacher expectancy data}{teach}
+
+Figure \ref{teach} shows the teacher expectancy data using the default
+scaling in sub--figure \subref{teachlinear}.
+It is hard to see whether some of the points fall
+outside the boundary.
+However if we use the log--scaling option shown in sub--figure
+\subref{teachlog} it becomes much clearer.
+Note that the scale is reversed between the
+sub--plots and in \subref{teachlog}
+the small $p$--values are now on the right.
+So the cluster of points near the bottom left of the
+sub--figure \subref{teachlinear} are hard to distinguish
+as to whether they lie inside the boundary or not.
+In the log scaling of sub--figure \subref{teachlog}
+where they appear towards the top right
+it is much clearer that one does
+fall outside the boundary and two others are
+borderline.
+This reflects the fact that for most of the methods in the \func{metap} package
+the overall $p$--value is below 0.05.
+For instance using the logit method we have
+
+{\codefont
+<<>>=
+logitp(teach)
+@
+}
+
+\section{Plotting using \func{schweder}}
+
+A function \func{schweder} provides plots
+with a variety of informative lines
+superimposed.
+It plots the ordered $p$--values, $p_{[i]}: p_{[1]} \le \dots{}
+p_{[2]} \le \dots{} p_{[i]} \dots{}
+\le p_{[k-1]} \le p_{[k]}$, against
+$i$.
+Although the original motivation
+for the plot is \citet{schweder82}
+the function uses a different choice of axes due
+to
+\citet{benjamini00}.
+We will use an example dataset on the validity of student
+ratings quoted in \citet{becker94}.
+Figure \ref{simple} shows the plot from \func{schweder}.
+
+<<fig=TRUE,label=simple,include=FALSE>>=
+schweder(validity)
+@
+
+\func{schweder} also offers the possibility of drawing one of 
+a number of straight line summaries.
+The three possible straight line summaries are
+shown in Figure \ref{withlines} and are:
+
+\begin{itemize}
+\item
+the lowest slope line of Benjaimin and Hochberg
+which is drawn by default
+as solid,
+\item
+a least squares line drawn passing through the point
+$k+1, 1$
+and using a specified fraction of the points
+which is drawn by default as dotted,
+\item
+a line with user specified
+intercept and slope
+which is drawn by default as dashed.
+\end{itemize}
+
+<<fig=TRUE,label=withlines,include=FALSE>>=
+schweder(validity, drawline = c("bh", "ls", "ab"),
+   ls.control = list(frac = 0.5), ab.control = list(a = 0, b = 0.01))
+@
+\twograph{plotmetap-simple}{Simple graph}{simple}{plotmetap-withlines}{With lines}{withlines}{Output from schweder}{schweder}
+
+\section{The albatros plot}
+
+The albatros plot was introduced in \citet{harrison17}
+which should be consulted for more details.
+Basically it consists of plotting a possibly transformed sample
+size against the transformed $p$--values.
+The default is to use $\sqrt{N}$ for the
+$y$--axis and a log transformation for the $x$--axis.
+The plot also contains contours of constant
+effect size.
+A number of possible options are available for effect size
+type: correlation,
+standardised mean difference, and odds ratio.
+
+<<fig=TRUE,label=albatros,include=FALSE>>=
+validity <- dat.metap$validity
+fit.v <- albatros(validity$p, validity$n,
+   contours = list(type = "corr", contvals = c(0.25, 0.5, 0.8), ltys = 1:3),
+      axes = list(ylimit = c(1,200),  lefttext = "Negative correlation",
+         righttext = "Positive correlation"),
+   main = "Validity")
+@
+
+\mygraph{plotmetap-albatros}{Albatros plot from of the validity data}{albatros}
+
+Figure \ref{albatros} shows the result.
+Most of the points clearly correspond to positive
+and substantial correlations although a
+few are in the
+opposite direction although not far from the null
+$p$--value (0.5).
+
+Of course if the actual effect sizes are available it would be
+better to use one of the conventional methods for
+meta--analysing them.
+\citet{harrison17} outline possible
+use cases for this method even so.
+
+If the studies come from different groups one might
+use meta--regression with a moderator for group
+membership if one had the effect sizes.
+In the absence of effect sizes
+the albatros plot can display the points using different
+symbols for groups.
+This would enable a visual check on whether the groups
+differed.
+
+<<fig=TRUE,label=zhang,include=FALSE>>=
+fit.z <- albatros(zhang$p, zhang$n,
+   contours = list(type = "smd", contvals = c(0.25, 0.5, 1), ltys = 1:3),
+   plotpars = list(pchs = letters[unclass(dat.metap$zhang$phase)]),
+   axes = list(lefttext = "Favours control", righttext = "Favours exercise"),
+   main = "Zhang"
+   )
+@
+
+\mygraph{plotmetap-zhang}{Albatros plot of the Zhang et al data}{zhang}
+
+Figure \ref{zhang} shows an example using the Zhang et al data-set.
+The studies involved come from three groups
+corresponding to three different periods o
+initiation of exercise.
+The points
+are labelled accordingly:
+"a" initiation during the acute phase, "b"
+during the healing phase and "c" during the healed phase.
+The difference between the groups is quite clear here.
+In fact in \citet{zhang16} the results are handled with
+stratification into three separate analyses
+and meta--regression was not used.
+
+
+If some studies had given effect sizes but others did not then
+an albatros plot with the points marked for group
+membership and with appropriate contour lines
+would provide a visual check on whether the unavailable
+effect sizes were similar to the available ones.
+
+\bibliography{metap}
+\bibliographystyle{plainnat}
+\end{document}
+

@@ -1,0 +1,17 @@
+bibentry(bibtype = "Article",
+  title        = "{mgm}: Estimating Time-Varying Mixed Graphical Models in High-Dimensional Data",
+  author       = c(person(given = c("Jonas", "M.", "B."),
+                          family = "Haslbeck",
+                          email = "jonashaslbeck@gmail.com"),
+                   person(given = c("Lourens", "J."),
+                          family = "Waldorp")),
+  journal      = "Journal of Statistical Software",
+  year         = "2020",
+  volume       = "93",
+  number       = "8",
+  pages        = "1--46",
+  doi          = "10.18637/jss.v093.i08",
+
+  header       = "To cite mgm in publications use:"
+)
+

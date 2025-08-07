@@ -1,0 +1,44 @@
+Package: DOSE
+Type: Package
+Title: Disease Ontology Semantic and Enrichment analysis
+Version: 4.0.1
+Authors@R: c( person(given = "Guangchuang", family = "Yu",        email = "guangchuangyu@gmail.com",   role = c("aut", "cre")),
+              person(given = "Li-Gen",      family = "Wang",      email = "reeganwang020@gmail.com",   role = "ctb"),
+              person(given = "Vladislav",   family = "Petyuk",    email = "petyuk@gmail.com",          role = "ctb"),
+              person(given = "Giovanni",    family = "Dall'Olio", email = "giovanni.dallolio@upf.edu", role = "ctb"))
+Maintainer: Guangchuang Yu <guangchuangyu@gmail.com>
+Description: This package implements five methods proposed by
+    Resnik, Schlicker, Jiang, Lin and Wang respectively
+    for measuring semantic similarities among DO terms and
+    gene products. Enrichment analyses including hypergeometric
+    model and gene set enrichment analysis are also implemented
+    for discovering disease associations of high-throughput
+    biological data.
+Depends: R (>= 3.5.0)
+Imports: AnnotationDbi, BiocParallel, fgsea, ggplot2, GOSemSim (>=
+        2.31.2), methods, qvalue, reshape2, stats, utils, yulab.utils
+        (>= 0.1.6)
+Suggests: prettydoc, clusterProfiler, gson (>= 0.0.5), knitr, memoise,
+        org.Hs.eg.db, rmarkdown, testthat
+VignetteBuilder: knitr
+ByteCompile: true
+License: Artistic-2.0
+Encoding: UTF-8
+URL: https://yulab-smu.top/contribution-knowledge-mining/
+BugReports: https://github.com/GuangchuangYu/DOSE/issues
+Packaged: 2025-03-27 22:54:15 UTC; biocbuild
+biocViews: Annotation, Visualization, MultipleComparison,
+        GeneSetEnrichment, Pathways, Software
+RoxygenNote: 7.3.2
+git_url: https://git.bioconductor.org/packages/DOSE
+git_branch: RELEASE_3_20
+git_last_commit: cc63eec
+git_last_commit_date: 2025-03-24
+Repository: Bioconductor 3.20
+Date/Publication: 2025-03-27
+NeedsCompilation: no
+Author: Guangchuang Yu [aut, cre],
+  Li-Gen Wang [ctb],
+  Vladislav Petyuk [ctb],
+  Giovanni Dall'Olio [ctb]
+Built: R 4.4.3; ; 2025-03-28 12:18:24 UTC; windows

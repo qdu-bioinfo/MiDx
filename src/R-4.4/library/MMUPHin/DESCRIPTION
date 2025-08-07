@@ -1,0 +1,33 @@
+Package: MMUPHin
+Type: Package
+Title: Meta-analysis Methods with Uniform Pipeline for Heterogeneity in
+        Microbiome Studies
+Version: 1.20.0
+Author: Siyuan Ma
+Maintainer: Siyuan MA <syma.research@gmail.com>
+Description: MMUPHin is an R package for meta-analysis tasks of microbiome 
+    cohorts. It has function interfaces for:
+    a) covariate-controlled batch- and cohort effect adjustment, 
+    b) meta-analysis differential abundance testing, 
+    c) meta-analysis unsupervised discrete structure (clustering) discovery, and 
+    d) meta-analysis unsupervised continuous structure discovery.
+License: MIT + file LICENSE
+Encoding: UTF-8
+RoxygenNote: 7.2.1
+VignetteBuilder: knitr
+SystemRequirements: glpk (>= 4.57)
+Depends: R (>= 3.6)
+Imports: Maaslin2, metafor, fpc, igraph, ggplot2, dplyr, tidyr,
+        stringr, cowplot, utils, stats, grDevices
+Suggests: testthat, BiocStyle, knitr, rmarkdown, magrittr, vegan,
+        phyloseq, curatedMetagenomicData, genefilter
+biocViews: Metagenomics, Microbiome, BatchEffect
+git_url: https://git.bioconductor.org/packages/MMUPHin
+git_branch: RELEASE_3_20
+git_last_commit: 0f730a6
+git_last_commit_date: 2024-10-29
+Repository: Bioconductor 3.20
+Date/Publication: 2025-01-02
+NeedsCompilation: no
+Packaged: 2025-01-03 01:20:16 UTC; biocbuild
+Built: R 4.4.2; ; 2025-01-03 13:44:56 UTC; windows

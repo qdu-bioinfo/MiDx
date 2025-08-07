@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Huang Lin^1" />
+<meta name="author" content="^1University of Maryland, College Park, MD 20742" />
+
+<meta name="date" content="2025-01-09" />
+
+<title>ANCOM Tutorial</title>
+
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">ANCOM Tutorial</h1>
+<h4 class="author">Huang Lin<span class="math inline">\(^1\)</span></h4>
+<h4 class="author"><span class="math inline">\(^1\)</span>University of Maryland, College Park, MD 20742</h4>
+<h4 class="date">January 09, 2025</h4>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">message =</span> <span class="ot">FALSE</span>, <span class="dt">warning =</span> <span class="ot">FALSE</span>, <span class="dt">comment =</span> <span class="ot">NA</span>,</span>
+<span id="cb1-2"><a href="#cb1-2"></a>                      <span class="dt">fig.width =</span> <span class="fl">6.25</span>, <span class="dt">fig.height =</span> <span class="dv">5</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">library</span>(ANCOMBC)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<div id="introduction" class="section level1">
+<h1>1. Introduction</h1>
+<p>Analysis of Composition of Microbiomes (ANCOM) <span class="citation">(Mandal et al. 2015)</span> is a differential abundance (DA) analysis for microbial absolute abundances. It accounts for the compositionality of microbiome data by performing the additive log ratio (ALR) transformation. ANCOM employs a heuristic strategy to declare taxa that are significantly differentially abundant. For a given taxon, the output W statistic represents the number ALR transformed models where the taxon is differentially abundant with regard to the variable of interest. The larger the value of W, the more likely the taxon is differentially abundant. For more details, please refer to the <a href="https://www.tandfonline.com/doi/full/10.3402/mehd.v26.27663">ANCOM</a> paper.</p>
+</div>
+<div id="installation" class="section level1">
+<h1>2. Installation</h1>
+<p>Download package.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb2-2"><a href="#cb2-2"></a>    <span class="kw">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a>BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">&quot;ANCOMBC&quot;</span>)</span></code></pre></div>
+<p>Load the package.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">library</span>(ANCOMBC)</span></code></pre></div>
+</div>
+<div id="run-ancom-on-a-real-cross-sectional-dataset" class="section level1 tabset">
+<h1>3. Run ANCOM on a real cross-sectional dataset</h1>
+<div id="import-example-data" class="section level2">
+<h2>3.1 Import example data</h2>
+<p>The HITChip Atlas dataset contains genus-level microbiota profiling with HITChip for 1006 western adults with no reported health complications, reported in <span class="citation">(Lahti et al. 2014)</span>. The dataset is available via the microbiome R package <span class="citation">(Lahti et al. 2017)</span> in phyloseq <span class="citation">(McMurdie and Holmes 2013)</span> format. In this tutorial, we consider the following covariates:</p>
+<ul>
+<li><p>Continuous covariates: “age”</p></li>
+<li><p>Categorical covariates: “region”, “bmi”</p></li>
+<li><p>The group variable of interest: “bmi”</p>
+<ul>
+<li><p>Three groups: “lean”, “overweight”, “obese”</p></li>
+<li><p>The reference group: “obese”</p></li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">data</span>(atlas1006, <span class="dt">package =</span> <span class="st">&quot;microbiome&quot;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># Subset to baseline</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>pseq =<span class="st"> </span>phyloseq<span class="op">::</span><span class="kw">subset_samples</span>(atlas1006, time <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)</span>
+<span id="cb4-5"><a href="#cb4-5"></a></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co"># Re-code the bmi group</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>meta_data =<span class="st"> </span>microbiome<span class="op">::</span><span class="kw">meta</span>(pseq)</span>
+<span id="cb4-8"><a href="#cb4-8"></a>meta_data<span class="op">$</span>bmi =<span class="st"> </span><span class="kw">recode</span>(meta_data<span class="op">$</span>bmi_group,</span>
+<span id="cb4-9"><a href="#cb4-9"></a>                       <span class="dt">obese =</span> <span class="st">&quot;obese&quot;</span>,</span>
+<span id="cb4-10"><a href="#cb4-10"></a>                       <span class="dt">severeobese =</span> <span class="st">&quot;obese&quot;</span>,</span>
+<span id="cb4-11"><a href="#cb4-11"></a>                       <span class="dt">morbidobese =</span> <span class="st">&quot;obese&quot;</span>)</span>
+<span id="cb4-12"><a href="#cb4-12"></a></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co"># Note that by default, levels of a categorical variable in R are sorted </span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co"># alphabetically. In this case, the reference level for `bmi` will be </span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co"># `lean`. To manually change the reference level, for instance, setting `obese`</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co"># as the reference level, use:</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a>meta_data<span class="op">$</span>bmi =<span class="st"> </span><span class="kw">factor</span>(meta_data<span class="op">$</span>bmi, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;obese&quot;</span>, <span class="st">&quot;overweight&quot;</span>, <span class="st">&quot;lean&quot;</span>))</span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co"># You can verify the change by checking:</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co"># levels(meta_data$bmi)</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="co"># Create the region variable</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a>meta_data<span class="op">$</span>region =<span class="st"> </span><span class="kw">recode</span>(<span class="kw">as.character</span>(meta_data<span class="op">$</span>nationality),</span>
+<span id="cb4-23"><a href="#cb4-23"></a>                          <span class="dt">Scandinavia =</span> <span class="st">&quot;NE&quot;</span>, <span class="dt">UKIE =</span> <span class="st">&quot;NE&quot;</span>, <span class="dt">SouthEurope =</span> <span class="st">&quot;SE&quot;</span>, </span>
+<span id="cb4-24"><a href="#cb4-24"></a>                          <span class="dt">CentralEurope =</span> <span class="st">&quot;CE&quot;</span>, <span class="dt">EasternEurope =</span> <span class="st">&quot;EE&quot;</span>,</span>
+<span id="cb4-25"><a href="#cb4-25"></a>                          <span class="dt">.missing =</span> <span class="st">&quot;unknown&quot;</span>)</span>
+<span id="cb4-26"><a href="#cb4-26"></a></span>
+<span id="cb4-27"><a href="#cb4-27"></a>phyloseq<span class="op">::</span><span class="kw">sample_data</span>(pseq) =<span class="st"> </span>meta_data</span>
+<span id="cb4-28"><a href="#cb4-28"></a></span>
+<span id="cb4-29"><a href="#cb4-29"></a><span class="co"># Subset to lean, overweight, and obese subjects</span></span>
+<span id="cb4-30"><a href="#cb4-30"></a>pseq =<span class="st"> </span>phyloseq<span class="op">::</span><span class="kw">subset_samples</span>(pseq, bmi <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;lean&quot;</span>, <span class="st">&quot;overweight&quot;</span>, <span class="st">&quot;obese&quot;</span>))</span>
+<span id="cb4-31"><a href="#cb4-31"></a><span class="co"># Discard &quot;EE&quot; as it contains only 1 subject</span></span>
+<span id="cb4-32"><a href="#cb4-32"></a><span class="co"># Discard subjects with missing values of region</span></span>
+<span id="cb4-33"><a href="#cb4-33"></a>pseq =<span class="st"> </span>phyloseq<span class="op">::</span><span class="kw">subset_samples</span>(pseq, <span class="op">!</span><span class="st"> </span>region <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;EE&quot;</span>, <span class="st">&quot;unknown&quot;</span>))</span>
+<span id="cb4-34"><a href="#cb4-34"></a></span>
+<span id="cb4-35"><a href="#cb4-35"></a><span class="kw">print</span>(pseq)</span></code></pre></div>
+<pre><code>phyloseq-class experiment-level object
+otu_table()   OTU Table:         [ 130 taxa and 873 samples ]
+sample_data() Sample Data:       [ 873 samples by 12 sample variables ]
+tax_table()   Taxonomy Table:    [ 130 taxa by 3 taxonomic ranks ]</code></pre>
+</div>
+<div id="run-ancom-function-using-phyloseq-data" class="section level2">
+<h2>3.2 Run <code>ancom</code> function using <code>phyloseq</code> data</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a>out =<span class="st"> </span><span class="kw">ancom</span>(<span class="dt">data =</span> pseq, <span class="dt">tax_level =</span> <span class="st">&quot;Family&quot;</span>, <span class="dt">meta_data =</span> <span class="ot">NULL</span>,</span>
+<span id="cb6-3"><a href="#cb6-3"></a>            <span class="dt">p_adj_method =</span> <span class="st">&quot;holm&quot;</span>, <span class="dt">prv_cut =</span> <span class="fl">0.10</span>,</span>
+<span id="cb6-4"><a href="#cb6-4"></a>            <span class="dt">lib_cut =</span> <span class="dv">1000</span>, <span class="dt">main_var =</span> <span class="st">&quot;bmi&quot;</span>, <span class="dt">adj_formula =</span> <span class="st">&quot;age + region&quot;</span>, </span>
+<span id="cb6-5"><a href="#cb6-5"></a>            <span class="dt">rand_formula =</span> <span class="ot">NULL</span>, <span class="dt">lme_control =</span> <span class="ot">NULL</span>, <span class="dt">struc_zero =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>            <span class="dt">neg_lb =</span> <span class="ot">TRUE</span>, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">n_cl =</span> <span class="dv">2</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb6-7"><a href="#cb6-7"></a></span>
+<span id="cb6-8"><a href="#cb6-8"></a>res =<span class="st"> </span>out<span class="op">$</span>res</span>
+<span id="cb6-9"><a href="#cb6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co"># Similarly, if the main variable of interest is continuous, such as age, the</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co"># ancom model can be specified as</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co"># out = ancom(data = pseq, tax_level = &quot;Family&quot;, meta_data = NULL,</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#             p_adj_method = &quot;holm&quot;, prv_cut = 0.10,</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#             lib_cut = 1000, main_var = &quot;age&quot;, adj_formula = &quot;bmi + region&quot;,</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#             rand_formula = NULL, lme_control = NULL, struc_zero = FALSE,</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#             neg_lb = FALSE, alpha = 0.05, n_cl = 2, verbose = TRUE)</span></span></code></pre></div>
+</div>
+<div id="scatter-plot-for-w-statistics" class="section level2">
+<h2>3.3 Scatter plot for W statistics</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>q_val =<span class="st"> </span>out<span class="op">$</span>q_data</span>
+<span id="cb7-2"><a href="#cb7-2"></a>beta_val =<span class="st"> </span>out<span class="op">$</span>beta_data</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co"># Only consider the effect sizes with the corresponding q-value less than alpha</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>beta_val =<span class="st"> </span>beta_val <span class="op">*</span><span class="st"> </span>(q_val <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>) </span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co"># Choose the maximum of beta&#39;s as the effect size</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>beta_pos =<span class="st"> </span><span class="kw">apply</span>(<span class="kw">abs</span>(beta_val), <span class="dv">2</span>, which.max) </span>
+<span id="cb7-7"><a href="#cb7-7"></a>beta_max =<span class="st"> </span><span class="kw">vapply</span>(<span class="kw">seq_along</span>(beta_pos), <span class="cf">function</span>(i) </span>
+<span id="cb7-8"><a href="#cb7-8"></a>    beta_val[beta_pos[i], i], <span class="dt">FUN.VALUE =</span> <span class="kw">double</span>(<span class="dv">1</span>))</span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="co"># Number of taxa except structural zeros</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>n_taxa =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(out<span class="op">$</span>zero_ind), </span>
+<span id="cb7-11"><a href="#cb7-11"></a>                <span class="kw">nrow</span>(tse), </span>
+<span id="cb7-12"><a href="#cb7-12"></a>                <span class="kw">sum</span>(<span class="kw">apply</span>(out<span class="op">$</span>zero_ind[, <span class="dv">-1</span>], <span class="dv">1</span>, sum) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>))</span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co"># Cutoff values for declaring differentially abundant taxa</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a>cut_off =<span class="st"> </span><span class="fl">0.7</span> <span class="op">*</span><span class="st"> </span>(n_taxa <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb7-15"><a href="#cb7-15"></a></span>
+<span id="cb7-16"><a href="#cb7-16"></a>df_fig_w =<span class="st"> </span>res <span class="op">%&gt;%</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">beta =</span> beta_max,</span>
+<span id="cb7-18"><a href="#cb7-18"></a>                <span class="dt">direct =</span> <span class="kw">case_when</span>(</span>
+<span id="cb7-19"><a href="#cb7-19"></a>                  detected_<span class="fl">0.7</span> <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span> <span class="op">&amp;</span><span class="st"> </span>beta <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">~</span><span class="st"> &quot;Positive&quot;</span>,</span>
+<span id="cb7-20"><a href="#cb7-20"></a>                  detected_<span class="fl">0.7</span> <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span> <span class="op">&amp;</span><span class="st"> </span>beta <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span> <span class="op">~</span><span class="st"> &quot;Negative&quot;</span>,</span>
+<span id="cb7-21"><a href="#cb7-21"></a>                  <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;Not Significant&quot;</span></span>
+<span id="cb7-22"><a href="#cb7-22"></a>                  )) <span class="op">%&gt;%</span></span>
+<span id="cb7-23"><a href="#cb7-23"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">arrange</span>(W)</span>
+<span id="cb7-24"><a href="#cb7-24"></a>df_fig_w<span class="op">$</span>taxon =<span class="st"> </span><span class="kw">factor</span>(df_fig_w<span class="op">$</span>taxon, <span class="dt">levels =</span> df_fig_w<span class="op">$</span>taxon)</span>
+<span id="cb7-25"><a href="#cb7-25"></a>df_fig_w<span class="op">$</span>W =<span class="st"> </span><span class="kw">replace</span>(df_fig_w<span class="op">$</span>W, <span class="kw">is.infinite</span>(df_fig_w<span class="op">$</span>W), n_taxa <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb7-26"><a href="#cb7-26"></a>df_fig_w<span class="op">$</span>direct =<span class="st"> </span><span class="kw">factor</span>(df_fig_w<span class="op">$</span>direct, </span>
+<span id="cb7-27"><a href="#cb7-27"></a>                         <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Negative&quot;</span>, <span class="st">&quot;Positive&quot;</span>, <span class="st">&quot;Not Significant&quot;</span>))</span>
+<span id="cb7-28"><a href="#cb7-28"></a></span>
+<span id="cb7-29"><a href="#cb7-29"></a>p_w =<span class="st"> </span>df_fig_w <span class="op">%&gt;%</span></span>
+<span id="cb7-30"><a href="#cb7-30"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> taxon, <span class="dt">y =</span> W, <span class="dt">color =</span> direct)) <span class="op">+</span></span>
+<span id="cb7-31"><a href="#cb7-31"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">alpha =</span> <span class="fl">0.6</span>) <span class="op">+</span></span>
+<span id="cb7-32"><a href="#cb7-32"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Taxon&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;W&quot;</span>) <span class="op">+</span></span>
+<span id="cb7-33"><a href="#cb7-33"></a><span class="st">  </span><span class="kw">scale_color_discrete</span>(<span class="dt">name =</span> <span class="ot">NULL</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb7-34"><a href="#cb7-34"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> cut_off, <span class="dt">linetype =</span> <span class="st">&quot;dotted&quot;</span>, </span>
+<span id="cb7-35"><a href="#cb7-35"></a>             <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">size =</span> <span class="fl">1.5</span>) <span class="op">+</span></span>
+<span id="cb7-36"><a href="#cb7-36"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> cut_off <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span>, <span class="dt">label =</span> <span class="st">&quot;W[0.7]&quot;</span>), </span>
+<span id="cb7-37"><a href="#cb7-37"></a>            <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">vjust =</span> <span class="fl">-0.5</span>, <span class="dt">hjust =</span> <span class="dv">0</span>, <span class="dt">color =</span> <span class="st">&quot;orange&quot;</span>, <span class="dt">parse =</span> <span class="ot">TRUE</span>) <span class="op">+</span></span>
+<span id="cb7-38"><a href="#cb7-38"></a><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
+<span id="cb7-39"><a href="#cb7-39"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb7-40"><a href="#cb7-40"></a>        <span class="dt">axis.ticks.x =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb7-41"><a href="#cb7-41"></a>        <span class="dt">panel.grid.major =</span> <span class="kw">element_blank</span>())</span>
+<span id="cb7-42"><a href="#cb7-42"></a>p_w</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="run-ancom-function-using-tse-data" class="section level2">
+<h2>3.4 Run <code>ancom</code> function using <code>tse</code> data</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>tse =<span class="st"> </span>mia<span class="op">::</span><span class="kw">makeTreeSummarizedExperimentFromPhyloseq</span>(pseq)</span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb8-4"><a href="#cb8-4"></a>out =<span class="st"> </span><span class="kw">ancom</span>(<span class="dt">data =</span> tse, <span class="dt">assay_name =</span> <span class="st">&quot;counts&quot;</span>,</span>
+<span id="cb8-5"><a href="#cb8-5"></a>            <span class="dt">tax_level =</span> <span class="st">&quot;Family&quot;</span>, <span class="dt">meta_data =</span> <span class="ot">NULL</span>,</span>
+<span id="cb8-6"><a href="#cb8-6"></a>            <span class="dt">p_adj_method =</span> <span class="st">&quot;holm&quot;</span>, <span class="dt">prv_cut =</span> <span class="fl">0.10</span>,</span>
+<span id="cb8-7"><a href="#cb8-7"></a>            <span class="dt">lib_cut =</span> <span class="dv">1000</span>, <span class="dt">main_var =</span> <span class="st">&quot;bmi&quot;</span>, <span class="dt">adj_formula =</span> <span class="st">&quot;age + region&quot;</span>, </span>
+<span id="cb8-8"><a href="#cb8-8"></a>            <span class="dt">rand_formula =</span> <span class="ot">NULL</span>, <span class="dt">lme_control =</span> <span class="ot">NULL</span>, <span class="dt">struc_zero =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb8-9"><a href="#cb8-9"></a>            <span class="dt">neg_lb =</span> <span class="ot">TRUE</span>, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">n_cl =</span> <span class="dv">2</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb8-10"><a href="#cb8-10"></a></span>
+<span id="cb8-11"><a href="#cb8-11"></a>res =<span class="st"> </span>out<span class="op">$</span>res</span></code></pre></div>
+</div>
+<div id="run-ancom-function-by-directly-providing-the-abundance-and-metadata" class="section level2">
+<h2>3.5 Run <code>ancom</code> function by directly providing the abundance and metadata</h2>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>abundance_data =<span class="st"> </span>microbiome<span class="op">::</span><span class="kw">abundances</span>(pseq)</span>
+<span id="cb9-2"><a href="#cb9-2"></a>aggregate_data =<span class="st"> </span>microbiome<span class="op">::</span><span class="kw">abundances</span>(microbiome<span class="op">::</span><span class="kw">aggregate_taxa</span>(pseq, <span class="st">&quot;Family&quot;</span>))</span>
+<span id="cb9-3"><a href="#cb9-3"></a>meta_data =<span class="st"> </span>microbiome<span class="op">::</span><span class="kw">meta</span>(pseq)</span>
+<span id="cb9-4"><a href="#cb9-4"></a></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>out =<span class="st"> </span><span class="kw">ancom</span>(<span class="dt">data =</span> abundance_data, <span class="dt">aggregate_data =</span> aggregate_data, </span>
+<span id="cb9-7"><a href="#cb9-7"></a>            <span class="dt">meta_data =</span> meta_data, <span class="dt">p_adj_method =</span> <span class="st">&quot;holm&quot;</span>, <span class="dt">prv_cut =</span> <span class="fl">0.10</span>,</span>
+<span id="cb9-8"><a href="#cb9-8"></a>            <span class="dt">lib_cut =</span> <span class="dv">1000</span>, <span class="dt">main_var =</span> <span class="st">&quot;bmi&quot;</span>, <span class="dt">adj_formula =</span> <span class="st">&quot;age + region&quot;</span>, </span>
+<span id="cb9-9"><a href="#cb9-9"></a>            <span class="dt">rand_formula =</span> <span class="ot">NULL</span>, <span class="dt">lme_control =</span> <span class="ot">NULL</span>, <span class="dt">struc_zero =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb9-10"><a href="#cb9-10"></a>            <span class="dt">neg_lb =</span> <span class="ot">TRUE</span>, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">n_cl =</span> <span class="dv">2</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb9-11"><a href="#cb9-11"></a></span>
+<span id="cb9-12"><a href="#cb9-12"></a>res =<span class="st"> </span>out<span class="op">$</span>res</span></code></pre></div>
+</div>
+</div>
+<div id="run-ancom-on-a-real-longitudinal-dataset" class="section level1 tabset">
+<h1>4. Run ANCOM on a real longitudinal dataset</h1>
+<div id="import-example-data-1" class="section level2">
+<h2>4.1 Import example data</h2>
+<p>A two-week diet swap study between western (USA) and traditional (rural Africa) diets <span class="citation">(Lahti et al. 2014)</span>. The dataset is available via the microbiome R package <span class="citation">(Lahti et al. 2017)</span> in phyloseq <span class="citation">(McMurdie and Holmes 2013)</span> format. In this tutorial, we consider the following fixed effects:</p>
+<ul>
+<li><p>Continuous covariates: “timepoint”</p></li>
+<li><p>Categorical covariates: “nationality”</p></li>
+<li><p>The group variable of interest: “group”</p>
+<ul>
+<li><p>Three groups: “DI”, “ED”, “HE”</p></li>
+<li><p>The reference group: “DI”</p></li>
+</ul></li>
+</ul>
+<p>and the following random effects:</p>
+<ul>
+<li><p>A random intercept</p></li>
+<li><p>A random slope: “timepoint”</p></li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">data</span>(dietswap, <span class="dt">package =</span> <span class="st">&quot;microbiome&quot;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="kw">print</span>(dietswap)</span></code></pre></div>
+<pre><code>phyloseq-class experiment-level object
+otu_table()   OTU Table:         [ 130 taxa and 222 samples ]
+sample_data() Sample Data:       [ 222 samples by 8 sample variables ]
+tax_table()   Taxonomy Table:    [ 130 taxa by 3 taxonomic ranks ]</code></pre>
+</div>
+<div id="run-ancom-function-using-phyloseq-data-1" class="section level2">
+<h2>4.2 Run <code>ancom</code> function using <code>phyloseq</code> data</h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb12-2"><a href="#cb12-2"></a>out =<span class="st"> </span><span class="kw">ancom</span>(<span class="dt">data =</span> dietswap, <span class="dt">tax_level =</span> <span class="st">&quot;Family&quot;</span>, </span>
+<span id="cb12-3"><a href="#cb12-3"></a>            <span class="dt">p_adj_method =</span> <span class="st">&quot;holm&quot;</span>, <span class="dt">prv_cut =</span> <span class="fl">0.10</span>, <span class="dt">lib_cut =</span> <span class="dv">1000</span>, </span>
+<span id="cb12-4"><a href="#cb12-4"></a>            <span class="dt">main_var =</span> <span class="st">&quot;group&quot;</span>,</span>
+<span id="cb12-5"><a href="#cb12-5"></a>            <span class="dt">adj_formula =</span> <span class="st">&quot;nationality + timepoint&quot;</span>, </span>
+<span id="cb12-6"><a href="#cb12-6"></a>            <span class="dt">rand_formula =</span> <span class="st">&quot;(timepoint | subject)&quot;</span>, </span>
+<span id="cb12-7"><a href="#cb12-7"></a>            <span class="dt">lme_control =</span> lme4<span class="op">::</span><span class="kw">lmerControl</span>(), </span>
+<span id="cb12-8"><a href="#cb12-8"></a>            <span class="dt">struc_zero =</span> <span class="ot">TRUE</span>, <span class="dt">neg_lb =</span> <span class="ot">TRUE</span>, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">n_cl =</span> <span class="dv">2</span>)</span>
+<span id="cb12-9"><a href="#cb12-9"></a></span>
+<span id="cb12-10"><a href="#cb12-10"></a>res =<span class="st"> </span>out<span class="op">$</span>res</span></code></pre></div>
+</div>
+<div id="visualization-for-w-statistics" class="section level2">
+<h2>4.3 Visualization for W statistics</h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>q_val =<span class="st"> </span>out<span class="op">$</span>q_data</span>
+<span id="cb13-2"><a href="#cb13-2"></a>beta_val =<span class="st"> </span>out<span class="op">$</span>beta_data</span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="co"># Only consider the effect sizes with the corresponding q-value less than alpha</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>beta_val =<span class="st"> </span>beta_val <span class="op">*</span><span class="st"> </span>(q_val <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>) </span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="co"># Choose the maximum of beta&#39;s as the effect size</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a>beta_pos =<span class="st"> </span><span class="kw">apply</span>(<span class="kw">abs</span>(beta_val), <span class="dv">2</span>, which.max) </span>
+<span id="cb13-7"><a href="#cb13-7"></a>beta_max =<span class="st"> </span><span class="kw">vapply</span>(<span class="kw">seq_along</span>(beta_pos), <span class="cf">function</span>(i) beta_val[beta_pos[i], i],</span>
+<span id="cb13-8"><a href="#cb13-8"></a>                  <span class="dt">FUN.VALUE =</span> <span class="kw">double</span>(<span class="dv">1</span>))</span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="co"># Number of taxa except structural zeros</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a>n_taxa =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(out<span class="op">$</span>zero_ind), </span>
+<span id="cb13-11"><a href="#cb13-11"></a>                <span class="kw">nrow</span>(tse), </span>
+<span id="cb13-12"><a href="#cb13-12"></a>                <span class="kw">sum</span>(<span class="kw">apply</span>(out<span class="op">$</span>zero_ind[, <span class="dv">-1</span>], <span class="dv">1</span>, sum) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>))</span>
+<span id="cb13-13"><a href="#cb13-13"></a><span class="co"># Cutoff values for declaring differentially abundant taxa</span></span>
+<span id="cb13-14"><a href="#cb13-14"></a>cut_off =<span class="st"> </span><span class="fl">0.7</span> <span class="op">*</span><span class="st"> </span>(n_taxa <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb13-15"><a href="#cb13-15"></a></span>
+<span id="cb13-16"><a href="#cb13-16"></a>df_fig_w =<span class="st"> </span>res <span class="op">%&gt;%</span></span>
+<span id="cb13-17"><a href="#cb13-17"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">beta =</span> beta_max,</span>
+<span id="cb13-18"><a href="#cb13-18"></a>                <span class="dt">direct =</span> <span class="kw">case_when</span>(</span>
+<span id="cb13-19"><a href="#cb13-19"></a>                  detected_<span class="fl">0.7</span> <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span> <span class="op">&amp;</span><span class="st"> </span>beta <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">~</span><span class="st"> &quot;Positive&quot;</span>,</span>
+<span id="cb13-20"><a href="#cb13-20"></a>                  detected_<span class="fl">0.7</span> <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span> <span class="op">&amp;</span><span class="st"> </span>beta <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span> <span class="op">~</span><span class="st"> &quot;Negative&quot;</span>,</span>
+<span id="cb13-21"><a href="#cb13-21"></a>                  <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;Not Significant&quot;</span></span>
+<span id="cb13-22"><a href="#cb13-22"></a>                  )) <span class="op">%&gt;%</span></span>
+<span id="cb13-23"><a href="#cb13-23"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">arrange</span>(W)</span>
+<span id="cb13-24"><a href="#cb13-24"></a>df_fig_w<span class="op">$</span>taxon =<span class="st"> </span><span class="kw">factor</span>(df_fig_w<span class="op">$</span>taxon, <span class="dt">levels =</span> df_fig_w<span class="op">$</span>taxon)</span>
+<span id="cb13-25"><a href="#cb13-25"></a>df_fig_w<span class="op">$</span>W =<span class="st"> </span><span class="kw">replace</span>(df_fig_w<span class="op">$</span>W, <span class="kw">is.infinite</span>(df_fig_w<span class="op">$</span>W), n_taxa <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb13-26"><a href="#cb13-26"></a>df_fig_w<span class="op">$</span>direct =<span class="st"> </span><span class="kw">factor</span>(df_fig_w<span class="op">$</span>direct, </span>
+<span id="cb13-27"><a href="#cb13-27"></a>                     <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Negative&quot;</span>, <span class="st">&quot;Positive&quot;</span>, <span class="st">&quot;Not Significant&quot;</span>))</span>
+<span id="cb13-28"><a href="#cb13-28"></a></span>
+<span id="cb13-29"><a href="#cb13-29"></a>p_w =<span class="st"> </span>df_fig_w <span class="op">%&gt;%</span></span>
+<span id="cb13-30"><a href="#cb13-30"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> taxon, <span class="dt">y =</span> W, <span class="dt">color =</span> direct)) <span class="op">+</span></span>
+<span id="cb13-31"><a href="#cb13-31"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">alpha =</span> <span class="fl">0.6</span>) <span class="op">+</span></span>
+<span id="cb13-32"><a href="#cb13-32"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Taxon&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;W&quot;</span>) <span class="op">+</span></span>
+<span id="cb13-33"><a href="#cb13-33"></a><span class="st">  </span><span class="kw">scale_color_discrete</span>(<span class="dt">name =</span> <span class="ot">NULL</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb13-34"><a href="#cb13-34"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> cut_off, <span class="dt">linetype =</span> <span class="st">&quot;dotted&quot;</span>, </span>
+<span id="cb13-35"><a href="#cb13-35"></a>             <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">size =</span> <span class="fl">1.5</span>) <span class="op">+</span></span>
+<span id="cb13-36"><a href="#cb13-36"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> cut_off <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span>, <span class="dt">label =</span> <span class="st">&quot;W[0.7]&quot;</span>), </span>
+<span id="cb13-37"><a href="#cb13-37"></a>            <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">vjust =</span> <span class="fl">-0.5</span>, <span class="dt">hjust =</span> <span class="dv">0</span>, <span class="dt">color =</span> <span class="st">&quot;orange&quot;</span>, <span class="dt">parse =</span> <span class="ot">TRUE</span>) <span class="op">+</span></span>
+<span id="cb13-38"><a href="#cb13-38"></a><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
+<span id="cb13-39"><a href="#cb13-39"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb13-40"><a href="#cb13-40"></a>        <span class="dt">axis.ticks.x =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb13-41"><a href="#cb13-41"></a>        <span class="dt">panel.grid.major =</span> <span class="kw">element_blank</span>())</span>
+<span id="cb13-42"><a href="#cb13-42"></a>p_w</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="run-ancom-function-using-tse-data-1" class="section level2">
+<h2>4.4 Run <code>ancom</code> function using <code>tse</code> data</h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>tse =<span class="st"> </span>mia<span class="op">::</span><span class="kw">makeTreeSummarizedExperimentFromPhyloseq</span>(dietswap)</span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb14-4"><a href="#cb14-4"></a>out =<span class="st"> </span><span class="kw">ancom</span>(<span class="dt">data =</span> tse, <span class="dt">assay_name =</span> <span class="st">&quot;counts&quot;</span>, <span class="dt">tax_level =</span> <span class="st">&quot;Family&quot;</span>,</span>
+<span id="cb14-5"><a href="#cb14-5"></a>            <span class="dt">p_adj_method =</span> <span class="st">&quot;holm&quot;</span>, <span class="dt">prv_cut =</span> <span class="fl">0.10</span>, <span class="dt">lib_cut =</span> <span class="dv">1000</span>, </span>
+<span id="cb14-6"><a href="#cb14-6"></a>            <span class="dt">main_var =</span> <span class="st">&quot;group&quot;</span>,</span>
+<span id="cb14-7"><a href="#cb14-7"></a>            <span class="dt">adj_formula =</span> <span class="st">&quot;nationality + timepoint&quot;</span>, </span>
+<span id="cb14-8"><a href="#cb14-8"></a>            <span class="dt">rand_formula =</span> <span class="st">&quot;(timepoint | subject)&quot;</span>, </span>
+<span id="cb14-9"><a href="#cb14-9"></a>            <span class="dt">lme_control =</span> lme4<span class="op">::</span><span class="kw">lmerControl</span>(), </span>
+<span id="cb14-10"><a href="#cb14-10"></a>            <span class="dt">struc_zero =</span> <span class="ot">TRUE</span>, <span class="dt">neg_lb =</span> <span class="ot">TRUE</span>, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">n_cl =</span> <span class="dv">2</span>)</span>
+<span id="cb14-11"><a href="#cb14-11"></a></span>
+<span id="cb14-12"><a href="#cb14-12"></a>res =<span class="st"> </span>out<span class="op">$</span>res</span></code></pre></div>
+</div>
+<div id="run-ancom-function-by-directly-providing-the-abundance-and-metadata-1" class="section level2">
+<h2>4.5 Run <code>ancom</code> function by directly providing the abundance and metadata</h2>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>abundance_data =<span class="st"> </span>microbiome<span class="op">::</span><span class="kw">abundances</span>(dietswap)</span>
+<span id="cb15-2"><a href="#cb15-2"></a>aggregate_data =<span class="st"> </span>microbiome<span class="op">::</span><span class="kw">abundances</span>(microbiome<span class="op">::</span><span class="kw">aggregate_taxa</span>(dietswap, <span class="st">&quot;Family&quot;</span>))</span>
+<span id="cb15-3"><a href="#cb15-3"></a>meta_data =<span class="st"> </span>microbiome<span class="op">::</span><span class="kw">meta</span>(dietswap)</span>
+<span id="cb15-4"><a href="#cb15-4"></a></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb15-6"><a href="#cb15-6"></a>out =<span class="st"> </span><span class="kw">ancom</span>(<span class="dt">data =</span> abundance_data, <span class="dt">aggregate_data =</span> aggregate_data,</span>
+<span id="cb15-7"><a href="#cb15-7"></a>            <span class="dt">meta_data =</span> meta_data, <span class="dt">p_adj_method =</span> <span class="st">&quot;holm&quot;</span>, </span>
+<span id="cb15-8"><a href="#cb15-8"></a>            <span class="dt">prv_cut =</span> <span class="fl">0.10</span>, <span class="dt">lib_cut =</span> <span class="dv">1000</span>, <span class="dt">main_var =</span> <span class="st">&quot;group&quot;</span>,</span>
+<span id="cb15-9"><a href="#cb15-9"></a>            <span class="dt">adj_formula =</span> <span class="st">&quot;nationality + timepoint&quot;</span>, </span>
+<span id="cb15-10"><a href="#cb15-10"></a>            <span class="dt">rand_formula =</span> <span class="st">&quot;(timepoint | subject)&quot;</span>, </span>
+<span id="cb15-11"><a href="#cb15-11"></a>            <span class="dt">lme_control =</span> lme4<span class="op">::</span><span class="kw">lmerControl</span>(), </span>
+<span id="cb15-12"><a href="#cb15-12"></a>            <span class="dt">struc_zero =</span> <span class="ot">TRUE</span>, <span class="dt">neg_lb =</span> <span class="ot">TRUE</span>, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">n_cl =</span> <span class="dv">2</span>)</span>
+<span id="cb15-13"><a href="#cb15-13"></a></span>
+<span id="cb15-14"><a href="#cb15-14"></a>res =<span class="st"> </span>out<span class="op">$</span>res</span></code></pre></div>
+</div>
+</div>
+<div id="session-information" class="section level1">
+<h1>Session information</h1>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">sessionInfo</span>()</span></code></pre></div>
+<pre><code>R version 4.4.2 (2024-10-31 ucrt)
+Platform: x86_64-w64-mingw32/x64
+Running under: Windows Server 2022 x64 (build 20348)
+
+Matrix products: default
+
+
+locale:
+[1] LC_COLLATE=C                          
+[2] LC_CTYPE=English_United States.utf8   
+[3] LC_MONETARY=English_United States.utf8
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.utf8    
+
+time zone: America/New_York
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] lubridate_1.9.4 forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4    
+ [5] purrr_1.0.2     readr_2.1.5     tidyr_1.3.1     tibble_3.2.1   
+ [9] ggplot2_3.5.1   tidyverse_2.0.0 ANCOMBC_2.8.1  
+
+loaded via a namespace (and not attached):
+  [1] rstudioapi_0.17.1       jsonlite_1.8.9          magrittr_2.0.3         
+  [4] TH.data_1.1-2           farver_2.1.2            nloptr_2.1.1           
+  [7] rmarkdown_2.29          zlibbioc_1.52.0         vctrs_0.6.5            
+ [10] multtest_2.62.0         minqa_1.2.8             base64enc_0.1-3        
+ [13] htmltools_0.5.8.1       energy_1.7-12           haven_2.5.4            
+ [16] cellranger_1.1.0        Rhdf5lib_1.28.0         Formula_1.2-5          
+ [19] rhdf5_2.50.2            sass_0.4.9              bslib_0.8.0            
+ [22] htmlwidgets_1.6.4       plyr_1.8.9              sandwich_3.1-1         
+ [25] rootSolve_1.8.2.4       zoo_1.8-12              cachem_1.1.0           
+ [28] igraph_2.1.3            lifecycle_1.0.4         iterators_1.0.14       
+ [31] pkgconfig_2.0.3         Matrix_1.7-1            R6_2.5.1               
+ [34] fastmap_1.2.0           GenomeInfoDbData_1.2.13 rbibutils_2.3          
+ [37] digest_0.6.37           Exact_3.3               numDeriv_2016.8-1.1    
+ [40] colorspace_2.1-1        S4Vectors_0.44.0        Hmisc_5.2-1            
+ [43] vegan_2.6-8             labeling_0.4.3          timechange_0.3.0       
+ [46] mgcv_1.9-1              httr_1.4.7              compiler_4.4.2         
+ [49] rngtools_1.5.2          proxy_0.4-27            bit64_4.5.2            
+ [52] withr_3.0.2             doParallel_1.0.17       gsl_2.1-8              
+ [55] htmlTable_2.4.3         backports_1.5.0         MASS_7.3-64            
+ [58] biomformat_1.34.0       permute_0.9-7           gtools_3.9.5           
+ [61] CVXR_1.0-15             gld_2.6.6               tools_4.4.2            
+ [64] foreign_0.8-87          ape_5.8-1               nnet_7.3-20            
+ [67] glue_1.8.0              nlme_3.1-166            rhdf5filters_1.18.0    
+ [70] grid_4.4.2              Rtsne_0.17              checkmate_2.3.2        
+ [73] cluster_2.1.8           reshape2_1.4.4          ade4_1.7-22            
+ [76] generics_0.1.3          microbiome_1.28.0       gtable_0.3.6           
+ [79] tzdb_0.4.0              class_7.3-23            data.table_1.16.4      
+ [82] lmom_3.2                hms_1.1.3               XVector_0.46.0         
+ [85] BiocGenerics_0.52.0     foreach_1.5.2           pillar_1.10.1          
+ [88] splines_4.4.2           lattice_0.22-6          survival_3.8-3         
+ [91] gmp_0.7-5               bit_4.5.0.1             tidyselect_1.2.1       
+ [94] Biostrings_2.74.1       knitr_1.49              gridExtra_2.3          
+ [97] phyloseq_1.50.0         IRanges_2.40.1          stats4_4.4.2           
+[100] xfun_0.50               expm_1.0-0              Biobase_2.66.0         
+[103] stringi_1.8.4           UCSC.utils_1.2.0        yaml_2.3.10            
+[106] boot_1.3-31             evaluate_1.0.1          codetools_0.2-20       
+[109] cli_3.6.3               rpart_4.1.24            DescTools_0.99.58      
+[112] Rdpack_2.6.2            munsell_0.5.1           jquerylib_0.1.4        
+[115] Rcpp_1.0.13-1           GenomeInfoDb_1.42.1     readxl_1.4.3           
+[118] parallel_4.4.2          doRNG_1.8.6             lme4_1.1-35.5          
+[121] Rmpfr_1.0-0             mvtnorm_1.3-2           lmerTest_3.1-3         
+[124] scales_1.3.0            e1071_1.7-16            crayon_1.5.3           
+[127] rlang_1.1.4             multcomp_1.4-26        </code></pre>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references">
+<div id="ref-lahti2014tipping">
+<p>Lahti, Leo, Jarkko Salojärvi, Anne Salonen, Marten Scheffer, and Willem M De Vos. 2014. “Tipping Elements in the Human Intestinal Ecosystem.” <em>Nature Communications</em> 5 (1): 1–10.</p>
+</div>
+<div id="ref-lahti2017tools">
+<p>Lahti, Leo, Sudarshan Shetty, T Blake, J Salojarvi, and others. 2017. “Tools for Microbiome Analysis in R.” <em>Version</em> 1: 10013.</p>
+</div>
+<div id="ref-mandal2015analysis">
+<p>Mandal, Siddhartha, Will Van Treuren, Richard A White, Merete Eggesbø, Rob Knight, and Shyamal D Peddada. 2015. “Analysis of Composition of Microbiomes: A Novel Method for Studying Microbial Composition.” <em>Microbial Ecology in Health and Disease</em> 26 (1): 27663.</p>
+</div>
+<div id="ref-mcmurdie2013phyloseq">
+<p>McMurdie, Paul J, and Susan Holmes. 2013. “Phyloseq: An R Package for Reproducible Interactive Analysis and Graphics of Microbiome Census Data.” <em>PloS One</em> 8 (4): e61217.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

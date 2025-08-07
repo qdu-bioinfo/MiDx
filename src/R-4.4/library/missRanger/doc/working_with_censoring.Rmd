@@ -1,0 +1,108 @@
+---
+title: "Censored Variables"
+date: "`r Sys.Date()`"
+bibliography: "biblio.bib"
+link-citations: true
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Censored Variables}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+## How to deal with censored variables?
+
+There is no obvious way of how to deal with survival variables as covariates in imputation models. Options discussed in [@white] include:
+
+- Use the status variable $s$ and the (censored) time variable $t$.
+- Use $s$ and $\log(t)$.
+- Use $\text{surv}(t)$, and, optionally $s$.
+
+By $\text{surv}(t)$, we denote the Nelson-Aalen survival estimate at each value of $t$. The third option seems attractive as it explicitly deals with censoring information. We provide some additional details on it in the example.
+
+### Example
+
+For illustration, we use data from a randomized two-arm trial about lung cancer. The aim is to estimate the treatment effect of "trt" with reliable inference using Cox regression. We add missing values in the covariates "age", "karno", and "diagtime".
+
+Let's estimate the covariate adjusted treatment effect using the following steps:
+
+1. Add Nelson-Aalen survival estimates "surv" to the dataset.
+2. Use "surv" as well as the covariates to impute missing values in the covariates multiple times.
+3. Perform the intended Cox regression for each of the imputed data sets.
+4. Pool their results by Rubin's rule [@rubin], using package {mice} [@buuren].
+
+```r
+library(missRanger)
+library(survival)
+library(mice)
+
+set.seed(65)
+
+head(veteran)
+
+#   trt celltype time status karno diagtime age prior
+# 1   1 squamous   72      1    60        7  69     0
+# 2   1 squamous  411      1    70        5  64    10
+# 3   1 squamous  228      1    60        3  38     0
+# 4   1 squamous  126      1    60        9  63    10
+# 5   1 squamous  118      1    70       11  65    10
+# 6   1 squamous   10      1    20        5  49     0
+
+# 1. Calculate Nelson-Aalen survival probabilities for each time point
+nelson_aalen <- survfit(Surv(time, status) ~ 1, data = veteran) |>
+  summary(times = unique(veteran$time))
+nelson_aalen <- nelson_aalen[c("time", "surv")]
+
+# Add it to the original data set
+veteran2 <- merge(veteran, nelson_aalen, all.x = TRUE, by = "time")
+
+# Add missing values to make things tricky
+veteran2 <- generateNA(veteran2, p = c(age = 0.1, karno = 0.1, diagtime = 0.1))
+
+# 2. Generate 20 complete data sets, representing "time" and "status" by "surv"
+filled <- replicate(
+  20, 
+  missRanger(veteran2, . ~ . - time - status, verbose = 0, pmm.k = 10, num.trees = 100), 
+  simplify = FALSE
+)
+
+# 3. Run a Cox regression for each of the completed data sets
+models <- lapply(filled, function(x) coxph(Surv(time, status) ~ . - surv, x))
+
+# 4. Pool the results by mice
+summary(pooled_fit <- pool(models))
+
+#                term     estimate   std.error  statistic       df      p.value
+# 1               trt  0.231154077 0.214672763  1.0767741 105.1514 2.840454e-01
+# 2 celltypesmallcell  0.805824737 0.285571376  2.8217980 114.1273 5.634607e-03
+# 3     celltypeadeno  1.130585762 0.306698637  3.6863084 113.3636 3.506786e-04
+# 4     celltypelarge  0.340627347 0.296740520  1.1478963 103.4753 2.536583e-01
+# 5             karno -0.030623274 0.005653790 -5.4164149 106.3603 3.806255e-07
+# 6          diagtime  0.001273007 0.009102230  0.1398566 108.7518 8.890320e-01
+# 7               age -0.005587627 0.009379064 -0.5957554 105.3053 5.526170e-01
+# 8             prior  0.005174395 0.023433186  0.2208148 112.4847 8.256369e-01
+
+# Compare with the results on the original data
+summary(coxph(Surv(time, status) ~ ., veteran))$coefficients
+
+#                            coef exp(coef)    se(coef)            z     Pr(>|z|)
+# trt                2.946028e-01 1.3425930 0.207549604  1.419433313 1.557727e-01
+# celltypesmallcell  8.615605e-01 2.3668512 0.275284474  3.129709606 1.749792e-03
+# celltypeadeno      1.196066e+00 3.3070825 0.300916994  3.974738536 7.045662e-05
+# celltypelarge      4.012917e-01 1.4937529 0.282688638  1.419553530 1.557377e-01
+# karno             -3.281533e-02 0.9677173 0.005507757 -5.958020093 2.553121e-09
+# diagtime           8.132051e-05 1.0000813 0.009136062  0.008901046 9.928981e-01
+# age               -8.706475e-03 0.9913313 0.009300299 -0.936149992 3.491960e-01
+# prior              7.159360e-03 1.0071850 0.023230538  0.308187441 7.579397e-01
+```
+
+## References

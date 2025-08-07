@@ -1,0 +1,50 @@
+Tax4Fun2_KEGG           The KEGG data files used in the trans_func
+                        class
+clone                   Copy an R6 class object
+dataset                 The dataset structured with microtable class
+                        for the demonstration of examples
+dropallfactors          Remove all factors in a data frame
+env_data_16S            The environmental factors for the 16S example
+                        data
+fungi_func_FUNGuild     The FUNGuild database for fungi trait
+                        prediction
+fungi_func_FungalTraits
+                        The FungalTraits database for fungi trait
+                        prediction
+microeco                Introduction to microeco package
+                        (https://github.com/ChiLiubio/microeco)
+microtable              Create 'microtable' object to store and manage
+                        all the basic files.
+otu_table_16S           The OTU table of the 16S example data
+otu_table_ITS           The OTU table of the ITS example data
+phylo_tree_16S          The phylogenetic tree of 16S example data
+prok_func_FAPROTAX      The modified FAPROTAX trait database
+prok_func_NJC19_list    The modified NJC19 database
+sample_info_16S         The sample information of 16S example data
+sample_info_ITS         The sample information of ITS example data
+taxonomy_table_16S      The taxonomic information of 16S example data
+taxonomy_table_ITS      The taxonomic information of ITS example data
+tidy_taxonomy           Clean up the taxonomic table to make taxonomic
+                        assignments consistent.
+trans_abund             Create 'trans_abund' object for taxonomic
+                        abundance visualization.
+trans_alpha             Create 'trans_alpha' object for alpha diversity
+                        statistics and visualization.
+trans_beta              Create 'trans_beta' object for beta-diversity
+                        analysis
+trans_classifier        Create 'trans_classifier' object for
+                        machine-learning-based model prediction.
+trans_diff              Create 'trans_diff' object for the differential
+                        analysis on the taxonomic abundance
+trans_env               Create 'trans_env' object to analyze the
+                        association between environmental factor and
+                        microbial community.
+trans_func              Create 'trans_func' object for functional
+                        prediction.
+trans_network           Create 'trans_network' object for network
+                        analysis.
+trans_norm              Feature abundance normalization/transformation.
+trans_nullmodel         Create 'trans_nullmodel' object for null model
+                        related analysis.
+trans_venn              Create 'trans_venn' object for the Venn
+                        diagram, petal plot and UpSet plot.

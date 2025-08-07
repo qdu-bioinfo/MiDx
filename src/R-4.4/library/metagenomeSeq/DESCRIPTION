@@ -1,0 +1,37 @@
+Package: metagenomeSeq
+Title: Statistical analysis for sparse high-throughput sequencing
+Version: 1.48.1
+Date: 2025-01-02
+Author: Joseph Nathaniel Paulson, Nathan D. Olson, Domenick J. Braccia, 
+    Justin Wagner, Hisham Talukder, Mihai Pop, Hector Corrada Bravo
+Maintainer: Joseph N. Paulson <josephpaulson@gmail.com>
+Description: metagenomeSeq is designed to determine features (be it
+    Operational Taxanomic Unit (OTU), species, etc.) that are
+    differentially abundant between two or more groups of multiple
+    samples. metagenomeSeq is designed to address the effects of
+    both normalization and under-sampling of microbial communities
+    on disease association detection and the testing of feature
+    correlations.
+License: Artistic-2.0
+Depends: R(>= 3.0), Biobase, limma, glmnet, methods, RColorBrewer
+Suggests: annotate, BiocGenerics, biomformat, knitr, gss, testthat (>=
+        0.8), vegan, interactiveDisplay, IHW
+Imports: parallel, matrixStats, foreach, Matrix, gplots, graphics,
+        grDevices, stats, utils, Wrench
+VignetteBuilder: knitr
+URL: https://github.com/nosson/metagenomeSeq/
+BugReports: https://github.com/nosson/metagenomeSeq/issues
+biocViews: ImmunoOncology, Classification, Clustering,
+        GeneticVariability, DifferentialExpression, Microbiome,
+        Metagenomics, Normalization, Visualization, MultipleComparison,
+        Sequencing, Software
+RoxygenNote: 7.1.0
+git_url: https://git.bioconductor.org/packages/metagenomeSeq
+git_branch: RELEASE_3_20
+git_last_commit: cb424ed
+git_last_commit_date: 2025-01-02
+Repository: Bioconductor 3.20
+Date/Publication: 2025-01-02
+NeedsCompilation: no
+Packaged: 2025-01-03 01:07:35 UTC; biocbuild
+Built: R 4.4.2; ; 2025-01-03 13:40:15 UTC; windows

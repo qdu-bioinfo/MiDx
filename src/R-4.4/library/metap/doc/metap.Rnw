@@ -1,0 +1,253 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb}
+%\usepackage{mydef2}
+\usepackage[round]{natbib}
+\usepackage{parskip,url}
+\usepackage{graphicx,subfig}
+\setlength{\topmargin}{0cm}
+\addtolength{\textheight}{2cm}
+%\lhead{}
+%\input{title}
+%\VignetteIndexEntry{Introduction to the metap package}
+\title{Introduction to the \pkg{metap} package}
+\author{Michael Dewey}
+\newcommand{\pkg}[1]{\texttt{#1}}
+\newcommand{\func}[1]{\texttt{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\codefont}{\footnotesize}
+\newcommand{\mygraph}[3]{%
+\begin{figure}[htbp]
+\includegraphics[height=6cm,width=10cm]{#1}
+\caption{#2}
+\label{#3}
+\end{figure}
+}
+\newcommand{\twograph}[8]{%
+\begin{figure}[htbp]
+\subfloat[#2\label{#3}]{\includegraphics[height=6cm,width=7cm]{#1}}%
+\subfloat[#5\label{#6}]{\includegraphics[height=6cm,width=7cm]{#4}}
+\caption{#7}
+\label{#8}
+\end{figure}
+}
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+\subsection{What is this document for?}
+
+This document describes some methods for the meta--analysis of
+$p$--values
+(significance values)
+and their implementation
+in the package \pkg{metap}.
+I welcome feedback about sources
+of published examples against which
+I can test the code and any other comments
+about either the documentation or the code.
+
+The problem of meta--analysis of $p$--values is of course
+not completely unconnected with the more general issue
+of simultaneous statistical inference.
+
+\subsection{Why and when to meta--analyse significance values}
+
+The canonical way to meta--analyse a number of primary studies
+uses estimates of effect sizes from each of them.
+There are a large number of packages for
+this purpose available from CRAN
+and
+described in the task view \url{http://CRAN.R-project.org/view=MetaAnalysis}.
+However sometimes
+the only available information may be $p$--values
+especially when some of the primary
+studies were published a long time ago or were published
+in sources which were less rigorous about insisting on effect
+sizes.
+The methods outlined here are designed for this
+eventuality.
+The situation may also arise that some of the studies
+can be combined in a conventional meta--analysis
+using effect sizes but there
+are many others which cannot and in that case the conventional
+meta--analysis of the
+subset of studies which do have effect sizes
+may usefully be supplemented by an overall
+analysis of the $p$--values.
+
+Just for the avoidance of doubt,
+if each study has produced a proportion and the goal is
+to synthesise them to a common estimate or analyse the
+differences between them then the standard methods
+are appropriate not the ones outlined here.
+The $p$--values in this document are significance levels.
+
+The methods are referred to by the name of the
+function in \func{metap}.
+Table \ref{funcs} shows other
+descriptions of each method.
+
+\begin{table}[htbp]
+\begin{tabular}{lll}
+Function name & \multicolumn{2}{c}{Description(s)} \\[1ex]
+ & \multicolumn{1}{c}{Eponym} \\
+\func{invchisq} & Lancaster's method & Inverse chi square \\
+\func{invt} & & Inverse t \\
+\func{logitp} & & Logistic\\
+\func{meanp} \\
+\func{meanz} \\
+\func{maximump} \\
+\func{minimump} & Tippett's method \\
+\func{sumlog} & Fisher's method & Chi square (2 df)\\
+\func{sump} & Edgington's method & Uniform\\
+\func{sumz} & Stouffer's method & Normal\\
+\func{truncated} & Truncated Fisher & rank--truncated\\
+\func{votep} \\
+\func{wilkinsonp} & Wilkinson's method \\
+\end{tabular}
+\caption{Methods considered in this document}
+\label{funcs}
+\end{table}
+
+\section{Preparation for meta--analysis of $p$--values}
+
+\subsection{Preliminaries}
+
+I assume you have installed \textsf{R} and \pkg{metap}.
+You then need to load the package.
+<<>>=
+library(metap)
+@
+
+\subsection{Directionality}
+
+It is usual to have a directional hypothesis, for
+instance that treatment is better than control.
+For the methods described here a necessary preliminary
+is to ensure that all the $p$--values
+refer to the same directional hypothesis.
+If the value from the primary study is two--sided it needs to
+be converted.
+This is not simply a matter of halving the quoted $p$--value
+as values in the opposite direction need to be reversed.
+A convenience function \func{two2one} is provided for this.
+
+{\codefont
+<<>>=
+pvals <- c(0.1, 0.1, 0.9, 0.9, 0.9, 0.9)
+istwo <- c(TRUE,  FALSE, TRUE, FALSE, TRUE, FALSE)
+toinvert <- c(FALSE, TRUE, FALSE, FALSE, TRUE, TRUE)
+two2one(pvals, two = istwo, invert = toinvert)
+@
+}
+Note in particular the way in which $0.9$ is
+converted under the different scenarios.
+
+\subsection{Plotting}
+It would be a wise precaution to examine the $p$--values
+graphically or otherwise before subjecting them to further analysis.
+A separate vignette discusses the range of plots
+available in the package so here we just show the
+most simple.
+As our example we use data from studies of validity of
+student ratings of their instructors \citep{becker94}.
+      
+The \func{plotp} provides a Q--Q plot of
+the $p$--values to detect departure from
+the uniform distribution.
+An example is shown in Figure \ref{plotp}.
+The line is the line of exact fit to the
+reference distribution, the uniform.
+The polygon is a simultaneous confidence region
+such that if points lie outside it we
+can reject the null hypothesis that the points
+are drawn iid from a uniform.
+
+<<fig=TRUE,label=plotp,include=FALSE>>=
+data(dat.metap)
+validity <- dat.metap$validity$p
+plotp(validity)
+@
+
+\mygraph{metap-plotp}{Q--Q plot from \func{plotp}}{plotp}
+
+This plot is more informative than
+a simple printout.
+Note that this enhanced plot is only available from
+version 1.8 of \func{metap}.
+Previous versions usd a simpler plot.
+
+{\codefont
+<<>>=
+print(validity)
+@
+}
+
+\subsection{Reporting problems in the primary studies}
+
+Another issue is what to do with studies which have simply reported
+on whether a conventional level of significance like 0.05
+was achieved or not.
+If the exact associated $p$ cannot be derived from the
+statistics quoted in the primary source then the value
+of the level achieved, in this case 0.05, can be used
+although this may be conservative.
+Studies which simply report not significant could be included
+as having $p=1$ (or $p=0.5$
+if it is known that the direction was right)
+although this is very conservative.
+The theory of handling $p$--values which have been truncated like this
+has been developed by \citet{zaykin02} and
+\func{truncated} provides a convenience wrapper for
+two methods available in other CRAN
+packages.
+
+\section{Using the methods}
+
+All the methods in the package take as their first
+argument the vector of $p$--values.
+To use Fisher's method as an example:
+
+<<>>=
+sumlog(validity)
+@
+
+This confirms what was indeed obvious from the plot
+that the null hypothesis that these are drawn from
+a uniform distribution can be rejected.
+
+A few require extra information.
+Those which rely on inverse transformations
+often need a vector of degrees of freedom.
+Currently this applies to \func{invchisq} and \func{invt}.
+Stouffer's method in \func{sumz}
+optionally uses weights
+if a vector of weights is provided.
+Most of the methods
+(\func{invchisq, invt, logitp, meanz, sumlog, sumz, wilkinsonp})
+allow as an option to return the
+logarithm of the $p$--value which may be useful if
+it is expected that the return value will be very small.
+A smaller number (\func{invchisq, invt, sumlog})
+allow for input of log $p$--values.
+
+\section{Miscellanea}
+
+\begin{description}
+\item[Extractor functions]
+The standard \code{print} and \code{plot} methods
+are provided.
+\item[Omnibus function]
+A function \func{allmetap} is provided to simultaneously
+perform a number of the other functions.
+It may be useful to show how they give different results
+on the same data.
+\item[Reading]
+An annotated bibliography is provided by \citet{cousins08}
+\end{description}
+
+\bibliography{metap}
+\bibliographystyle{plainnat}
+\end{document}
+

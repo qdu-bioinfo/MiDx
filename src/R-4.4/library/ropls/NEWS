@@ -1,0 +1,943 @@
+CHANGES IN VERSION 1.37.6
+------------------------------
+
+  o minor vignette update
+
+CHANGES IN VERSION 1.37.4
+------------------------------
+
+  o plot_score new name of the previous gg_scoreplot method
+
+CHANGES IN VERSION 1.37.2
+------------------------------
+
+  o gg_scoreplot: now handling the 1D or empty models
+
+CHANGES IN VERSION 1.35.4
+------------------------------
+
+  o gg_scoreplot: minor update
+
+CHANGES IN VERSION 1.35.2
+------------------------------
+
+  o gg_scoreplot: update to handle OPLS models
+
+CHANGES IN VERSION 1.29.32
+------------------------------
+
+  o view: minor modification
+
+CHANGES IN VERSION 1.29.30
+------------------------------
+
+  o view: minor modification
+
+CHANGES IN VERSION 1.29.28
+------------------------------
+
+  o view: minor modification
+
+CHANGES IN VERSION 1.29.26
+------------------------------
+
+  o gg_scoreplot: minor modification
+
+CHANGES IN VERSION 1.29.24
+------------------------------
+
+  o gg_scoreplot: minor modification
+
+CHANGES IN VERSION 1.29.22
+------------------------------
+
+  o gg_scoreplot: generic method to be applied either to a SummarizedExperiment or an opls object
+  
+CHANGES IN VERSION 1.29.20
+------------------------------
+
+  o gg_scoreplot: modification of the info to display with plotly
+
+CHANGES IN VERSION 1.29.18
+------------------------------
+
+MINOR MODIFICATION
+
+    o minor documentation update
+
+CHANGES IN VERSION 1.29.16
+------------------------------
+
+MINOR MODIFICATION
+
+    o minor documentation update
+
+CHANGES IN VERSION 1.29.14
+------------------------------
+
+NEW FEATURE
+
+    o NCI60 dataset from omicade4 available in MultiAssayExperiment and MultiDataSet
+
+CHANGES IN VERSION 1.29.12
+------------------------------
+
+MINOR MODIFICATION
+
+    o minor documentation update
+
+CHANGES IN VERSION 1.29.10
+------------------------------
+
+MINOR MODIFICATION
+
+    o minor documentation update
+
+CHANGES IN VERSION 1.29.8
+------------------------------
+
+NEW FEATURE
+
+    o 'opls' method now handles MultiAssayExperiment
+
+CHANGES IN VERSION 1.29.6
+------------------------------
+
+NEW FEATURE
+
+    o 'opls' method now handles SummarizedExperiment
+
+CHANGES IN VERSION 1.29.4
+------------------------------
+
+NEW FEATURE
+
+    o 'view' method now handles SummarizedExperiment
+    o 'sacurine' dataset includes the ExpressionSet and SummarizedExperiment formats
+
+CHANGES IN VERSION 1.29.2
+------------------------------
+
+MINOR MODIFICATION
+
+    o new bioc release
+
+CHANGES IN VERSION 1.27.8
+------------------------------
+
+MINOR MODIFICATION
+
+    o minor vignette correction
+
+CHANGES IN VERSION 1.27.6
+------------------------------
+
+MINOR MODIFICATION
+
+    o minor vignette correction
+    
+CHANGES IN VERSION 1.27.4
+------------------------------
+
+MINOR MODIFICATION
+
+    o minor vignette update
+
+CHANGES IN VERSION 1.27.2
+------------------------------
+
+MINOR MODIFICATION
+
+    o minor documentation update
+
+CHANGES IN VERSION 1.23.12
+------------------------------
+
+MINOR MODIFICATION
+
+    o minor documentation update
+
+CHANGES IN VERSION 1.23.8
+------------------------------
+
+MINOR MODIFICATION
+
+    o vignette: minor update
+
+CHANGES IN VERSION 1.23.6
+------------------------------
+
+MINOR MODIFICATION
+
+    o 'view' method: minor update of documentation
+
+CHANGES IN VERSION 1.23.4
+------------------------------
+
+BUG FIXED
+
+    o 'view' method: display of row names
+
+CHANGES IN VERSION 1.23.2
+------------------------------
+
+BUG FIXED
+
+    o 'view' method: display of row names (reversed in the previous versions)
+
+CHANGES IN VERSION 1.19.16
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o '.header' function: 'class(x) == ' removed from code to take into account the R 4.0 changes
+
+CHANGES IN VERSION 1.19.14
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o 'strF' function: use of is.array instead of is.matrix to take into account the R 4.0 changes
+
+CHANGES IN VERSION 1.19.12
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o 'strF' function: replacement by 'is(x, )': cont'd
+
+CHANGES IN VERSION 1.19.10
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o 'strF' function: 'class(x) ==' replaced by 'is(x, )' as required by R/Bioconductor
+
+CHANGES IN VERSION 1.19.8
+------------------------------
+
+NEW FEATURE
+
+    o 'view' method: 'standardizeL' argument for the standardization of column values
+    for display
+
+CHANGES IN VERSION 1.19.6
+------------------------------
+
+BUG FIXED
+
+    o 'view' method: ExpressionSet with empty metadata
+
+CHANGES IN VERSION 1.19.4
+------------------------------
+
+NEW FEATURE
+
+    o 'view' method: plot extended to data.frames and ExpressionSet
+
+CHANGES IN VERSION 1.19.2
+------------------------------
+
+BUG FIXED
+
+    o 'view' method: in case the matrix has no row nor column names
+
+CHANGES IN VERSION 1.17.34
+------------------------------
+
+NEW FEATURE
+
+    o 'view' method (wrapper of the imageF and strF functions)
+
+CHANGES IN VERSION 1.17.32
+------------------------------
+
+BUG FIXED
+
+    o plot.oplsMultiDataSet correction to include all plots in the .pdf file
+
+CHANGES IN VERSION 1.17.30
+------------------------------
+
+MINOR MODIFICATION
+
+    o Additional correction in getMset documentation (example)
+
+CHANGES IN VERSION 1.17.28
+------------------------------
+
+MINOR MODIFICATION
+
+    o Correcting typo in getMset documentation (example)
+
+CHANGES IN VERSION 1.17.26
+------------------------------
+
+MINOR MODIFICATION
+
+    o Including the set name in the figure of MultiDataSet models
+
+CHANGES IN VERSION 1.17.24
+------------------------------
+
+MINOR MODIFICATION
+
+    o Correction of the documentation for 'residuals' and 'plot-oplsMultidDataSet'
+
+CHANGES IN VERSION 1.17.22
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o Correction of the example in the oplsMultiDataSet class documentation
+
+CHANGES IN VERSION 1.17.20
+------------------------------
+
+NEW FEATURE
+
+    o plotPhenoDataC parameter for coloring (score plots) according to one column from
+    the pData data frame when the opls method has been applied to an ExpresssionSet
+
+CHANGES IN VERSION 1.17.18
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o Minor internal modification
+
+CHANGES IN VERSION 1.17.16
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o Minor internal modification
+
+CHANGES IN VERSION 1.17.14
+------------------------------
+
+NEW FEATURE
+
+    o Example of the analyis of a MultiDataSet ('NCI60_4arrays' from the 'omicade4' package)
+
+CHANGES IN VERSION 1.17.12
+------------------------------
+
+NEW FEATURE
+
+    o Multi data set names display on graphics
+    
+CHANGES IN VERSION 1.17.10
+------------------------------
+
+NEW FEATURE
+
+    o plot method for oplsMultiDataSet objects
+
+CHANGES IN VERSION 1.17.8
+------------------------------
+
+NEW FEATURE
+
+    o opls can now be applied to MultiDataSet objects; getMset method to extract
+    the complemented MultiDataSet
+
+CHANGES IN VERSION 1.17.6
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o minor internal modification
+
+CHANGES IN VERSION 1.17.4
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o minor internal modification
+    
+CHANGES IN VERSION 1.17.2
+------------------------------
+
+NEW FEATURE
+
+    o info.txtC and fig.pdfC argument values NULL and NA replaced by 'none' and 'interactive', respectively 
+
+CHANGES IN VERSION 1.15.26
+------------------------------
+
+NEW FEATURE
+
+    o plot method: dev.new() is not called internally any more; consequently the 'parDevNewL' argument has been removed; layout can be either 1x1 or 2x2, depending on the length of the 'typeVc' argument; 'fig.pdfC' and 'info.txtC' arguments have been added for compatibility reasons with other packages; they have the same role as 'file.pdfC' and '.sinkC' which now generate a deprecated warning. 
+
+CHANGES IN VERSION 1.15.24
+------------------------------
+
+MINOR MODIFICATION
+
+    o plot method: turning off ellipse display in case of a single sample the class
+
+CHANGES IN VERSION 1.15.22
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o imageF function: minor modification of the log parameter
+
+CHANGES IN VERSION 1.15.20
+------------------------------
+
+NEW FEATURE
+
+    o imageF function to visualize a numerical matrix
+    
+CHANGES IN VERSION 1.15.18
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o minor internal modification
+
+CHANGES IN VERSION 1.15.16
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o modification of the way additional columns are added to the pData and fData of an ExpressionSet instance
+    
+    o 'Biobase' package now as 'depends' (not 'import') 
+
+CHANGES IN VERSION 1.15.14
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o minor internal modification
+
+CHANGES IN VERSION 1.15.12
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o minor modification in examples defining ExpressionSet instances
+
+CHANGES IN VERSION 1.15.10
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o 'eset' is now a slot of the 'opls' class (used when the 'opls' method is applied to an ExpressionSet instance)
+
+CHANGES IN VERSION 1.15.8
+------------------------------
+
+NEW FEATURE
+
+    o 'plot' method: parPaletteVc argument to specify colors
+    
+
+CHANGES IN VERSION 1.15.6
+------------------------------
+
+NEW FEATURE
+
+    o Application to ExpressionSet: first 2 scores and loadings, as well as fitted values and VIP now returned in the pData and fData
+    
+INTERNAL MODIFICATION
+
+    o Unit testing switched from 'RUnit' to 'testthat'
+
+
+CHANGES IN VERSION 1.15.4
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o Checking that the data matrix does not contain any infinite or NaN value
+
+CHANGES IN VERSION 1.15.2
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o ImmunoOncology tag added to biocViews
+    o minor correction in the diagnostics graph labeling
+
+CHANGES IN VERSION 1.13.8
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o minor correction in the documentation
+    
+CHANGES IN VERSION 1.13.6
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o update of package vignette
+
+CHANGES IN VERSION 1.13.4
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o fixed bug in unit test
+
+CHANGES IN VERSION 1.13.2
+------------------------------
+
+BUG CORRECTION
+
+    o predict method: naming of the predicted Y matrix output columns in case of PLS modeling of multiple responses
+    
+INTERNAL MODIFICATION
+
+    o ropls.Rproj file added for package management with RStudio
+
+CHANGES IN VERSION 1.7.2
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o vignette now in pdf format
+
+CHANGES IN VERSION 1.5.22
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o minor code formatting
+
+CHANGES IN VERSION 1.5.20
+------------------------------
+
+BUG CORRECTION
+
+    o PCA: correction in the computation of variance and R2X (svd), and the determination of the optimal number of components
+
+CHANGES IN VERSION 1.5.18
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o correction in the vignette (determination of optimal number of components in PCA)
+
+CHANGES IN VERSION 1.5.16
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o minor vignette formatting
+
+CHANGES IN VERSION 1.5.14
+------------------------------
+
+NEW FEATURE
+
+    o 'fromW4M' function and 'toW4M' method to import preprocessed tables
+    generated by the online Workflow4metabolomics infrastructure into an
+    ExpressionSet bioconductor object (and vice versa)
+
+CHANGES IN VERSION 1.5.12
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o minor vignette formatting
+
+CHANGES IN VERSION 1.5.10
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o checking automated documentation with the 'roxygen2' package; automated vignette with rmarkdown and knitr
+
+CHANGES IN VERSION 1.5.8
+------------------------------
+
+INTERNAL MODIFICATION
+
+    o deleting missing files from svn repository
+
+CHANGES IN VERSION 1.5.6
+------------------------------
+
+NEW FEATURE
+
+    o opls can now be applied to ExpressionSet instances
+    o vignette is now in html format
+    o automated documentation with the 'roxygen2' package; automated vignette with rmarkdown and knitr
+
+CHANGES IN VERSION 1.5.4
+------------------------------
+
+NEW FEATURE
+
+    o package documentation now available with ?ropls, help("ropls"), or help("ropls-package")
+
+CHANGES IN VERSION 1.5.2
+------------------------------
+
+BUG FIXED
+
+    o stop messages generated when non-significant predictive or first orthogonal components are obtained
+
+CHANGES IN VERSION 1.5.0
+------------------------------
+
+NEW FEATURES
+
+    o 'opls' is now an S4 class: please use the accessors e.g. 'getScoreMN(oplsModel)' instead of 'oplsModel$scoreMN', or 'getScoreMN(oplsModel, orthoL = TRUE)' instead of 'oplsModel$orthoScoreMN'
+    o The full list of accessors is: getLoadingMN, getScoreMN, getVipVn, getWeightMN (all with the orthoL argument), in addition to getSummaryDF, getPcaVarVn, getSubsetVi
+    o Please see the vignette and documentation for examples    
+    
+
+CHANGES IN VERSION 1.3.19
+------------------------------
+
+BUG FIXED
+
+    o Committing the new files
+
+CHANGES IN VERSION 1.3.18
+------------------------------
+
+NEW FEATURE
+
+    o 'coefficients' method renamed as 'coef'
+    
+BUG FIXED
+
+    o 'methods-opls_class.R' file renamed as 'opls-methods.R' to ensure 'opls' class is defined before the methods
+
+CHANGES IN VERSION 1.3.17
+------------------------------
+
+BUG FIXED
+
+    o Committing the new files
+
+CHANGES IN VERSION 1.3.16
+------------------------------
+
+BUG FIXED
+
+    o Committing the new files
+
+CHANGES IN VERSION 1.3.15
+------------------------------
+
+NEW FEATURES
+
+    o Switching to S4 class
+    o Evaluating the metabolomics workflow in the vignette    
+
+CHANGES IN VERSION 1.3.14
+------------------------------
+
+NEW FEATURES
+
+    o plot.opls: when 'parAsColFcVn' is a character vector, it is converted to a factor (thus drawing ellipses by default)
+            
+BUG FIXED
+
+    o plot.opls: handling of ellipse display when parEllipseL parameter set to NA (default)
+
+CHANGES IN VERSION 1.3.13
+------------------------------
+
+NEW FEATURES
+
+    o opls: no scaling option now available
+            
+BUG FIXED
+
+    o opls: computation of the matrix of correlations (when the number of features is <= 100)
+
+CHANGES IN VERSION 1.3.12
+------------------------------
+
+NEW FEATURES
+
+    o opls: multiclass PLS-DA implemented (PLS2 approach; comments added in the vignette)
+            default number of permutations set to 20 (instead of 10)
+            predictive components denoted in the tables by 'p' (instead of 'h' previously)
+            OPLS(-DA): simplified "modelDF" data frame ('rotation' row has been suppressed)
+            
+BUG FIXED
+
+    o opls: PCA model with 'svd' and a single component
+            
+
+CHANGES IN VERSION 1.3.11
+------------------------------
+
+NEW FEATURES
+
+    o opls: for OPLS(-DA), vipVn and orthoVipVn are now computed as the VIP4,p and VIP4,o described in Galindo-Prieto et al (2014)
+    o plot.opls: changes in palette: black/grey colors for diagnostics and other colors for scores    
+
+CHANGES IN VERSION 1.3.10
+------------------------------
+
+BUG FIXED
+
+    o plot.opls: minor bug fixed ('x-score' label and color display of test samples when 'subset' is not NULL)
+
+CHANGES IN VERSION 1.3.9
+------------------------------
+
+NEW FEATURES
+
+    o vignette: minor update
+
+CHANGES IN VERSION 1.3.8
+------------------------------
+
+NEW FEATURES
+
+    o vignette: "some words of warning" section added
+
+CHANGES IN VERSION 1.3.7
+------------------------------
+
+NEW FEATURES
+
+    o vignette: default figures from plot.opls included
+    
+CHANGES IN VERSION 1.3.6
+------------------------------
+
+NEW FEATURES
+
+    o strF: object size now displayed in Mb (instead of bytes); minor corrections to handle all matrices and data frames (whatever the dimensions, mode, row and column names)
+    o unit tests: new tests added to increase test coverage
+
+CHANGES IN VERSION 1.3.5
+------------------------------
+
+NEW FEATURES
+
+    o unit tests: warning message corrected in order to allow test coverage display on the Bioconductor page
+    
+CHANGES IN VERSION 1.3.4
+------------------------------
+
+NEW FEATURES
+
+    o vignette: minor correction in the default number of permutations for single response (O)PLS(-DA) models
+
+CHANGES IN VERSION 1.3.3
+------------------------------
+
+NEW FEATURES
+
+    o vignette: detailed explanations of Q2Y computation 
+
+
+CHANGES IN VERSION 1.3.2
+------------------------------
+
+NEW FEATURES
+
+    o plot.opls: 'plotVc' argument renamed 'typeVc' similarly to the default 'plot' function
+
+CHANGES IN VERSION 1.3.1
+------------------------------
+
+NEW FEATURES
+
+    o opls: now takes either a (numeric) data frame or matrix as 'x' input (instead of matrix only)   
+    o predict: now takes either a (numeric) data frame or matrix as 'newdata' input (instead of matrix only) 
+
+CHANGES IN VERSION 1.1.11
+------------------------------
+
+NEW FEATURES
+
+    o NEWS format updated
+
+CHANGES IN VERSION 1.1.10
+------------------------------
+
+NEW FEATURES
+
+    o opls: PLS models can now be built for 'x' data with a single variable
+        
+CHANGES IN VERSION 1.1.9
+------------------------------
+
+NEW FEATURES
+
+    o opls: default number of permutations set to 10 (instead of 100) as a compromise to enable both quick computation and a first hint at model significance
+
+    o opls: maximum number of components in automated mode (predI = NA or orthoI = NA) set to 10 (instead of 15)
+
+    o plot.opls: bug corrected in case of single component model without permutation testing
+
+CHANGES IN VERSION 1.1.8
+------------------------------
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o sacurine dataset name simplification: names of sample metadata are now 'age', 'bmi', and 'gender' instead of 'ageVn', 'bmiVn', and 'genderFc'; names of variableMetadata are now 'msiLevel', 'hmdb', 'chemicalClass' instead of 'msiLevelVn', 'hmdbVc', 'chemicalClassVc'
+
+CHANGES IN VERSION 1.1.7
+------------------------------
+
+NEW FEATURES
+
+    o Control to avoid overfitting was strenghtened by: i) setting the default number of permutations to 100 (instead of 0) and ii) changing the default plot ("summary") to include both the "permutation" and the "overview" graphics
+
+CHANGES IN VERSION 1.1.6
+------------------------------
+
+NEW FEATURES
+
+    o .sinkC argument added in the opls and plot.opls methods: Diversion of messages is required for Galaxy integration
+
+CHANGES IN VERSION 1.1.5
+------------------------------
+
+NEW FEATURES
+
+    o current implementation supports two-class only classification
+
+CHANGES IN VERSION 1.1.4
+------------------------------
+
+NEW FEATURES
+
+    o renamed slot of opls object: rotationMN -> weightStarMN
+
+CHANGES IN VERSION 1.1.3
+------------------------------
+
+NEW FEATURES
+
+    o Minor internal changes regarding default ellipse plotting options and checking the compatibility between the subset size and the cross-validation fold
+
+CHANGES IN VERSION 1.1.2
+------------------------------
+
+BUG FIXES
+
+    o Minor internal changes
+
+CHANGES IN VERSION 1.1.1
+------------------------------
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o The packaging was modified (but not the algorithms) to be consistent with other machine learning packages: 'opls' is now a class and the 'print', 'plot', 'predict', 'summary', 'fitted', 'coefficients' and 'residuals' methods are available (see the vignette)
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o renamed method: roplsF -> opls
+
+    o renamed arguments
+        testVi -> now 'subset' which indicates the indices of the training (instead of the testing) observations
+
+    o values:
+        tMN -> scoreMN
+        pMN -> loadingMN
+        wMN -> weightMN
+        bMN -> coefficients
+        rMN -> rotationMN
+        varVn -> pcaVarVn
+        tOrthoMN -> orthoScoreMN
+        pOrthoMN -> orthoLoadingMN
+        wOrthoMN -> orthoWeightMN
+
+    o new (S3) methods for objects of class 'opls'
+        print
+        summary
+        plot
+        predict
+        fitted
+        coefficients
+        residuals
+
+CHANGES IN VERSION 1.0.2
+------------------------------
+
+NEW FEATURES
+
+    o roplsF outputs: '.char2numF' function (required for class prediction on new datasets); replaces 'c2nLs'
+
+CHANGES IN VERSION 1.0.1
+------------------------------
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o renamed roplsF arguments (to indicate integers more explicitly)
+        'predN' -> 'predI'
+        'orthoN' -> 'orthoI'
+        'crossvalN' -> 'crossvalI'
+        'permN' -> 'permI'
+        'parCompVn' -> 'parCompVi'
+        'parTopLoadN' -> 'parTopLoadI'
+
+CHANGES IN VERSION 0.99.7
+------------------------------
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o rename ('sacurine' data set) for compatibility with 'Workflow4Metabolomics.org':
+        'profileMN'  -> dataMatrix
+        'sampleDF'   -> sampleMetadata
+        'variableDF' -> variableMetadata
+        
+CHANGES IN VERSION 0.99.6
+------------------------------
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o roplsF:
+        handling of PLS models with single predictive component only
+
+CHANGES IN VERSION 0.99.4
+------------------------------
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o rename:
+        'sacuri' data set -> 'sacurine'
+
+CHANGES IN VERSION 0.99.2
+------------------------------
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o rename:
+        ropF -> roplsF
+        ropStrF -> strF
+
+    o depreacated roplsF arguments:
+        parObsColLabVcn: now available through the parLabVc and parAsColVcn arguments
+        parObsLegVc: not useful
+	
+    o rename roplsF arguments:
+        ncpN -> predN
+        ncoN -> orthoN
+        ploVc -> plotVc
+        algC -> algoC
+        savImg.pdfC -> fileFig.pdfC
+        savLog.txtC -> fileInfo.txtC
+        logL -> log10L
+        perN -> permN
+        scaC -> scaleC
+        tesVi -> testVi
+        vrbC -> verboseC
+        parObsColVc -> parAsColVcn
+        parPcsVn -> parCompVn
+        parMahL -> parEllipsesL
+        parObsLabVc -> parLabVc
+        parMaiL -> parTitleL
+        parNexN -> parTopLoadN		
+
+NEW FEATURES
+
+    o ropColF -> now split between .colorF and .legendF
+    o ropMahF -> now .ellipseF

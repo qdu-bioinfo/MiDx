@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head><title>R: Brings transcriptomics to the tidyverse</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+<h1> Brings transcriptomics to the tidyverse
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+</h1>
+<hr/>
+<div style="text-align: center;">
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
+</div><h2>Documentation for package &lsquo;tidybulk&rsquo; version 1.18.0</h2>
+
+<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+<li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
+<li><a href="../NEWS">Package NEWS</a>.</li>
+</ul>
+
+<h2>Help Pages</h2>
+
+
+<table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="describe_transcript-methods.html">.describe_transcript_SE</a></td>
+<td>Get DESCRIPTION from gene SYMBOL for Human and Mouse</td></tr>
+<tr><td style="width: 25%;"><a href="adjust_abundance-methods.html">adjust_abundance</a></td>
+<td>Adjust transcript abundance for unwanted variation</td></tr>
+<tr><td style="width: 25%;"><a href="adjust_abundance-methods.html">adjust_abundance-method</a></td>
+<td>Adjust transcript abundance for unwanted variation</td></tr>
+<tr><td style="width: 25%;"><a href="aggregate_duplicates-methods.html">aggregate_duplicates</a></td>
+<td>Aggregates multiple counts from the same samples (e.g., from isoforms), concatenates other character columns, and averages other numeric columns</td></tr>
+<tr><td style="width: 25%;"><a href="aggregate_duplicates-methods.html">aggregate_duplicates-method</a></td>
+<td>Aggregates multiple counts from the same samples (e.g., from isoforms), concatenates other character columns, and averages other numeric columns</td></tr>
+<tr><td style="width: 25%;"><a href="arrange-methods.html">arrange</a></td>
+<td>Arrange rows by column values</td></tr>
+<tr><td style="width: 25%;"><a href="as_matrix.html">as_matrix</a></td>
+<td>Get matrix from tibble</td></tr>
+<tr><td style="width: 25%;"><a href="as_SummarizedExperiment-methods.html">as_SummarizedExperiment</a></td>
+<td>as_SummarizedExperiment</td></tr>
+<tr><td style="width: 25%;"><a href="as_SummarizedExperiment-methods.html">as_SummarizedExperiment-method</a></td>
+<td>as_SummarizedExperiment</td></tr>
+<tr><td style="width: 25%;"><a href="dplyr-methods.html">bind_cols</a></td>
+<td>Left join datasets</td></tr>
+<tr><td style="width: 25%;"><a href="bind_rows.html">bind_rows</a></td>
+<td>Efficiently bind multiple data frames by row and column</td></tr>
+<tr><td style="width: 25%;"><a href="breast_tcga_mini_SE.html">breast_tcga_mini_SE</a></td>
+<td>Needed for vignette breast_tcga_mini_SE</td></tr>
+<tr><td style="width: 25%;"><a href="cluster_elements-methods.html">cluster_elements</a></td>
+<td>Get clusters of elements (e.g., samples or transcripts)</td></tr>
+<tr><td style="width: 25%;"><a href="cluster_elements-methods.html">cluster_elements-method</a></td>
+<td>Get clusters of elements (e.g., samples or transcripts)</td></tr>
+<tr><td style="width: 25%;"><a href="counts_ensembl.html">counts_ensembl</a></td>
+<td>Counts with ensembl annotation</td></tr>
+<tr><td style="width: 25%;"><a href="deconvolve_cellularity-methods.html">deconvolve_cellularity</a></td>
+<td>Get cell type proportions from samples</td></tr>
+<tr><td style="width: 25%;"><a href="deconvolve_cellularity-methods.html">deconvolve_cellularity-method</a></td>
+<td>Get cell type proportions from samples</td></tr>
+<tr><td style="width: 25%;"><a href="describe_transcript-methods.html">describe_transcript</a></td>
+<td>Get DESCRIPTION from gene SYMBOL for Human and Mouse</td></tr>
+<tr><td style="width: 25%;"><a href="describe_transcript-methods.html">describe_transcript-method</a></td>
+<td>Get DESCRIPTION from gene SYMBOL for Human and Mouse</td></tr>
+<tr><td style="width: 25%;"><a href="distinct-methods.html">distinct</a></td>
+<td>distinct</td></tr>
+<tr><td style="width: 25%;"><a href="ensembl_symbol_mapping.html">ensembl_symbol_mapping</a></td>
+<td>Data set</td></tr>
+<tr><td style="width: 25%;"><a href="ensembl_to_symbol-methods.html">ensembl_to_symbol</a></td>
+<td>Add transcript symbol column from ensembl id for human and mouse data</td></tr>
+<tr><td style="width: 25%;"><a href="ensembl_to_symbol-methods.html">ensembl_to_symbol-method</a></td>
+<td>Add transcript symbol column from ensembl id for human and mouse data</td></tr>
+<tr><td style="width: 25%;"><a href="fill_missing_abundance-methods.html">fill_missing_abundance</a></td>
+<td>Fill transcript abundance if missing from sample-transcript pairs</td></tr>
+<tr><td style="width: 25%;"><a href="fill_missing_abundance-methods.html">fill_missing_abundance-method</a></td>
+<td>Fill transcript abundance if missing from sample-transcript pairs</td></tr>
+<tr><td style="width: 25%;"><a href="filter-methods.html">filter</a></td>
+<td>Subset rows using column values</td></tr>
+<tr><td style="width: 25%;"><a href="flybaseIDs.html">flybaseIDs</a></td>
+<td>flybaseIDs</td></tr>
+<tr><td style="width: 25%;"><a href="join-methods.html">full_join</a></td>
+<td>Inner join datasets</td></tr>
+<tr><td style="width: 25%;"><a href="get_bibliography-methods.html">get_bibliography</a></td>
+<td>Produces the bibliography list of your workflow</td></tr>
+<tr><td style="width: 25%;"><a href="get_bibliography-methods.html">get_bibliography-method</a></td>
+<td>Produces the bibliography list of your workflow</td></tr>
+<tr><td style="width: 25%;"><a href="group_by-methods.html">group_by</a></td>
+<td>Group by one or more variables</td></tr>
+<tr><td style="width: 25%;"><a href="identify_abundant-methods.html">identify_abundant</a></td>
+<td>find abundant transcripts</td></tr>
+<tr><td style="width: 25%;"><a href="identify_abundant-methods.html">identify_abundant-method</a></td>
+<td>find abundant transcripts</td></tr>
+<tr><td style="width: 25%;"><a href="impute_missing_abundance-methods.html">impute_missing_abundance</a></td>
+<td>impute transcript abundance if missing from sample-transcript pairs</td></tr>
+<tr><td style="width: 25%;"><a href="impute_missing_abundance-methods.html">impute_missing_abundance-method</a></td>
+<td>impute transcript abundance if missing from sample-transcript pairs</td></tr>
+<tr><td style="width: 25%;"><a href="join-methods.html">inner_join</a></td>
+<td>Inner join datasets</td></tr>
+<tr><td style="width: 25%;"><a href="keep_abundant-methods.html">keep_abundant</a></td>
+<td>Keep abundant transcripts</td></tr>
+<tr><td style="width: 25%;"><a href="keep_abundant-methods.html">keep_abundant-method</a></td>
+<td>Keep abundant transcripts</td></tr>
+<tr><td style="width: 25%;"><a href="keep_variable-methods.html">keep_variable</a></td>
+<td>Keep variable transcripts</td></tr>
+<tr><td style="width: 25%;"><a href="keep_variable-methods.html">keep_variable-method</a></td>
+<td>Keep variable transcripts</td></tr>
+<tr><td style="width: 25%;"><a href="dplyr-methods.html">left_join</a></td>
+<td>Left join datasets</td></tr>
+<tr><td style="width: 25%;"><a href="log10_reverse_trans.html">log10_reverse_trans</a></td>
+<td>log10_reverse_trans</td></tr>
+<tr><td style="width: 25%;"><a href="logit_trans.html">logit_trans</a></td>
+<td>logit scale</td></tr>
+<tr><td style="width: 25%;"><a href="mutate-methods.html">mutate</a></td>
+<td>Create, modify, and delete columns</td></tr>
+<tr><td style="width: 25%;"><a href="nest-methods.html">nest</a></td>
+<td>unnest</td></tr>
+<tr><td style="width: 25%;"><a href="pivot_sample-methods.html">pivot_sample</a></td>
+<td>Extract sample-wise information</td></tr>
+<tr><td style="width: 25%;"><a href="pivot_sample-methods.html">pivot_sample-method</a></td>
+<td>Extract sample-wise information</td></tr>
+<tr><td style="width: 25%;"><a href="pivot_transcript-methods.html">pivot_transcript</a></td>
+<td>Extract transcript-wise information</td></tr>
+<tr><td style="width: 25%;"><a href="pivot_transcript-methods.html">pivot_transcript-method</a></td>
+<td>Extract transcript-wise information</td></tr>
+<tr><td style="width: 25%;"><a href="quantile_normalise_abundance-methods.html">quantile_normalise_abundance</a></td>
+<td>Normalise by quantiles the counts of transcripts/genes</td></tr>
+<tr><td style="width: 25%;"><a href="quantile_normalise_abundance-methods.html">quantile_normalise_abundance-method</a></td>
+<td>Normalise by quantiles the counts of transcripts/genes</td></tr>
+<tr><td style="width: 25%;"><a href="reduce_dimensions-methods.html">reduce_dimensions</a></td>
+<td>Dimension reduction of the transcript abundance data</td></tr>
+<tr><td style="width: 25%;"><a href="reduce_dimensions-methods.html">reduce_dimensions-method</a></td>
+<td>Dimension reduction of the transcript abundance data</td></tr>
+<tr><td style="width: 25%;"><a href="remove_redundancy-methods.html">remove_redundancy</a></td>
+<td>Drop redundant elements (e.g., samples) for which feature (e.g., transcript/gene) abundances are correlated</td></tr>
+<tr><td style="width: 25%;"><a href="remove_redundancy-methods.html">remove_redundancy-method</a></td>
+<td>Drop redundant elements (e.g., samples) for which feature (e.g., transcript/gene) abundances are correlated</td></tr>
+<tr><td style="width: 25%;"><a href="rename-methods.html">rename</a></td>
+<td>Rename columns</td></tr>
+<tr><td style="width: 25%;"><a href="resolve_complete_confounders_of_non_interest-methods.html">resolve_complete_confounders_of_non_interest</a></td>
+<td>Resolve Complete Confounders of Non-Interest</td></tr>
+<tr><td style="width: 25%;"><a href="resolve_complete_confounders_of_non_interest-methods.html">resolve_complete_confounders_of_non_interest-method</a></td>
+<td>Resolve Complete Confounders of Non-Interest</td></tr>
+<tr><td style="width: 25%;"><a href="join-methods.html">right_join</a></td>
+<td>Inner join datasets</td></tr>
+<tr><td style="width: 25%;"><a href="rotate_dimensions-methods.html">rotate_dimensions</a></td>
+<td>Rotate two dimensions (e.g., principal components) of an arbitrary angle</td></tr>
+<tr><td style="width: 25%;"><a href="rotate_dimensions-methods.html">rotate_dimensions-method</a></td>
+<td>Rotate two dimensions (e.g., principal components) of an arbitrary angle</td></tr>
+<tr><td style="width: 25%;"><a href="rowwise-methods.html">rowwise</a></td>
+<td>Group input by rows</td></tr>
+<tr><td style="width: 25%;"><a href="scale_abundance-methods.html">scale_abundance</a></td>
+<td>Scale the counts of transcripts/genes</td></tr>
+<tr><td style="width: 25%;"><a href="scale_abundance-methods.html">scale_abundance-method</a></td>
+<td>Scale the counts of transcripts/genes</td></tr>
+<tr><td style="width: 25%;"><a href="se.html">se</a></td>
+<td>SummarizedExperiment</td></tr>
+<tr><td style="width: 25%;"><a href="se_mini.html">se_mini</a></td>
+<td>SummarizedExperiment mini for vignette</td></tr>
+<tr><td style="width: 25%;"><a href="summarise-methods.html">summarise</a></td>
+<td>Summarise each group to fewer rows</td></tr>
+<tr><td style="width: 25%;"><a href="symbol_to_entrez.html">symbol_to_entrez</a></td>
+<td>Get ENTREZ id from gene SYMBOL</td></tr>
+<tr><td style="width: 25%;"><a href="test_differential_abundance-methods.html">test_differential_abundance</a></td>
+<td>Perform differential transcription testing using edgeR quasi-likelihood (QLT), edgeR likelihood-ratio (LR), limma-voom, limma-voom-with-quality-weights or DESeq2</td></tr>
+<tr><td style="width: 25%;"><a href="test_differential_abundance-methods.html">test_differential_abundance-method</a></td>
+<td>Perform differential transcription testing using edgeR quasi-likelihood (QLT), edgeR likelihood-ratio (LR), limma-voom, limma-voom-with-quality-weights or DESeq2</td></tr>
+<tr><td style="width: 25%;"><a href="test_differential_cellularity-methods.html">test_differential_cellularity</a></td>
+<td>Add differential tissue composition information to a tbl</td></tr>
+<tr><td style="width: 25%;"><a href="test_differential_cellularity-methods.html">test_differential_cellularity-method</a></td>
+<td>Add differential tissue composition information to a tbl</td></tr>
+<tr><td style="width: 25%;"><a href="test_gene_enrichment-methods.html">test_gene_enrichment</a></td>
+<td>analyse gene enrichment with EGSEA</td></tr>
+<tr><td style="width: 25%;"><a href="test_gene_enrichment-methods.html">test_gene_enrichment-method</a></td>
+<td>analyse gene enrichment with EGSEA</td></tr>
+<tr><td style="width: 25%;"><a href="test_gene_overrepresentation-methods.html">test_gene_overrepresentation</a></td>
+<td>analyse gene over-representation with GSEA</td></tr>
+<tr><td style="width: 25%;"><a href="test_gene_overrepresentation-methods.html">test_gene_overrepresentation-method</a></td>
+<td>analyse gene over-representation with GSEA</td></tr>
+<tr><td style="width: 25%;"><a href="test_gene_rank-methods.html">test_gene_rank</a></td>
+<td>analyse gene rank with GSEA</td></tr>
+<tr><td style="width: 25%;"><a href="test_gene_rank-methods.html">test_gene_rank-method</a></td>
+<td>analyse gene rank with GSEA</td></tr>
+<tr><td style="width: 25%;"><a href="test_stratification_cellularity-methods.html">test_stratification_cellularity</a></td>
+<td>Test of stratification of biological replicates based on tissue composition, one cell-type at the time, using Kaplan-meier curves.</td></tr>
+<tr><td style="width: 25%;"><a href="test_stratification_cellularity-methods.html">test_stratification_cellularity-method</a></td>
+<td>Test of stratification of biological replicates based on tissue composition, one cell-type at the time, using Kaplan-meier curves.</td></tr>
+<tr><td style="width: 25%;"><a href="tidybulk-methods.html">tidybulk</a></td>
+<td>Creates an annotated 'tidybulk' tibble from a 'tbl' or 'SummarizedExperiment' object</td></tr>
+<tr><td style="width: 25%;"><a href="tidybulk-methods.html">tidybulk-method</a></td>
+<td>Creates an annotated 'tidybulk' tibble from a 'tbl' or 'SummarizedExperiment' object</td></tr>
+<tr><td style="width: 25%;"><a href="tidybulk_SAM_BAM-methods.html">tidybulk_SAM_BAM</a></td>
+<td>Creates a 'tt' object from a list of file names of BAM/SAM</td></tr>
+<tr><td style="width: 25%;"><a href="tidybulk_SAM_BAM-methods.html">tidybulk_SAM_BAM-method</a></td>
+<td>Creates a 'tt' object from a list of file names of BAM/SAM</td></tr>
+<tr><td style="width: 25%;"><a href="tximeta_summarizeToGene_object.html">tximeta_summarizeToGene_object</a></td>
+<td>Needed for tests tximeta_summarizeToGene_object, It is SummarizedExperiment from tximeta</td></tr>
+<tr><td style="width: 25%;"><a href="nest-methods.html">unnest</a></td>
+<td>unnest</td></tr>
+<tr><td style="width: 25%;"><a href="vignette_manuscript_signature_boxplot.html">vignette_manuscript_signature_boxplot</a></td>
+<td>Needed for vignette vignette_manuscript_signature_boxplot</td></tr>
+<tr><td style="width: 25%;"><a href="vignette_manuscript_signature_tsne.html">vignette_manuscript_signature_tsne</a></td>
+<td>Needed for vignette vignette_manuscript_signature_tsne</td></tr>
+<tr><td style="width: 25%;"><a href="vignette_manuscript_signature_tsne2.html">vignette_manuscript_signature_tsne2</a></td>
+<td>Needed for vignette vignette_manuscript_signature_tsne2</td></tr>
+<tr><td style="width: 25%;"><a href="X_cibersort.html">X_cibersort</a></td>
+<td>Cibersort reference</td></tr>
+</table>
+</div></body></html>
