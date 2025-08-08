@@ -5,12 +5,11 @@ import pandas as pd
 new_path = os.path.abspath(os.path.join(__file__, "../../"))
 sys.path[1] = new_path
 feature_path = sys.path[1] + '/Result/figures/Feature/'
-data_path = sys.path[1] + '/Result/data/'
-Norm_path=sys.path[1] + '/Result/data/'
+data_path = sys.path[1] + '/data/'
 def split_data(analysis_level, groups,data_type):
-    data = Norm_path + f"{data_type}/Raw/{analysis_level}/Raw_feature_finally.csv"
+    data = data_path + f"{data_type}/Raw/{analysis_level}/Raw_feature_finally.csv"
     feature = pd.read_csv(data, sep=',', index_col=0)
-    meta = pd.read_csv(data_path+f"{data_type}/Raw_meta_finally.csv")
+    meta = pd.read_csv(data_path+f"{data_type}/Raw/Raw_meta_finally.csv")
     merged_df = pd.merge(feature, meta[["Group", "SampleID", "Study"]], left_index=True, right_on='SampleID', how="inner")
     merged_df.set_index('SampleID', inplace=True)
     return merged_df
